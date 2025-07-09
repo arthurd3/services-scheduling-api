@@ -9,11 +9,11 @@ import java.util.Collection;
 import java.util.List;
 
 @Entity
-@Table(name = "users")
+@Table(name = "users_t")
 public class User implements UserDetails {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     @Column(nullable = false)
     private String name;
@@ -21,30 +21,32 @@ public class User implements UserDetails {
     private String email;
     @Column(nullable = false)
     private String password;
-    @Column(unique = true, nullable = false)
+    @Column(name="phone_number" , unique = true, nullable = false)
     private String phoneNumber;
 
+    @Enumerated(EnumType.STRING)
+    @Column(name = "role", nullable = false)
     private UserRoles role;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return switch (role) {
             case ADMIN -> List.of(
-                    new SimpleGrantedAuthority("ROLE_ADMIN"),
-                    new SimpleGrantedAuthority("ROLE_MANAGER"),
-                    new SimpleGrantedAuthority("ROLE_MANAGER_VIP"),
-                    new SimpleGrantedAuthority("ROLE_USER")
+                    new SimpleGrantedAuthority("ROLE_" + UserRoles.ADMIN.getRole()),
+                    new SimpleGrantedAuthority("ROLE_" + UserRoles.MANAGER.getRole()),
+                    new SimpleGrantedAuthority("ROLE_" + UserRoles.MANAGER_VIP.getRole()),
+                    new SimpleGrantedAuthority("ROLE_" + UserRoles.USER.getRole())
             );
-            case VIP -> List.of(
-                    new SimpleGrantedAuthority("ROLE_MANAGER"),
-                    new SimpleGrantedAuthority("ROLE_MANAGER_VIP"),
-                    new SimpleGrantedAuthority("ROLE_USER")
+            case MANAGER_VIP -> List.of(
+                    new SimpleGrantedAuthority("ROLE_" + UserRoles.MANAGER.getRole()),
+                    new SimpleGrantedAuthority("ROLE_" + UserRoles.MANAGER_VIP.getRole()),
+                    new SimpleGrantedAuthority("ROLE_" + UserRoles.USER.getRole())
             );
             case MANAGER -> List.of(
-                    new SimpleGrantedAuthority("ROLE_MANAGER")
+                    new SimpleGrantedAuthority("ROLE_" + UserRoles.MANAGER.getRole())
             );
             default -> List.of(
-                    new SimpleGrantedAuthority("ROLE_USER")
+                    new SimpleGrantedAuthority("ROLE_" + UserRoles.USER.getRole())
             );
         };
     }
