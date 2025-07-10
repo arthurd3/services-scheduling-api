@@ -3,17 +3,13 @@ package com.arthur.schedulingApi.controllers.user;
 import com.arthur.schedulingApi.controllers.user.request.UserRequestDTO;
 import com.arthur.schedulingApi.controllers.user.response.ApiResponseDTO;
 import com.arthur.schedulingApi.controllers.user.response.UserResponseDTO;
-import com.arthur.schedulingApi.usecases.user.DeleteUser;
-import com.arthur.schedulingApi.usecases.user.FindAllUsers;
-import com.arthur.schedulingApi.usecases.user.FindUser;
-import com.arthur.schedulingApi.usecases.user.RegisterUser;
+import com.arthur.schedulingApi.usecases.user.*;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 
 @RestController()
@@ -24,12 +20,15 @@ public class UserController {
     private final RegisterUser registerUser;
     private final FindUser findUser;
     private final DeleteUser deleteUser;
+    private final EditUser editUser;
 
-    public UserController(FindAllUsers findAllUsers, RegisterUser registerUser, FindUser findUser, DeleteUser deleteUser) {
+
+    public UserController(FindAllUsers findAllUsers, RegisterUser registerUser, FindUser findUser, DeleteUser deleteUser, EditUser editUser) {
         this.findAllUsers = findAllUsers;
         this.registerUser = registerUser;
         this.findUser = findUser;
         this.deleteUser = deleteUser;
+        this.editUser = editUser;
     }
 
     @GetMapping("/findAll")
@@ -63,5 +62,15 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.NOT_FOUND)
                 .body(new ApiResponseDTO("Usuário com id " + id + " não encontrado."));
 
+    }
+
+    @PutMapping("/edit/{id}")
+    public ResponseEntity<Optional<UserResponseDTO>> editUser(@PathVariable Long id, @RequestBody UserRequestDTO userRequestDTO) {
+        var editedUser = editUser.editUser(id , userRequestDTO);
+
+        if(editedUser.isPresent())
+            return ResponseEntity.ok(editedUser);
+
+        return ResponseEntity.notFound().build();
     }
 }
