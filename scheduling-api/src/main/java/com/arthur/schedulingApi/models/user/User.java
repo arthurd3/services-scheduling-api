@@ -28,6 +28,19 @@ public class User implements UserDetails {
     @Column(name = "role", nullable = false)
     private UserRoles role;
 
+    public User(Long id, String name, String email, String password, String phoneNumber, UserRoles role) {
+        this.id = id;
+        this.name = name;
+        this.email = email;
+        this.password = password;
+        this.phoneNumber = phoneNumber;
+        this.role = role;
+    }
+
+    public User() {
+
+    }
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return switch (role) {
