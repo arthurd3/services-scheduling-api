@@ -11,7 +11,8 @@ public class UserMapperToResponse {
                 userModel.getId(),
                 userModel.getUsername(),
                 userModel.getEmail(),
-                userModel.getPhoneNumber()
+                userModel.getPhoneNumber(),
+                userModel.getRole().toString()
         );
 
     }
