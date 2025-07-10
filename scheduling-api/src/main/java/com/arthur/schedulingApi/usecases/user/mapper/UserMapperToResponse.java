@@ -5,7 +5,7 @@ import com.arthur.schedulingApi.models.user.User;
 
 public class UserMapperToResponse {
 
-    public UserResponseDTO UserToResponse(User userModel) {
+    public static UserResponseDTO userToResponse(User userModel) {
 
         return new UserResponseDTO(
                 userModel.getId(),
