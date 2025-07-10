@@ -8,11 +8,9 @@ public class UserCopyProperties {
 
     public static User copyProperties(User originalUser, UserRequestDTO userRequestDTO) {
         UserRoles userRole;
+        if (userRequestDTO.role() == null) userRole = originalUser.getRole();
 
-        if (userRequestDTO.role() == null)
-            userRole = originalUser.getRole();
-        else
-            userRole = UserRoles.valueOf(userRequestDTO.role().toUpperCase());
+        else userRole = UserRoles.valueOf(userRequestDTO.role().toUpperCase());
 
         return new User(
                 originalUser.getId(),
