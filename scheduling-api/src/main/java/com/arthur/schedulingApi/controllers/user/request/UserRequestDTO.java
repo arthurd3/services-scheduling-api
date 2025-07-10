@@ -6,5 +6,7 @@ public record UserRequestDTO (Long id,
                               String password,
                               String phoneNumber,
                               String role){
+
 }
+
 
