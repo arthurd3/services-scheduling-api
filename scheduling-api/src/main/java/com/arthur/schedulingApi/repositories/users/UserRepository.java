@@ -1,4 +1,4 @@
-package com.arthur.schedulingApi.repositories;
+package com.arthur.schedulingApi.repositories.users;
 
 import com.arthur.schedulingApi.models.user.User;
 import org.springframework.data.domain.Page;

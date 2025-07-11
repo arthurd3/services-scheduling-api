@@ -1,5 +1,6 @@
 package com.arthur.schedulingApi.models.user;
 
+import com.arthur.schedulingApi.models.service.Service;
 import jakarta.persistence.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -29,6 +30,10 @@ public class User implements UserDetails {
     @Enumerated(EnumType.STRING)
     @Column(name = "role", nullable = false)
     private UserRoles role;
+
+    private List<Service> servicesOwner;
+
+    private List<Service> servicesJoined;
 
     public User(Long id, String name, String email, String password, String phoneNumber, UserRoles role) {
         this.id = id;
