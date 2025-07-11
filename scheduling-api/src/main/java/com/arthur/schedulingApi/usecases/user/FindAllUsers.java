@@ -1,7 +1,7 @@
 package com.arthur.schedulingApi.usecases.user;
 
 import com.arthur.schedulingApi.controllers.user.response.UserResponseDTO;
-import com.arthur.schedulingApi.repositories.UserRepository;
+import com.arthur.schedulingApi.repositories.users.UserRepository;
 
 import com.arthur.schedulingApi.usecases.user.mapper.UserMapperToResponse;
 import org.springframework.data.domain.PageRequest;
