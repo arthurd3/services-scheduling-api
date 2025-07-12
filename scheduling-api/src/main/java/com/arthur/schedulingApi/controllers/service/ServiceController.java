@@ -1,10 +1,13 @@
 package com.arthur.schedulingApi.controllers.service;
 
+import com.arthur.schedulingApi.controllers.ApiResponseDTO;
 import com.arthur.schedulingApi.controllers.service.request.ServiceRequestDTO;
 import com.arthur.schedulingApi.controllers.service.response.ServiceResponseDTO;
 import com.arthur.schedulingApi.usecases.service.CreateService;
+import com.arthur.schedulingApi.usecases.service.DeleteById;
 import com.arthur.schedulingApi.usecases.service.FindServiceById;
 import com.arthur.schedulingApi.usecases.service.FindServiceByName;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,11 +20,13 @@ public class ServiceController {
     private final CreateService createService;
     private final FindServiceByName findServiceByName;
     private final FindServiceById findServiceById;
+    private final DeleteById deleteById;
 
-    public ServiceController(CreateService createService, FindServiceByName findServiceByName, FindServiceById findServiceById) {
+    public ServiceController(CreateService createService, FindServiceByName findServiceByName, FindServiceById findServiceById, DeleteById deleteById) {
         this.createService = createService;
         this.findServiceByName = findServiceByName;
         this.findServiceById = findServiceById;
+        this.deleteById = deleteById;
     }
 
     @PostMapping("/create/{ownerId}")
@@ -37,6 +42,17 @@ public class ServiceController {
     @GetMapping("/findById/{id}")
     public ResponseEntity<Optional<ServiceResponseDTO>> findService(@PathVariable(name = "id") Long id){
         return ResponseEntity.ok(findServiceById.findById(id));
+    }
+
+    @DeleteMapping("/deleteById/{id}")
+    public ResponseEntity<ApiResponseDTO> deleteService(@PathVariable(name = "id") Long id){
+        boolean deletedConfirmed = deleteById.deleteById(id);
+
+        if(deletedConfirmed)
+            return ResponseEntity.ok(new ApiResponseDTO("Servico deletado com id: " + id));
+
+        return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                .body(new ApiResponseDTO("Servico com id " + id + " não encontrado."));
     }
 
 
