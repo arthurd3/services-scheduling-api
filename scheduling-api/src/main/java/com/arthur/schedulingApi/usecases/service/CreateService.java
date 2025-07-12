@@ -2,7 +2,10 @@ package com.arthur.schedulingApi.usecases.service;
 
 import com.arthur.schedulingApi.controllers.service.request.ServiceRequestDTO;
 import com.arthur.schedulingApi.controllers.service.response.ServiceResponseDTO;
+import com.arthur.schedulingApi.exceptions.ResourceNotFoundException;
+import com.arthur.schedulingApi.models.user.User;
 import com.arthur.schedulingApi.repositories.services.ServiceRepository;
+import com.arthur.schedulingApi.usecases.user.FindUser;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -13,18 +16,24 @@ import static com.arthur.schedulingApi.usecases.service.mapper.ServiceToResponse
 @Service
 public class CreateService {
     private final ServiceRepository serviceRepository;
+    private final FindUser findUser;
 
-    public CreateService(ServiceRepository serviceRepository) {
+    public CreateService(ServiceRepository serviceRepository, FindUser findUser) {
         this.serviceRepository = serviceRepository;
+
+        this.findUser = findUser;
     }
 
-    public Optional<ServiceResponseDTO> createService(Long ownerId , ServiceRequestDTO serviceRequestDTO) {
+    public Optional<ServiceResponseDTO> createService(Long ownerId, ServiceRequestDTO serviceRequestDTO) {
+
+        User ownerUser = findUser.findUserEntity(ownerId)
+                .orElseThrow(() -> new ResourceNotFoundException("Usuário dono com id " + ownerId + " não encontrado."));
 
         var serviceModel = serviceToModel(serviceRequestDTO);
-        serviceModel.setOwnerId(ownerId);
+        serviceModel.setOwner(ownerUser);
 
-        serviceRepository.save(serviceModel);
+        var savedService = serviceRepository.save(serviceModel);
 
-        return Optional.of(serviceToResponse(serviceModel));
+        return Optional.of(serviceToResponse(savedService));
     }
 }

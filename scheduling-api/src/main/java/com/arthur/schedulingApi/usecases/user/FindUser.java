@@ -1,12 +1,12 @@
 package com.arthur.schedulingApi.usecases.user;
 
 import com.arthur.schedulingApi.controllers.user.response.UserResponseDTO;
+import com.arthur.schedulingApi.models.user.User;
 import com.arthur.schedulingApi.repositories.users.UserRepository;
+import com.arthur.schedulingApi.usecases.user.mapper.UserMapperToResponse;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
-
-import static com.arthur.schedulingApi.usecases.user.mapper.UserMapperToResponse.userToResponse;
 
 @Service
 public class FindUser {
@@ -17,11 +17,12 @@ public class FindUser {
         this.userRepository = userRepository;
     }
 
-    public Optional<UserResponseDTO> findUser(Long userId) {
+    public Optional<UserResponseDTO> findUserAsDto(Long userId) {
+        return userRepository.findById(userId)
+                .map(UserMapperToResponse::userToResponse);
+    }
 
-        if (userRepository.existsById(userId))
-            return Optional.of(userToResponse(userRepository.findById(userId).get()));
-
-        return Optional.empty();
+    public Optional<User> findUserEntity(Long userId) {
+        return userRepository.findById(userId);
     }
 }

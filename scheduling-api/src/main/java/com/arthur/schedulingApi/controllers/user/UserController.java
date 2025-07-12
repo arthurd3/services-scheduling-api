@@ -44,7 +44,7 @@ public class UserController {
 
     @GetMapping("/find/{id}")
     public ResponseEntity<Optional<UserResponseDTO>> findAllUsers(@PathVariable Long id ) {
-        Optional<UserResponseDTO> userResponse = findUser.findUser(id);
+        var userResponse = findUser.findUserAsDto(id);
 
         if(userResponse.isPresent())
             return ResponseEntity.ok(userResponse);
