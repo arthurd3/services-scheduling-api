@@ -7,6 +7,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
+import static com.arthur.schedulingApi.usecases.service.mapper.ServiceToModel.serviceToModel;
+
 @Service
 public class CreateService {
     private final ServiceRepository serviceRepository;
@@ -17,5 +19,10 @@ public class CreateService {
 
     public Optional<ServiceResponseDTO> createService(Long ownerId , ServiceRequestDTO serviceRequestDTO) {
 
+        var serviceModel = serviceToModel(serviceRequestDTO);
+        serviceModel.setOwnerId(ownerId);
+
+        serviceRepository.save(serviceModel);
+        return
     }
 }
