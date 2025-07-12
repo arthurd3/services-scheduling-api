@@ -7,7 +7,8 @@ import com.arthur.schedulingApi.models.scheduling.Scheduling;
 import java.time.LocalDateTime;
 import java.util.List;
 
-public record ServiceResponseDTO (String name,
+public record ServiceResponseDTO (Long id,
+                                  String name,
                                   UserResumeDTO ownerUser,
                                   Integer capacity,
                                   String description,

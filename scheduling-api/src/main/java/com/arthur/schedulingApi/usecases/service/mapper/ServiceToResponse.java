@@ -12,6 +12,7 @@ public class ServiceToResponse {
     public static ServiceResponseDTO serviceToResponse(Service service) {
 
         return new ServiceResponseDTO(
+                service.getId(),
                 service.getName(),
                 userToResume(service.getOwner()),
                 service.getCapacity(),
