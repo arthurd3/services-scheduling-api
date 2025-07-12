@@ -1,5 +1,7 @@
 package com.arthur.schedulingApi.models.user;
 
+import com.arthur.schedulingApi.controllers.service.response.ServiceResponseDTO;
+import com.arthur.schedulingApi.models.scheduling.Scheduling;
 import com.arthur.schedulingApi.models.service.Service;
 import jakarta.persistence.*;
 import org.springframework.security.core.GrantedAuthority;
@@ -32,15 +34,12 @@ public class User implements UserDetails {
     @Column(name = "role", nullable = false)
     private UserRoles role;
 
-    @OneToMany(
-            mappedBy = "owner",
-            cascade = CascadeType.ALL,
-            orphanRemoval = true,
-            fetch = FetchType.LAZY
-    )
-    private List<Service> servicesOwner = new ArrayList<>();
+    @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Service> servicesOwned = new ArrayList<>();
 
-    private List<Service> servicesJoined;
+
+    @OneToMany(mappedBy = "client", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<Scheduling> schedulings = new ArrayList<>();
 
     public User(Long id, String name, String email, String password, String phoneNumber, UserRoles role) {
         this.id = id;
@@ -102,6 +101,14 @@ public class User implements UserDetails {
 
     public Long getId() {
         return this.id;
+    }
+
+    public List<Scheduling> getSchedulings() {
+        return this.schedulings;
+    }
+
+    public List<Service> getServicesOwned() {
+        return this.servicesOwned;
     }
 
     public void setEncodePassword(String rawPassword, PasswordEncoder passwordEncoder) {
