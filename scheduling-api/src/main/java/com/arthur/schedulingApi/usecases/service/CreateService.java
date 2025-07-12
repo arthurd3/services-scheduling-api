@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import java.util.Optional;
 
 import static com.arthur.schedulingApi.usecases.service.mapper.ServiceToModel.serviceToModel;
+import static com.arthur.schedulingApi.usecases.service.mapper.ServiceToResponse.serviceToResponse;
 
 @Service
 public class CreateService {
@@ -23,6 +24,7 @@ public class CreateService {
         serviceModel.setOwnerId(ownerId);
 
         serviceRepository.save(serviceModel);
-        return
+
+        return Optional.of(serviceToResponse(serviceModel));
     }
 }
