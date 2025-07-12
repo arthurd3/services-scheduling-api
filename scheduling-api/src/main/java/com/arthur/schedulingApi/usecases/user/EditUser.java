@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
-import static com.arthur.schedulingApi.usecases.user.mapper.UserCopyProperties.copyProperties;
+import static com.arthur.schedulingApi.usecases.copyproperties.UserCopyProperties.copyProperties;
 import static com.arthur.schedulingApi.usecases.user.mapper.UserMapperToResponse.userToResponse;
 
 

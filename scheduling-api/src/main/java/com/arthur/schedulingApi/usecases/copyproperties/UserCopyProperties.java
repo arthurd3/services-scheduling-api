@@ -1,8 +1,10 @@
-package com.arthur.schedulingApi.usecases.user.mapper;
+package com.arthur.schedulingApi.usecases.copyproperties;
 
 import com.arthur.schedulingApi.controllers.user.request.UserRequestDTO;
 import com.arthur.schedulingApi.models.user.User;
 import com.arthur.schedulingApi.models.user.UserRoles;
+
+import static com.arthur.schedulingApi.usecases.copyproperties.GetUpdateValue.getUpdatedValue;
 
 public class UserCopyProperties {
 
@@ -22,10 +24,5 @@ public class UserCopyProperties {
         );
     }
 
-    private static String getUpdatedValue(String newValue, String oldValue) {
-        if (newValue != null && !newValue.isBlank()) {
-            return newValue;
-        }
-        return oldValue;
-    }
+
 }

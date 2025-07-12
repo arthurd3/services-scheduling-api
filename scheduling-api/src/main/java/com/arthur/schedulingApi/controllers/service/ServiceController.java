@@ -4,7 +4,6 @@ import com.arthur.schedulingApi.controllers.ApiResponseDTO;
 import com.arthur.schedulingApi.controllers.service.request.ServiceRequestDTO;
 import com.arthur.schedulingApi.controllers.service.response.ServiceResponseDTO;
 import com.arthur.schedulingApi.usecases.service.*;
-import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -35,12 +34,12 @@ public class ServiceController {
     }
 
     @GetMapping("/findByName/{name}")
-    public ResponseEntity<Optional<ServiceResponseDTO>> findService(@PathVariable(name = "name") String name){
+    public ResponseEntity<Optional<ServiceResponseDTO>> findByNameService(@PathVariable(name = "name") String name){
         return ResponseEntity.ok(findServiceByName.findService(name));
     }
 
     @GetMapping("/findById/{id}")
-    public ResponseEntity<Optional<ServiceResponseDTO>> findService(@PathVariable(name = "id") Long id){
+    public ResponseEntity<Optional<ServiceResponseDTO>> findByIdService(@PathVariable(name = "id") Long id){
         return ResponseEntity.ok(findServiceById.findById(id));
     }
 

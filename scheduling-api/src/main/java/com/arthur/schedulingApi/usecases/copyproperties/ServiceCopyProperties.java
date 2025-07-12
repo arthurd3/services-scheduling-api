@@ -1,7 +1,9 @@
-package com.arthur.schedulingApi.usecases.service.mapper;
+package com.arthur.schedulingApi.usecases.copyproperties;
 
 import com.arthur.schedulingApi.controllers.service.request.ServiceRequestDTO;
 import com.arthur.schedulingApi.models.service.Service;
+
+import static com.arthur.schedulingApi.usecases.copyproperties.GetUpdateValue.getUpdatedValue;
 
 public class ServiceCopyProperties {
 
@@ -23,20 +25,6 @@ public class ServiceCopyProperties {
 
 
 
-    private static <T> T getUpdatedValue(T newValue, T oldValue) {
-
-        if (newValue == null) {
-            return oldValue;
-        }
-
-        if (newValue instanceof String) {
-            if (((String) newValue).isBlank()) {
-                return oldValue;
-            }
-        }
-
-        return newValue;
-    }
 
 
 
