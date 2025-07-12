@@ -53,4 +53,8 @@ public class Service {
     public void setOwner(User owner) {
         this.owner = owner;
     }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
 }

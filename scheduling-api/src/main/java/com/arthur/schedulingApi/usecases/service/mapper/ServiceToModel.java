@@ -9,7 +9,7 @@ public class ServiceToModel {
 
     public static Service serviceToModel(ServiceRequestDTO serviceRequestDTO) {
 
-        return new  Service(
+        return new Service(
                 serviceRequestDTO.id(),
                 serviceRequestDTO.name(),
                 serviceRequestDTO.capacity(),
