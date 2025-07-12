@@ -1,7 +1,7 @@
 package com.arthur.schedulingApi.controllers.user;
 
 import com.arthur.schedulingApi.controllers.user.request.UserRequestDTO;
-import com.arthur.schedulingApi.controllers.user.response.ApiResponseDTO;
+import com.arthur.schedulingApi.controllers.ApiResponseDTO;
 import com.arthur.schedulingApi.controllers.user.response.UserResponseDTO;
 import com.arthur.schedulingApi.usecases.user.*;
 import org.springframework.data.domain.PageRequest;
