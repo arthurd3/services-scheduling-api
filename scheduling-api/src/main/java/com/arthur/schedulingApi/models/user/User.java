@@ -8,6 +8,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -31,7 +32,13 @@ public class User implements UserDetails {
     @Column(name = "role", nullable = false)
     private UserRoles role;
 
-    private List<Service> servicesOwner;
+    @OneToMany(
+            mappedBy = "owner",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true,
+            fetch = FetchType.LAZY
+    )
+    private List<Service> servicesOwner = new ArrayList<>();
 
     private List<Service> servicesJoined;
 
