@@ -33,6 +33,10 @@ public class Service {
         this.scheduling = scheduling;
     }
 
+    public Service() {
+
+    }
+
     @CreationTimestamp
     @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt;
