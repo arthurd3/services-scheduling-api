@@ -1,6 +1,5 @@
 package com.arthur.schedulingApi.models.user;
 
-import com.arthur.schedulingApi.controllers.service.response.ServiceResponseDTO;
 import com.arthur.schedulingApi.models.scheduling.Scheduling;
 import com.arthur.schedulingApi.models.service.Service;
 import jakarta.persistence.*;
