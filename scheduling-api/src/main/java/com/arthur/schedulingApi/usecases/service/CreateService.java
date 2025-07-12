@@ -12,6 +12,8 @@ import java.util.Optional;
 
 import static com.arthur.schedulingApi.usecases.service.mapper.ServiceToModel.serviceToModel;
 import static com.arthur.schedulingApi.usecases.service.mapper.ServiceToResponse.serviceToResponse;
+import static com.arthur.schedulingApi.usecases.user.mapper.UserMapperToResponse.userToResponse;
+import static com.arthur.schedulingApi.usecases.user.mapper.UserMapperToResume.userToResume;
 
 @Service
 public class CreateService {
@@ -27,7 +29,7 @@ public class CreateService {
     public Optional<ServiceResponseDTO> createService(Long ownerId, ServiceRequestDTO serviceRequestDTO) {
 
         User ownerUser = findUser.findUserEntity(ownerId)
-                .orElseThrow(() -> new ResourceNotFoundException("Usuário dono com id " + ownerId + " não encontrado."));
+                .orElseThrow(() -> new ResourceNotFoundException("Usuário com id " + ownerId + " não encontrado."));
 
         var serviceModel = serviceToModel(serviceRequestDTO);
         serviceModel.setOwner(ownerUser);

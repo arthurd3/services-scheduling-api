@@ -1,12 +1,14 @@
 package com.arthur.schedulingApi.controllers.service.response;
 
-import com.arthur.schedulingApi.models.service.Scheduling;
+import com.arthur.schedulingApi.controllers.user.response.UserResumeDTO;
+import com.arthur.schedulingApi.models.scheduling.Scheduling;
+
 
 import java.time.LocalDateTime;
 import java.util.List;
 
 public record ServiceResponseDTO (String name,
-                                  Long ownerId,
+                                  UserResumeDTO ownerUser,
                                   Integer capacity,
                                   String description,
                                   String location,
