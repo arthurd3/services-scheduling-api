@@ -54,8 +54,6 @@ public class ServiceController {
                 .body(new ApiResponseDTO("Servico com id " + id + " não encontrado."));
     }
 
-
-
     @PutMapping("/edit/{id}")
     public ResponseEntity<Optional<ServiceResponseDTO>> editService(@PathVariable Long id, @RequestBody ServiceRequestDTO serviceRequestDTO){
         return ResponseEntity.ok(editService.editService(id,serviceRequestDTO));

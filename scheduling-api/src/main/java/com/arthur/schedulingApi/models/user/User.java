@@ -1,7 +1,7 @@
 package com.arthur.schedulingApi.models.user;
 
 import com.arthur.schedulingApi.models.scheduling.Scheduling;
-import com.arthur.schedulingApi.models.service.Service;
+import com.arthur.schedulingApi.models.service.Services;
 import jakarta.persistence.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -34,7 +34,7 @@ public class User implements UserDetails {
     private UserRoles role;
 
     @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Service> servicesOwned = new ArrayList<>();
+    private List<Services> servicesOwned = new ArrayList<>();
 
 
     @OneToMany(mappedBy = "client", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
@@ -106,7 +106,7 @@ public class User implements UserDetails {
         return this.schedulings;
     }
 
-    public List<Service> getServicesOwned() {
+    public List<Services> getServicesOwned() {
         return this.servicesOwned;
     }
 

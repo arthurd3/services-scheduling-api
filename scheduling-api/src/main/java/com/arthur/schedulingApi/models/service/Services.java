@@ -12,7 +12,7 @@ import java.util.List;
 @Entity
 @Table(name = "services")
 @Getter
-public class Service {
+public class Services {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,10 +28,10 @@ public class Service {
     private String location;
     private String url_image;
 
-    @OneToMany(mappedBy = "service", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "services", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<Scheduling> scheduling;
 
-    public Service(Long id, String name, Integer capacity, String description, String location, String url_image , List<Scheduling> scheduling) {
+    public Services(Long id, String name, Integer capacity, String description, String location, String url_image , List<Scheduling> scheduling) {
         this.id = id;
         this.name = name;
         this.capacity = capacity;
@@ -41,7 +41,7 @@ public class Service {
         this.scheduling = scheduling;
     }
 
-    public Service() {
+    public Services() {
 
     }
 
@@ -56,5 +56,9 @@ public class Service {
 
     public void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
+    }
+
+    public void addScheduling(Scheduling scheduling) {
+        this.scheduling.add(scheduling);
     }
 }
