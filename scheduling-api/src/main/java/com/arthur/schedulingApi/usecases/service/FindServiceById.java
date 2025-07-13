@@ -2,6 +2,7 @@ package com.arthur.schedulingApi.usecases.service;
 
 import com.arthur.schedulingApi.controllers.service.response.ServiceResponseDTO;
 import com.arthur.schedulingApi.exceptions.ServiceNotFoundException;
+import com.arthur.schedulingApi.models.service.Services;
 import com.arthur.schedulingApi.repositories.services.ServiceRepository;
 import org.springframework.stereotype.Service;
 
@@ -22,4 +23,9 @@ public class FindServiceById {
         var findedService = serviceRepository.findById(id).orElseThrow(() -> new ServiceNotFoundException("Servico com id "+ id +" nao encontrado"));
         return Optional.of(serviceToResponse(findedService));
     }
+    public Services findByIdAsModel(Long id){
+        return serviceRepository.findById(id)
+                .orElseThrow(() -> new ServiceNotFoundException("Servico nao encontrado"));
+    }
+
 }

@@ -1,11 +1,9 @@
-package com.arthur.schedulingApi.models.scheduling; // Sugestão de pacote
+package com.arthur.schedulingApi.models.scheduling;
 
-import com.arthur.schedulingApi.models.service.Service;
+import com.arthur.schedulingApi.models.service.Services;
 import com.arthur.schedulingApi.models.user.User;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 import java.time.LocalDateTime;
 
@@ -13,8 +11,6 @@ import java.time.LocalDateTime;
 @Table(name = "schedulings")
 @Getter
 @Setter
-@NoArgsConstructor
-@AllArgsConstructor
 public class Scheduling {
 
     @Id
@@ -37,6 +33,16 @@ public class Scheduling {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "service_id", nullable = false)
-    private Service service;
+    private Services services;
 
+    public Scheduling(Long id, LocalDateTime startTime, LocalDateTime endTime, SchedulingStatus status) {
+        this.id = id;
+        this.startTime = startTime;
+        this.endTime = endTime;
+        this.status = status;
+    }
+
+    public Scheduling(){
+
+    }
 }

@@ -1,5 +1,7 @@
 package com.arthur.schedulingApi.usecases.copyproperties;
 
+import java.util.List;
+
 public class GetUpdateValue {
 
     public static <T> T getUpdatedValue(T newValue, T oldValue) {
@@ -15,6 +17,15 @@ public class GetUpdateValue {
         }
 
         return newValue;
+    }
+
+    public static <E> List<E>  getUpdatedListValue(List<E> newListValue, List<E> oldListValue) {
+
+        if (newListValue == null) {
+            return oldListValue;
+        }
+
+        return newListValue;
     }
 
 }
