@@ -5,6 +5,7 @@ import com.arthur.schedulingApi.controllers.service.response.ServiceResponseDTO;
 import com.arthur.schedulingApi.exceptions.ServiceNotFoundException;
 
 import com.arthur.schedulingApi.repositories.services.ServiceRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -21,6 +22,7 @@ public class EditService {
         this.serviceRepository = serviceRepository;
     }
 
+    @Transactional
     public Optional<ServiceResponseDTO> editService(Long id ,ServiceRequestDTO serviceRequestDTO) {
         var originalService = serviceRepository.findById(id)
                 .orElseThrow(() -> new ServiceNotFoundException("Nao e Possivel Editar Servico nao Encontrado"));

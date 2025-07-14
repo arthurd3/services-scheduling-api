@@ -9,6 +9,7 @@ import com.arthur.schedulingApi.repositories.scheduling.SchedulingRepository;
 import com.arthur.schedulingApi.usecases.service.EditService;
 import com.arthur.schedulingApi.usecases.service.FindServiceById;
 import com.arthur.schedulingApi.usecases.user.FindUser;
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -33,7 +34,7 @@ public class CreateScheduling {
         this.schedulingRepository = schedulingRepository;
     }
 
-
+    @Transactional
     public Optional<SchedulingResponseDTO> createScheduling(SchedulingRequestDTO schedulingRequestDTO) {
 
         Optional<User> serviceOwner = findUser.findUserEntity(schedulingRequestDTO.ownerId());
