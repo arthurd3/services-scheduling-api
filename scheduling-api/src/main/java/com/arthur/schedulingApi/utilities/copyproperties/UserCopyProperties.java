@@ -1,10 +1,10 @@
-package com.arthur.schedulingApi.usecases.copyproperties;
+package com.arthur.schedulingApi.utilities.copyproperties;
 
 import com.arthur.schedulingApi.controllers.user.request.UserRequestDTO;
 import com.arthur.schedulingApi.models.user.User;
 import com.arthur.schedulingApi.models.user.UserRoles;
 
-import static com.arthur.schedulingApi.usecases.copyproperties.GetUpdateValue.getUpdatedValue;
+import static com.arthur.schedulingApi.utilities.copyproperties.GetUpdateValue.getUpdatedValue;
 
 public class UserCopyProperties {
 
