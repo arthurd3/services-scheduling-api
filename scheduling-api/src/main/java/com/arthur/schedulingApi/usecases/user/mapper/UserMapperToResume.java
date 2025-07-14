@@ -13,6 +13,5 @@ public class UserMapperToResume {
                 userModel.getEmail() ,
                 userModel.getPhoneNumber()
         );
-
     }
 }

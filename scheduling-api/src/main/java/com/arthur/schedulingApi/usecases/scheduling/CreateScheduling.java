@@ -19,6 +19,7 @@ public class CreateScheduling {
 
     private final FindServiceById findServiceById;
     private final SchedulingRepository schedulingRepository;
+
     public CreateScheduling(FindServiceById findServiceById, SchedulingRepository schedulingRepository) {
         this.findServiceById = findServiceById;
         this.schedulingRepository = schedulingRepository;
@@ -28,6 +29,7 @@ public class CreateScheduling {
     public Optional<SchedulingResponseDTO> createScheduling(SchedulingRequestDTO schedulingRequestDTO) {
 
         Services service = findServiceById.findByIdAsModel(schedulingRequestDTO.serviceId());
+
         Scheduling scheduling = schedulingToModel(schedulingRequestDTO , service);
 
         var schedulingReturn = schedulingRepository.save(scheduling);
