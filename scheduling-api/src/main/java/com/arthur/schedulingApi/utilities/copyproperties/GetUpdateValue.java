@@ -1,4 +1,4 @@
-package com.arthur.schedulingApi.usecases.copyproperties;
+package com.arthur.schedulingApi.utilities.copyproperties;
 
 import java.util.List;
 

@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
-import static com.arthur.schedulingApi.usecases.copyproperties.ServiceCopyProperties.copyServiceProperties;
+import static com.arthur.schedulingApi.utilities.copyproperties.ServiceCopyProperties.copyServiceProperties;
 import static com.arthur.schedulingApi.usecases.service.mapper.ServiceToResponse.serviceToResponse;
 
 @Service
