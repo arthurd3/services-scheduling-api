@@ -15,6 +15,7 @@ import static com.arthur.schedulingApi.usecases.service.mapper.ServiceToResponse
 
 @Service
 public class CreateService {
+
     private final ServiceRepository serviceRepository;
     private final FindUser findUser;
 
@@ -26,8 +27,7 @@ public class CreateService {
 
     public Optional<ServiceResponseDTO> createService(Long ownerId, ServiceRequestDTO serviceRequestDTO) {
 
-        User ownerUser = findUser.findUserEntity(ownerId)
-                .orElseThrow(() -> new UserNotFoundException("Usuário com id " + ownerId + " não encontrado."));
+        User ownerUser = findUser.findUserEntity(ownerId);
 
         var serviceModel = serviceToModel(serviceRequestDTO);
         serviceModel.setOwner(ownerUser);

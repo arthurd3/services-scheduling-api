@@ -20,10 +20,10 @@ public class FindServiceByName {
 
 
     public Optional<ServiceResponseDTO> findService(String name){
-        var findedService = serviceRepository.findByName(name)
+        var findService = serviceRepository.findByName(name)
                 .orElseThrow(() -> new ServiceNotFoundException("Servico com nome " + name + " não encontrado."));
 
-        return Optional.of(serviceToResponse(findedService));
+        return Optional.of(serviceToResponse(findService));
 
     }
 

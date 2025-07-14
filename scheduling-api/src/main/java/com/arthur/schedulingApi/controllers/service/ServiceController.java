@@ -45,13 +45,8 @@ public class ServiceController {
 
     @DeleteMapping("/deleteById/{id}")
     public ResponseEntity<ApiResponseDTO> deleteService(@PathVariable(name = "id") Long id){
-        boolean deletedConfirmed = deleteById.deleteById(id);
-
-        if(deletedConfirmed)
-            return ResponseEntity.ok(new ApiResponseDTO("Servico deletado com id: " + id));
-
-        return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                .body(new ApiResponseDTO("Servico com id " + id + " não encontrado."));
+        deleteById.deleteById(id);
+        return ResponseEntity.ok(new ApiResponseDTO("Servico deletado com id: " + id));
     }
 
     @PutMapping("/edit/{id}")

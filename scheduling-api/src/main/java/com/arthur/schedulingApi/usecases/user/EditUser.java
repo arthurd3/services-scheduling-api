@@ -16,20 +16,17 @@ import static com.arthur.schedulingApi.usecases.user.mapper.UserMapperToResponse
 @Service
 public class EditUser {
 
-    private final UserRepository userRepository;
-
-    public EditUser(UserRepository userRepository) {
-        this.userRepository = userRepository;
+    private final FindUser findUser;
+    public EditUser(FindUser findUser) {
+        this.findUser = findUser;
     }
 
     @Transactional
     public Optional<UserResponseDTO> editUser(Long id , UserRequestDTO userRequestDTO) {
-        Optional<User> originalUser = userRepository.findById(id);
 
-        if(originalUser.isEmpty())
-            return Optional.empty();
+        User originalUser = findUser.findUserEntity(id);
 
-        var editedUser = copyProperties(originalUser.get() , userRequestDTO);
+        var editedUser = copyProperties(originalUser , userRequestDTO);
 
         return Optional.of(userToResponse(editedUser));
     }

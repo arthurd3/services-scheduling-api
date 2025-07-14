@@ -1,6 +1,7 @@
 package com.arthur.schedulingApi.usecases.user;
 
 import com.arthur.schedulingApi.controllers.user.response.UserResponseDTO;
+import com.arthur.schedulingApi.exceptions.UserNotFoundException;
 import com.arthur.schedulingApi.repositories.users.UserRepository;
 
 import com.arthur.schedulingApi.usecases.user.mapper.UserMapperToResponse;
@@ -8,6 +9,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class FindAllUsers {
@@ -20,6 +22,8 @@ public class FindAllUsers {
 
     public List<UserResponseDTO> findAllUsers(PageRequest pageRequest){
         var pageToResponse = userRepository.findAll(pageRequest);
-        return pageToResponse.map(UserMapperToResponse::userToResponse).stream().toList();
+        return pageToResponse.map(UserMapperToResponse::userToResponse)
+                .stream()
+                .collect(Collectors.toList());
     }
 }

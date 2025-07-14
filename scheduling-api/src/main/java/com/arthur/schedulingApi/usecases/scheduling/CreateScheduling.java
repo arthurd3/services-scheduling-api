@@ -4,10 +4,8 @@ import com.arthur.schedulingApi.controllers.scheduling.request.SchedulingRequest
 import com.arthur.schedulingApi.controllers.scheduling.response.SchedulingResponseDTO;
 import com.arthur.schedulingApi.models.scheduling.Scheduling;
 import com.arthur.schedulingApi.models.service.Services;
-import com.arthur.schedulingApi.models.user.User;
 import com.arthur.schedulingApi.repositories.scheduling.SchedulingRepository;
 import com.arthur.schedulingApi.usecases.service.FindServiceById;
-import com.arthur.schedulingApi.usecases.user.FindUser;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
@@ -20,33 +18,22 @@ import static com.arthur.schedulingApi.usecases.scheduling.mapper.SchedulingToRe
 public class CreateScheduling {
 
     private final FindServiceById findServiceById;
-    private final FindUser findUser;
     private final SchedulingRepository schedulingRepository;
-
-    public CreateScheduling(FindServiceById findServiceById, FindUser findUser, SchedulingRepository schedulingRepository) {
+    public CreateScheduling(FindServiceById findServiceById, SchedulingRepository schedulingRepository) {
         this.findServiceById = findServiceById;
-        this.findUser = findUser;
         this.schedulingRepository = schedulingRepository;
     }
 
     @Transactional
     public Optional<SchedulingResponseDTO> createScheduling(SchedulingRequestDTO schedulingRequestDTO) {
 
-        Optional<User> serviceOwner = findUser.findUserEntity(schedulingRequestDTO.ownerId());
         Services service = findServiceById.findByIdAsModel(schedulingRequestDTO.serviceId());
+        Scheduling scheduling = schedulingToModel(schedulingRequestDTO , service);
 
-        if (serviceOwner.isPresent() && service != null) {
+        var schedulingReturn = schedulingRepository.save(scheduling);
+        service.addScheduling(scheduling);
 
-            Scheduling scheduling = schedulingToModel(schedulingRequestDTO , service);
-
-            var schedulingReturn = schedulingRepository.save(scheduling);
-
-            service.addScheduling(scheduling);
-
-            return Optional.of(schedulingToResponse(schedulingReturn));
-        }
-
-        return Optional.empty();
+        return Optional.of(schedulingToResponse(schedulingReturn));
 
     }
 
