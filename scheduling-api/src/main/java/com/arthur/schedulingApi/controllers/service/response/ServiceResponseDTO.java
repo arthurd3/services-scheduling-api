@@ -1,7 +1,7 @@
 package com.arthur.schedulingApi.controllers.service.response;
 
+import com.arthur.schedulingApi.controllers.scheduling.response.SchedulingResponseDTO;
 import com.arthur.schedulingApi.controllers.user.response.UserResumeDTO;
-import com.arthur.schedulingApi.models.scheduling.Scheduling;
 
 
 import java.time.LocalDateTime;
@@ -14,6 +14,6 @@ public record ServiceResponseDTO (Long id,
                                   String description,
                                   String location,
                                   String url_image,
-                                  List<Scheduling>scheduling,
+                                  List<SchedulingResponseDTO>scheduling,
                                   LocalDateTime createdAt) {
 }
