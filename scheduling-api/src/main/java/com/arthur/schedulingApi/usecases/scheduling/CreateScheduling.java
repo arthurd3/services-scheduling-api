@@ -2,8 +2,8 @@ package com.arthur.schedulingApi.usecases.scheduling;
 
 import com.arthur.schedulingApi.controllers.scheduling.request.SchedulingRequestDTO;
 import com.arthur.schedulingApi.controllers.scheduling.response.SchedulingResponseDTO;
-import com.arthur.schedulingApi.controllers.service.request.ServiceRequestDTO;
 import com.arthur.schedulingApi.models.scheduling.Scheduling;
+import com.arthur.schedulingApi.models.service.Services;
 import com.arthur.schedulingApi.models.user.User;
 import com.arthur.schedulingApi.repositories.scheduling.SchedulingRepository;
 import com.arthur.schedulingApi.usecases.service.EditService;
@@ -14,7 +14,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
-import static com.arthur.schedulingApi.usecases.scheduling.mapper.SchedulingListToRequest.schedulingListToRequest;
 import static com.arthur.schedulingApi.usecases.scheduling.mapper.SchedulingToModel.schedulingToModel;
 import static com.arthur.schedulingApi.usecases.scheduling.mapper.SchedulingToResponse.schedulingToResponse;
 import static com.arthur.schedulingApi.usecases.service.mapper.ServiceToRequest.serviceToRequest;
@@ -38,19 +37,17 @@ public class CreateScheduling {
     public Optional<SchedulingResponseDTO> createScheduling(SchedulingRequestDTO schedulingRequestDTO) {
 
         Optional<User> serviceOwner = findUser.findUserEntity(schedulingRequestDTO.ownerId());
+        Services service = findServiceById.findByIdAsModel(schedulingRequestDTO.serviceId());
 
-        if (serviceOwner.isPresent()) {
-
-            var service = findServiceById.findByIdAsModel(schedulingRequestDTO.serviceId());
+        if (serviceOwner.isPresent() && service != null) {
 
             Scheduling scheduling = schedulingToModel(schedulingRequestDTO , service);
-            schedulingRepository.save(scheduling);
+
+            var schedulingReturn = schedulingRepository.save(scheduling);
 
             service.addScheduling(scheduling);
 
-            editService.editService(service.getId() , serviceToRequest(service));
-
-            return Optional.of(schedulingToResponse(scheduling));
+            return Optional.of(schedulingToResponse(schedulingReturn));
         }
 
         return Optional.empty();

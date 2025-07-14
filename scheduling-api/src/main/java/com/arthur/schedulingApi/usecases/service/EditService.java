@@ -28,7 +28,7 @@ public class EditService {
                 .orElseThrow(() -> new ServiceNotFoundException("Nao e Possivel Editar Servico nao Encontrado"));
 
         var editedService = copyServiceProperties(serviceRequestDTO , originalService);
-        serviceRepository.save(editedService);
+
         return Optional.of(serviceToResponse(editedService));
     }
 

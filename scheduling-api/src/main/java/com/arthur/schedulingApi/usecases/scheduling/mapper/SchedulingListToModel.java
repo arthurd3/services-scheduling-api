@@ -4,6 +4,7 @@ import com.arthur.schedulingApi.controllers.scheduling.request.SchedulingRequest
 import com.arthur.schedulingApi.models.scheduling.Scheduling;
 import com.arthur.schedulingApi.models.service.Services;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -12,6 +13,10 @@ import static com.arthur.schedulingApi.usecases.scheduling.mapper.SchedulingToMo
 public class SchedulingListToModel {
 
     public static List<Scheduling> schedulingListToModel(List<SchedulingRequestDTO> schedulingList , Services services) {
+
+        if(schedulingList == null || schedulingList.isEmpty()) {
+            return new ArrayList<>();
+        }
 
         return schedulingList.stream()
                 .map(schedulingRequestDTO ->  schedulingToModel(schedulingRequestDTO, services))

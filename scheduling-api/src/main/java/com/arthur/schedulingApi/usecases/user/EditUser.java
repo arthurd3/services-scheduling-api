@@ -4,6 +4,7 @@ import com.arthur.schedulingApi.controllers.user.request.UserRequestDTO;
 import com.arthur.schedulingApi.controllers.user.response.UserResponseDTO;
 import com.arthur.schedulingApi.models.user.User;
 import com.arthur.schedulingApi.repositories.users.UserRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -21,6 +22,7 @@ public class EditUser {
         this.userRepository = userRepository;
     }
 
+    @Transactional
     public Optional<UserResponseDTO> editUser(Long id , UserRequestDTO userRequestDTO) {
         Optional<User> originalUser = userRepository.findById(id);
 
@@ -28,8 +30,6 @@ public class EditUser {
             return Optional.empty();
 
         var editedUser = copyProperties(originalUser.get() , userRequestDTO);
-
-        userRepository.save(editedUser);
 
         return Optional.of(userToResponse(editedUser));
     }
