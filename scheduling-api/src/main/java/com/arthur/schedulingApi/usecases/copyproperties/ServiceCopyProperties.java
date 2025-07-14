@@ -11,21 +11,16 @@ public class ServiceCopyProperties {
 
     public static Services copyServiceProperties(ServiceRequestDTO serviceRequestDTO , Services services) {
 
-        var serviceRequestList = schedulingListToModel(serviceRequestDTO.schedulingList() , services);
+        var serviceRequestList = schedulingListToModel(serviceRequestDTO.schedulingList(), services);
 
-        var editedService = new Services(
-                services.getId(),
-                getUpdatedValue(serviceRequestDTO.name() , services.getName()),
-                getUpdatedValue(serviceRequestDTO.capacity() , services.getCapacity()),
-                getUpdatedValue(serviceRequestDTO.description() , services.getDescription()),
-                getUpdatedValue(serviceRequestDTO.location() , services.getLocation()),
-                getUpdatedValue(serviceRequestDTO.url_image() , services.getUrl_image()),
-                getUpdatedListValue( serviceRequestList, services.getScheduling())
-        );
+        services.setName(getUpdatedValue(serviceRequestDTO.name(), services.getName()));
+        services.setCapacity(getUpdatedValue(serviceRequestDTO.capacity(), services.getCapacity()));
+        services.setDescription(getUpdatedValue(serviceRequestDTO.description(), services.getDescription()));
+        services.setLocation(getUpdatedValue(serviceRequestDTO.location(), services.getLocation()));
+        services.setUrl_image(getUpdatedValue(serviceRequestDTO.url_image(), services.getUrl_image()));
+        services.setScheduling(getUpdatedListValue(serviceRequestList, services.getScheduling()));
 
-        editedService.setOwner(services.getOwner());
-        editedService.setCreatedAt(services.getCreatedAt());
-        return editedService;
+        return services;
     }
 
 

@@ -9,19 +9,23 @@ import static com.arthur.schedulingApi.usecases.copyproperties.GetUpdateValue.ge
 public class UserCopyProperties {
 
     public static User copyProperties(User originalUser, UserRequestDTO userRequestDTO) {
-        UserRoles userRole;
-        if (userRequestDTO.role() == null) userRole = originalUser.getRole();
 
-        else userRole = UserRoles.valueOf(userRequestDTO.role().toUpperCase());
+        originalUser.setName(getUpdatedValue(userRequestDTO.name(), originalUser.getUsername()));
+        originalUser.setEmail(getUpdatedValue(userRequestDTO.email(), originalUser.getEmail()));
+        originalUser.setPhoneNumber(getUpdatedValue(userRequestDTO.phoneNumber(), originalUser.getPhoneNumber()));
 
-        return new User(
-                originalUser.getId(),
-                getUpdatedValue(userRequestDTO.name(), originalUser.getUsername()),
-                getUpdatedValue(userRequestDTO.email(), originalUser.getEmail()),
-                getUpdatedValue(userRequestDTO.password(), originalUser.getPassword()),
-                getUpdatedValue(userRequestDTO.phoneNumber(), originalUser.getPhoneNumber()),
-                userRole
-        );
+
+        if (userRequestDTO.role() != null) {
+            try {
+                UserRoles updatedRole = UserRoles.valueOf(userRequestDTO.role().toUpperCase());
+                originalUser.setRole(updatedRole);
+            } catch (IllegalArgumentException e) {
+                throw e;
+            }
+        }
+
+        return originalUser;
+
     }
 
 
