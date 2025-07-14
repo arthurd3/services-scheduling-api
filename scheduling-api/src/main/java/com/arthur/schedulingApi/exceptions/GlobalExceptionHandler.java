@@ -24,4 +24,11 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         return error;
     }
 
+    @ExceptionHandler(SchedulingNotFoundException.class)
+    public final ErrorResponse handleResourceNotFoundException(SchedulingNotFoundException ex) {
+        var error = ErrorResponse.create(ex , HttpStatus.NOT_FOUND , ex.getMessage());
+        error.getBody().setTitle("Agendamento nao encontrado");
+        return error;
+    }
+
 }
