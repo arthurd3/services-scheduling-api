@@ -6,7 +6,6 @@ import com.arthur.schedulingApi.models.scheduling.Scheduling;
 import com.arthur.schedulingApi.models.service.Services;
 import com.arthur.schedulingApi.models.user.User;
 import com.arthur.schedulingApi.repositories.scheduling.SchedulingRepository;
-import com.arthur.schedulingApi.usecases.service.EditService;
 import com.arthur.schedulingApi.usecases.service.FindServiceById;
 import com.arthur.schedulingApi.usecases.user.FindUser;
 import jakarta.transaction.Transactional;
@@ -16,20 +15,17 @@ import java.util.Optional;
 
 import static com.arthur.schedulingApi.usecases.scheduling.mapper.SchedulingToModel.schedulingToModel;
 import static com.arthur.schedulingApi.usecases.scheduling.mapper.SchedulingToResponse.schedulingToResponse;
-import static com.arthur.schedulingApi.usecases.service.mapper.ServiceToRequest.serviceToRequest;
 
 @Service
 public class CreateScheduling {
 
     private final FindServiceById findServiceById;
     private final FindUser findUser;
-    private final EditService editService;
     private final SchedulingRepository schedulingRepository;
 
-    public CreateScheduling(FindServiceById findServiceById, FindUser findUser, EditService editService, SchedulingRepository schedulingRepository) {
+    public CreateScheduling(FindServiceById findServiceById, FindUser findUser, SchedulingRepository schedulingRepository) {
         this.findServiceById = findServiceById;
         this.findUser = findUser;
-        this.editService = editService;
         this.schedulingRepository = schedulingRepository;
     }
 
