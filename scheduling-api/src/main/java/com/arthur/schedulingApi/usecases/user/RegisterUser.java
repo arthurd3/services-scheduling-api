@@ -2,6 +2,7 @@ package com.arthur.schedulingApi.usecases.user;
 
 import com.arthur.schedulingApi.controllers.user.request.UserRequestDTO;
 import com.arthur.schedulingApi.controllers.user.response.UserResponseDTO;
+import com.arthur.schedulingApi.models.user.User;
 import com.arthur.schedulingApi.repositories.users.UserRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -22,7 +23,7 @@ public class RegisterUser {
     }
 
     public UserResponseDTO registerUser(UserRequestDTO userRequestDTO) {
-        var userModel = userToModel(userRequestDTO);
+        User userModel = userToModel(userRequestDTO);
 
         userModel.setEncodePassword(userModel.getPassword() , passwordEncoder);
 

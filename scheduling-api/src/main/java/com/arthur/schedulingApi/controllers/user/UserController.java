@@ -44,24 +44,13 @@ public class UserController {
 
     @GetMapping("/find/{id}")
     public ResponseEntity<Optional<UserResponseDTO>> findAllUsers(@PathVariable Long id ) {
-        var userResponse = findUser.findUserAsDto(id);
-
-        if(userResponse.isPresent())
-            return ResponseEntity.ok(userResponse);
-
-        return ResponseEntity.notFound().build();
+        return ResponseEntity.ok(Optional.of(findUser.findUserAsDto(id)));
     }
 
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<ApiResponseDTO> deleteUser(@PathVariable Long id) {
-        boolean deleted = deleteUser.deleteUser(id);
-
-        if (deleted)
-            return ResponseEntity.ok(new ApiResponseDTO("Usuário com id "+ id +" deletado com sucesso!"));
-
-        return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                .body(new ApiResponseDTO("Usuário com id " + id + " não encontrado."));
-
+        deleteUser.deleteUser(id);
+        return ResponseEntity.ok(new ApiResponseDTO("Usuário com id "+ id +" deletado com sucesso!"));
     }
 
     @PutMapping("/edit/{id}")

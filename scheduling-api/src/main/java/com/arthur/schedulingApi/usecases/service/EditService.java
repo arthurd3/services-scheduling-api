@@ -16,16 +16,17 @@ import static com.arthur.schedulingApi.usecases.service.mapper.ServiceToResponse
 @Service
 public class EditService {
 
-    private final ServiceRepository serviceRepository;
+    private final FindServiceById findServiceById;
 
-    public EditService(ServiceRepository serviceRepository) {
-        this.serviceRepository = serviceRepository;
+    public EditService(FindServiceById findServiceById) {
+        this.findServiceById = findServiceById;
     }
+
 
     @Transactional
     public Optional<ServiceResponseDTO> editService(Long id ,ServiceRequestDTO serviceRequestDTO) {
-        var originalService = serviceRepository.findById(id)
-                .orElseThrow(() -> new ServiceNotFoundException("Nao e Possivel Editar Servico nao Encontrado"));
+
+        var originalService = findServiceById.findByIdAsModel(id);
 
         var editedService = copyServiceProperties(serviceRequestDTO , originalService);
 

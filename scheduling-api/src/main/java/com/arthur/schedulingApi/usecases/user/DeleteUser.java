@@ -1,5 +1,6 @@
 package com.arthur.schedulingApi.usecases.user;
 
+import com.arthur.schedulingApi.exceptions.UserNotFoundException;
 import com.arthur.schedulingApi.repositories.users.UserRepository;
 import org.springframework.stereotype.Service;
 
@@ -13,16 +14,13 @@ public class DeleteUser {
         this.userRepository = userRepository;
     }
 
+    public void deleteUser(Long userId) {
 
-    public boolean deleteUser(Long userId) {
-
-        if(userRepository.existsById(userId)){
-            userRepository.deleteById(userId);
-            return true;
+        if(!userRepository.existsById(userId)){
+            throw new UserNotFoundException("Nao foi possivel deletar o Usuario com id " + userId);
         }
 
-        return false;
-
+        userRepository.deleteById(userId);
     }
 
 }

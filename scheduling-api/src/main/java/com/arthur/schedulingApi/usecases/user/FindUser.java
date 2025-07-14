@@ -4,10 +4,11 @@ import com.arthur.schedulingApi.controllers.user.response.UserResponseDTO;
 import com.arthur.schedulingApi.exceptions.UserNotFoundException;
 import com.arthur.schedulingApi.models.user.User;
 import com.arthur.schedulingApi.repositories.users.UserRepository;
-import com.arthur.schedulingApi.usecases.user.mapper.UserMapperToResponse;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
+
+import static com.arthur.schedulingApi.usecases.user.mapper.UserMapperToResponse.userToResponse;
 
 @Service
 public class FindUser {
@@ -18,12 +19,14 @@ public class FindUser {
         this.userRepository = userRepository;
     }
 
-    public Optional<UserResponseDTO> findUserAsDto(Long userId) {
-        return userRepository.findById(userId)
-                .map(UserMapperToResponse::userToResponse);
+    public UserResponseDTO findUserAsDto(Long userId) {
+         var returnedUser = userRepository.findById(userId)
+                 .orElseThrow(() -> new UserNotFoundException("Usuario com id "+ userId +" nao encontrado!"));
+         return userToResponse(returnedUser);
     }
 
-    public Optional<User> findUserEntity(Long userId) {
-        return userRepository.findById(userId);
+    public User findUserEntity(Long userId) {
+        return userRepository.findById(userId)
+                .orElseThrow(() -> new UserNotFoundException("Usuario com id "+ userId +" nao encontrado!"));
     }
 }

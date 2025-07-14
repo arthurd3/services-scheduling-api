@@ -20,12 +20,15 @@ public class FindServiceById {
     }
 
     public Optional<ServiceResponseDTO> findById(Long id){
-        var findedService = serviceRepository.findById(id).orElseThrow(() -> new ServiceNotFoundException("Servico com id "+ id +" nao encontrado"));
-        return Optional.of(serviceToResponse(findedService));
+        var findService = serviceRepository.findById(id)
+                .orElseThrow(() -> new ServiceNotFoundException("Servico com id "+ id +" nao encontrado"));
+
+        return Optional.of(serviceToResponse(findService));
     }
+
     public Services findByIdAsModel(Long id){
         return serviceRepository.findById(id)
-                .orElseThrow(() -> new ServiceNotFoundException("Servico nao encontrado"));
+                .orElseThrow(() -> new ServiceNotFoundException("Servico com id "+ id +" nao encontrado"));
     }
 
 }

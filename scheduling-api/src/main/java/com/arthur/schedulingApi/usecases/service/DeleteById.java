@@ -1,5 +1,6 @@
 package com.arthur.schedulingApi.usecases.service;
 
+import com.arthur.schedulingApi.exceptions.ServiceNotFoundException;
 import com.arthur.schedulingApi.repositories.services.ServiceRepository;
 import org.springframework.stereotype.Service;
 
@@ -8,18 +9,17 @@ public class DeleteById {
 
     private final ServiceRepository serviceRepository;
 
-    public DeleteById(ServiceRepository serviceRepository) {
+    public DeleteById(ServiceRepository serviceRepository, FindServiceById findServiceById) {
         this.serviceRepository = serviceRepository;
     }
 
-    public boolean deleteById(Long id) {
-        var findedService = serviceRepository.findById(id);
+    public void deleteById(Long id) {
 
-        if(findedService.isPresent()){
-            serviceRepository.delete(findedService.get());
-            return true;
+        if (!serviceRepository.existsById(id)) {
+            throw new ServiceNotFoundException("Não é possível deletar: Serviço com id " + id + " não encontrado.");
         }
-        return false;
+
+        serviceRepository.deleteById(id);
     }
 
 }
