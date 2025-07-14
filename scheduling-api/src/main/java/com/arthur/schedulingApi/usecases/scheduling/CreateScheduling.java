@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 
+import static com.arthur.schedulingApi.usecases.scheduling.mapper.SchedulingListToRequest.schedulingListToRequest;
 import static com.arthur.schedulingApi.usecases.scheduling.mapper.SchedulingToModel.schedulingToModel;
 import static com.arthur.schedulingApi.usecases.scheduling.mapper.SchedulingToResponse.schedulingToResponse;
 
@@ -36,6 +37,7 @@ public class CreateScheduling {
         Optional<User> serviceOwner = findUser.findUserEntity(schedulingRequestDTO.ownerId());
 
         if (serviceOwner.isPresent()) {
+
             var service = findServiceById.findByIdAsModel(schedulingRequestDTO.serviceId());
             Scheduling scheduling = schedulingToModel(schedulingRequestDTO , service);
             service.addScheduling(scheduling);
@@ -47,8 +49,9 @@ public class CreateScheduling {
                     service.getUrl_image(),
                     service.getDescription(),
                     service.getLocation(),
-                    service.getScheduling())
+                    schedulingListToRequest(service.getScheduling()))
             );
+
             return Optional.of(schedulingToResponse(scheduling));
         }
 
