@@ -20,6 +20,5 @@ public class UserMapperToResponse {
                 userModel.getSchedulings(),
                 serviceList
         );
-
     }
 }

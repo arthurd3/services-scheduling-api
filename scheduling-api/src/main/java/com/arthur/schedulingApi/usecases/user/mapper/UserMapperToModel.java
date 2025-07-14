@@ -18,7 +18,5 @@ public class UserMapperToModel {
             userRequestDTO.phoneNumber(),
             userRole
         );
-
     }
-
 }
