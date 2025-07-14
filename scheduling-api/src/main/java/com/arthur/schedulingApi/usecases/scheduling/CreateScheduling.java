@@ -37,9 +37,11 @@ public class CreateScheduling {
 
         if (serviceOwner.isPresent()) {
             var service = findServiceById.findByIdAsModel(schedulingRequestDTO.serviceId());
-            Scheduling scheduling = schedulingToModel(schedulingRequestDTO);
+            Scheduling scheduling = schedulingToModel(schedulingRequestDTO , service);
             service.addScheduling(scheduling);
-            editService.editService(service.getId() , new ServiceRequestDTO(service.getId() ,
+
+            editService.editService(service.getId() , new ServiceRequestDTO(
+                    service.getId() ,
                     service.getName() ,
                     service.getCapacity() ,
                     service.getUrl_image(),
