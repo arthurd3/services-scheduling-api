@@ -6,7 +6,6 @@ import com.arthur.schedulingApi.models.service.Services;
 
 import java.util.List;
 
-import static com.arthur.schedulingApi.usecases.copyproperties.GetUpdateValue.getUpdatedListValue;
 import static com.arthur.schedulingApi.usecases.copyproperties.GetUpdateValue.getUpdatedValue;
 import static com.arthur.schedulingApi.usecases.scheduling.mapper.SchedulingListToModel.schedulingListToModel;
 
@@ -22,13 +21,11 @@ public class ServiceCopyProperties {
 
         if (serviceRequestDTO.schedulingList() != null) {
 
-            List<Scheduling> existingSchedulings = serviceToUpdate.getScheduling();
+            List<Scheduling> existingScheduling = serviceToUpdate.getScheduling();
+            List<Scheduling> newScheduling = schedulingListToModel(serviceRequestDTO.schedulingList(), serviceToUpdate);
+            existingScheduling.clear();
+            existingScheduling.addAll(newScheduling);
 
-            List<Scheduling> newSchedulings = schedulingListToModel(serviceRequestDTO.schedulingList(), serviceToUpdate);
-
-            existingSchedulings.clear();
-
-            existingSchedulings.addAll(newSchedulings);
         }
 
         return serviceToUpdate;

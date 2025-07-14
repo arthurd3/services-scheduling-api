@@ -16,12 +16,8 @@ public class UserCopyProperties {
 
 
         if (userRequestDTO.role() != null) {
-            try {
-                UserRoles updatedRole = UserRoles.valueOf(userRequestDTO.role().toUpperCase());
-                originalUser.setRole(updatedRole);
-            } catch (IllegalArgumentException e) {
-                throw e;
-            }
+            UserRoles updatedRole = UserRoles.valueOf(userRequestDTO.role().toUpperCase());
+            originalUser.setRole(updatedRole);
         }
 
         return originalUser;
