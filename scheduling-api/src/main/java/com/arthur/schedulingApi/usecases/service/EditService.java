@@ -2,9 +2,7 @@ package com.arthur.schedulingApi.usecases.service;
 
 import com.arthur.schedulingApi.controllers.service.request.ServiceRequestDTO;
 import com.arthur.schedulingApi.controllers.service.response.ServiceResponseDTO;
-import com.arthur.schedulingApi.exceptions.ServiceNotFoundException;
 
-import com.arthur.schedulingApi.repositories.services.ServiceRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
