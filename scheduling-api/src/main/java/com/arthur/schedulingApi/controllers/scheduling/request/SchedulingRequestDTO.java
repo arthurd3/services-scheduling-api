@@ -1,6 +1,5 @@
 package com.arthur.schedulingApi.controllers.scheduling.request;
 
-import com.arthur.schedulingApi.controllers.service.request.ServiceRequestDTO;
 import com.arthur.schedulingApi.models.scheduling.SchedulingStatus;
 
 import java.time.LocalDateTime;
