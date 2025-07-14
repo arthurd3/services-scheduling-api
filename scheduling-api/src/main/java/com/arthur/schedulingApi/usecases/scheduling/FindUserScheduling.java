@@ -20,7 +20,9 @@ public class FindUserScheduling {
 
     public List<SchedulingResponseDTO> findUserScheduling(Long userId , Pageable pageable) {
         Page<Scheduling> schedulingPage = schedulingRepository.findByClientId(userId, pageable);
-        return schedulingPage.map(SchedulingToResponse::schedulingToResponse).toList();
+
+        return schedulingPage
+                .map(SchedulingToResponse::schedulingToResponse).toList();
     }
 
 }
