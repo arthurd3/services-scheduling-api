@@ -4,7 +4,6 @@ import com.arthur.schedulingApi.controllers.ApiResponseDTO;
 import com.arthur.schedulingApi.controllers.service.request.ServiceRequestDTO;
 import com.arthur.schedulingApi.controllers.service.response.ServiceResponseDTO;
 import com.arthur.schedulingApi.usecases.service.*;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
