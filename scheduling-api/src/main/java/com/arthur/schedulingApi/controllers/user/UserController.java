@@ -4,11 +4,14 @@ import com.arthur.schedulingApi.controllers.user.request.UserRequestDTO;
 import com.arthur.schedulingApi.controllers.ApiResponseDTO;
 import com.arthur.schedulingApi.controllers.user.response.UserResponseDTO;
 import com.arthur.schedulingApi.usecases.user.*;
+import jakarta.validation.Valid;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.net.URI;
 import java.util.List;
 import java.util.Optional;
 
@@ -37,29 +40,29 @@ public class UserController {
         return ResponseEntity.ok(findAllUsers.findAllUsers(PageRequest.of(page, size)));
     }
 
-    @PostMapping("/register")
-    public ResponseEntity<UserResponseDTO> registerUser(@RequestBody UserRequestDTO userRequestDTO) {
-        return ResponseEntity.ok(registerUser.registerUser(userRequestDTO));
+    @PostMapping("/create")
+    public ResponseEntity<UserResponseDTO> createUser(@Valid @RequestBody UserRequestDTO userRequestDTO) {
+        var newUser = registerUser.registerUser(userRequestDTO);
+
+        URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
+                .buildAndExpand(newUser.id()).toUri();
+
+        return ResponseEntity.created(location).body(newUser);
     }
 
-    @GetMapping("/find/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<Optional<UserResponseDTO>> findAllUsers(@PathVariable Long id ) {
         return ResponseEntity.ok(Optional.of(findUser.findUserAsDto(id)));
     }
 
-    @DeleteMapping("/delete/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<ApiResponseDTO> deleteUser(@PathVariable Long id) {
         deleteUser.deleteUser(id);
         return ResponseEntity.ok(new ApiResponseDTO("Usuário com id "+ id +" deletado com sucesso!"));
     }
 
-    @PutMapping("/edit/{id}")
-    public ResponseEntity<Optional<UserResponseDTO>> editUser(@PathVariable Long id, @RequestBody UserRequestDTO userRequestDTO) {
-        var editedUser = editUser.editUser(id , userRequestDTO);
-
-        if(editedUser.isPresent())
-            return ResponseEntity.ok(editedUser);
-
-        return ResponseEntity.notFound().build();
+    @PutMapping("/{id}")
+    public ResponseEntity<Optional<UserResponseDTO>> editUser(@PathVariable Long id, @Valid @RequestBody UserRequestDTO userRequestDTO) {
+        return ResponseEntity.ok(editUser.editUser(id , userRequestDTO));
     }
 }
