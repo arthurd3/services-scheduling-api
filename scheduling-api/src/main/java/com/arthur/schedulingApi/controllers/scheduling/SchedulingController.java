@@ -53,7 +53,6 @@ public class SchedulingController {
         return ResponseEntity.ok(new ApiResponseDTO("Agendamento deletado com sucesso!"));
     }
 
-
     @PostMapping("/changeStatus/{id}")
     public ResponseEntity<SchedulingResponseDTO> changeStatus(@PathVariable(name = "id") Long idScheduling , @RequestBody SchedulingStatus status) {
         return ResponseEntity.ok(changeStatusScheduling.changeStatus(status , idScheduling));

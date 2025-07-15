@@ -4,9 +4,11 @@ import com.arthur.schedulingApi.controllers.scheduling.response.SchedulingRespon
 import com.arthur.schedulingApi.exceptions.SchedulingNotFoundException;
 import com.arthur.schedulingApi.models.scheduling.SchedulingStatus;
 import jakarta.transaction.Transactional;
+import org.springframework.stereotype.Service;
 
 import static com.arthur.schedulingApi.usecases.scheduling.mapper.SchedulingToResponse.schedulingToResponse;
 
+@Service
 public class ChangeStatusScheduling {
     private final FindScheduling findScheduling;
 
