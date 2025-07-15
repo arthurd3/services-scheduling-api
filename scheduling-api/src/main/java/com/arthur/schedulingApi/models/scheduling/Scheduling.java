@@ -35,11 +35,9 @@ public class Scheduling {
     @JoinColumn(name = "service_id", nullable = false)
     private Services services;
 
-    public Scheduling(Long id, LocalDateTime startTime, LocalDateTime endTime, SchedulingStatus status , Services service) {
-        this.id = id;
+    public Scheduling( LocalDateTime startTime, LocalDateTime endTime, Services service) {
         this.startTime = startTime;
         this.endTime = endTime;
-        this.status = status;
         this.services = service;
     }
 

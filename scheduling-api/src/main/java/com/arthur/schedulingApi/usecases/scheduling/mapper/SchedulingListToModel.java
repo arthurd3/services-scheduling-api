@@ -1,6 +1,6 @@
 package com.arthur.schedulingApi.usecases.scheduling.mapper;
 
-import com.arthur.schedulingApi.controllers.scheduling.request.SchedulingRequestDTO;
+import com.arthur.schedulingApi.controllers.scheduling.request.SchedulingSlotRequestDTO;
 import com.arthur.schedulingApi.models.scheduling.Scheduling;
 import com.arthur.schedulingApi.models.service.Services;
 
@@ -12,7 +12,7 @@ import static com.arthur.schedulingApi.usecases.scheduling.mapper.SchedulingToMo
 
 public class SchedulingListToModel {
 
-    public static List<Scheduling> schedulingListToModel(List<SchedulingRequestDTO> schedulingList , Services services) {
+    public static List<Scheduling> schedulingListToModel(List<SchedulingSlotRequestDTO> schedulingList , Services services) {
 
         if(schedulingList == null || schedulingList.isEmpty()) {
             return new ArrayList<>();
