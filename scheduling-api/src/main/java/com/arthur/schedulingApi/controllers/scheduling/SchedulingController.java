@@ -3,10 +3,8 @@ package com.arthur.schedulingApi.controllers.scheduling;
 import com.arthur.schedulingApi.controllers.ApiResponseDTO;
 import com.arthur.schedulingApi.controllers.scheduling.request.SchedulingRequestDTO;
 import com.arthur.schedulingApi.controllers.scheduling.response.SchedulingResponseDTO;
-import com.arthur.schedulingApi.usecases.scheduling.CreateScheduling;
-import com.arthur.schedulingApi.usecases.scheduling.DeleteScheduling;
-import com.arthur.schedulingApi.usecases.scheduling.FindScheduling;
-import com.arthur.schedulingApi.usecases.scheduling.FindUserScheduling;
+import com.arthur.schedulingApi.models.scheduling.SchedulingStatus;
+import com.arthur.schedulingApi.usecases.scheduling.*;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -22,12 +20,14 @@ public class SchedulingController {
     private final FindScheduling findScheduling;
     private final FindUserScheduling findUserScheduling;
     private final DeleteScheduling deleteScheduling;
+    private final ChangeStatusScheduling changeStatusScheduling;
 
-    public SchedulingController(CreateScheduling createScheduling, FindScheduling findScheduling, FindUserScheduling findUserScheduling, DeleteScheduling deleteScheduling) {
+    public SchedulingController(CreateScheduling createScheduling, FindScheduling findScheduling, FindUserScheduling findUserScheduling, DeleteScheduling deleteScheduling, ChangeStatusScheduling changeStatusScheduling) {
         this.createScheduling = createScheduling;
         this.findScheduling = findScheduling;
         this.findUserScheduling = findUserScheduling;
         this.deleteScheduling = deleteScheduling;
+        this.changeStatusScheduling = changeStatusScheduling;
     }
 
     @PostMapping("/create")
@@ -51,5 +51,11 @@ public class SchedulingController {
     public ResponseEntity<ApiResponseDTO> deleteScheduling(@PathVariable(name = "id") Long idScheduling) {
         deleteScheduling.deleteScheduling(idScheduling);
         return ResponseEntity.ok(new ApiResponseDTO("Agendamento deletado com sucesso!"));
+    }
+
+
+    @PostMapping("/changeStatus/{id}")
+    public ResponseEntity<SchedulingResponseDTO> changeStatus(@PathVariable(name = "id") Long idScheduling , @RequestBody SchedulingStatus status) {
+        return ResponseEntity.ok(changeStatusScheduling.changeStatus(status , idScheduling));
     }
 }

@@ -2,6 +2,7 @@ package com.arthur.schedulingApi.usecases.scheduling;
 
 import com.arthur.schedulingApi.controllers.scheduling.response.SchedulingResponseDTO;
 import com.arthur.schedulingApi.exceptions.SchedulingNotFoundException;
+import com.arthur.schedulingApi.models.scheduling.Scheduling;
 import com.arthur.schedulingApi.repositories.scheduling.SchedulingRepository;
 import org.springframework.stereotype.Service;
 
@@ -21,5 +22,10 @@ public class FindScheduling {
                 .orElseThrow(() -> new SchedulingNotFoundException("Agendamento com id: "+ id +" Nao encontrado!!"));
 
         return schedulingToResponse(schedulingReturn);
+    }
+
+    public Scheduling findSchedulingAsModel(Long id) {
+        return schedulingRepository.findById(id)
+                .orElseThrow(() -> new SchedulingNotFoundException("Agendamento com id: "+ id +" Nao encontrado!!"));
     }
 }
