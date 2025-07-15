@@ -1,12 +1,28 @@
 package com.arthur.schedulingApi.usecases.scheduling;
 
-import com.arthur.schedulingApi.controllers.scheduling.request.SchedulingRequestDTO;
+import com.arthur.schedulingApi.controllers.scheduling.response.SchedulingResponseDTO;
+import com.arthur.schedulingApi.exceptions.SchedulingNotFoundException;
 import com.arthur.schedulingApi.models.scheduling.SchedulingStatus;
-import com.arthur.schedulingApi.usecases.scheduling.mapper.SchedulingToResponse;
+import jakarta.transaction.Transactional;
+
+import static com.arthur.schedulingApi.usecases.scheduling.mapper.SchedulingToResponse.schedulingToResponse;
 
 public class ChangeStatusScheduling {
+    private final FindScheduling findScheduling;
 
-//    public SchedulingToResponse changeStatus(SchedulingStatus status, SchedulingRequestDTO schedulingRequestDTO) {
-//
-//    }
+    public ChangeStatusScheduling(FindScheduling findScheduling) {
+        this.findScheduling = findScheduling;
+    }
+
+    @Transactional
+    public SchedulingResponseDTO changeStatus(SchedulingStatus status , Long idScheduling) {
+        for(SchedulingStatus schedulingStatus : SchedulingStatus.values()) {
+            if(schedulingStatus.equals(status)) {
+                var returnedScheduling = findScheduling.findSchedulingAsModel(idScheduling);
+                returnedScheduling.setStatus(schedulingStatus);
+                return schedulingToResponse(returnedScheduling);
+            }
+        }
+        throw new SchedulingNotFoundException("Status nao Encontrado!!!");
+    }
 }
