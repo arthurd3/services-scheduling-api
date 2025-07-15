@@ -29,7 +29,7 @@ public class ServiceController {
         this.editService = editService;
     }
 
-    @PostMapping
+    @PostMapping("/create")
     public ResponseEntity<Optional<ServiceResponseDTO>> createService(@RequestBody @Valid ServiceRequestDTO serviceRequestDTO){
         return ResponseEntity.status(HttpStatus.CREATED).body(createService.createService(serviceRequestDTO));
     }
@@ -50,7 +50,7 @@ public class ServiceController {
         return ResponseEntity.ok(new ApiResponseDTO("Servico deletado com id: " + id));
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/edit/{id}")
     public ResponseEntity<Optional<ServiceResponseDTO>> editService(@PathVariable Long id, @Valid @RequestBody ServiceRequestDTO serviceRequestDTO){
         return ResponseEntity.ok(editService.editService(id,serviceRequestDTO));
     }

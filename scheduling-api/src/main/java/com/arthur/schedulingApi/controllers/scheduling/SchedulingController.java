@@ -34,7 +34,7 @@ public class SchedulingController {
         this.joinScheduling = joinScheduling;
     }
 
-    @PostMapping
+    @PostMapping("/create")
     public ResponseEntity<Optional<SchedulingResponseDTO>> createScheduling(@RequestBody @Valid SchedulingRequestDTO schedulingRequestDTO) {
         return ResponseEntity.status(HttpStatus.CREATED).body(createScheduling.createScheduling(schedulingRequestDTO));
     }
