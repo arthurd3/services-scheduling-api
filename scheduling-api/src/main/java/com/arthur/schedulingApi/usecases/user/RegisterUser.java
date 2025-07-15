@@ -5,6 +5,7 @@ import com.arthur.schedulingApi.controllers.user.response.UserResponseDTO;
 import com.arthur.schedulingApi.exceptions.EmailAlreadyExistsException;
 import com.arthur.schedulingApi.exceptions.PhoneAlreadyExistsException;
 import com.arthur.schedulingApi.models.user.User;
+import com.arthur.schedulingApi.models.user.UserRoles;
 import com.arthur.schedulingApi.repositories.users.UserRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -37,6 +38,7 @@ public class RegisterUser {
         User userModel = userToModel(userRequestDTO);
 
         userModel.setEncodePassword(userModel.getPassword() , passwordEncoder);
+        userModel.setRole(UserRoles.USER);
 
         return userToResponse(userRepository.save(userModel));
     }

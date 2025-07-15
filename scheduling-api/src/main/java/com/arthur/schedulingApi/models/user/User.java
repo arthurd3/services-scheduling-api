@@ -38,13 +38,11 @@ public class User {
     @OneToMany(mappedBy = "client", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<Scheduling> schedulings = new ArrayList<>();
 
-    public User(Long id, String name, String email, String password, String phoneNumber, UserRoles role) {
-        this.id = id;
+    public User(String name, String email, String password, String phoneNumber) {
         this.name = name;
         this.email = email;
         this.password = password;
         this.phoneNumber = phoneNumber;
-        this.role = role;
     }
 
     public User() {
