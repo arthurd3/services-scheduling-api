@@ -5,6 +5,7 @@ import com.arthur.schedulingApi.controllers.service.response.ServiceResponseDTO;
 import com.arthur.schedulingApi.exceptions.UserNotFoundException;
 import com.arthur.schedulingApi.models.user.User;
 import com.arthur.schedulingApi.repositories.services.ServiceRepository;
+import com.arthur.schedulingApi.security.userAuth.AuthenticatedUserService;
 import com.arthur.schedulingApi.usecases.user.FindUser;
 import org.springframework.stereotype.Service;
 
@@ -17,17 +18,16 @@ import static com.arthur.schedulingApi.usecases.service.mapper.ServiceToResponse
 public class CreateService {
 
     private final ServiceRepository serviceRepository;
-    private final FindUser findUser;
+    private final AuthenticatedUserService authenticatedUserService;
 
-    public CreateService(ServiceRepository serviceRepository, FindUser findUser) {
+    public CreateService(ServiceRepository serviceRepository, AuthenticatedUserService authenticatedUserService) {
         this.serviceRepository = serviceRepository;
-
-        this.findUser = findUser;
+        this.authenticatedUserService = authenticatedUserService;
     }
 
-    public Optional<ServiceResponseDTO> createService(Long ownerId, ServiceRequestDTO serviceRequestDTO) {
+    public Optional<ServiceResponseDTO> createService(ServiceRequestDTO serviceRequestDTO) {
 
-        User ownerUser = findUser.findUserEntity(ownerId);
+        User ownerUser = authenticatedUserService.getAuthenticatedUser();
 
         var serviceModel = serviceToModel(serviceRequestDTO);
         serviceModel.setOwner(ownerUser);

@@ -5,7 +5,9 @@ import com.arthur.schedulingApi.controllers.scheduling.request.SchedulingRequest
 import com.arthur.schedulingApi.controllers.scheduling.response.SchedulingResponseDTO;
 import com.arthur.schedulingApi.models.scheduling.SchedulingStatus;
 import com.arthur.schedulingApi.usecases.scheduling.*;
+import jakarta.validation.Valid;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -32,36 +34,36 @@ public class SchedulingController {
         this.joinScheduling = joinScheduling;
     }
 
-    @PostMapping("/create")
-    public ResponseEntity<Optional<SchedulingResponseDTO>> createScheduling(@RequestBody SchedulingRequestDTO schedulingRequestDTO) {
-        return ResponseEntity.ok(createScheduling.createScheduling(schedulingRequestDTO));
+    @PostMapping
+    public ResponseEntity<Optional<SchedulingResponseDTO>> createScheduling(@RequestBody @Valid SchedulingRequestDTO schedulingRequestDTO) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(createScheduling.createScheduling(schedulingRequestDTO));
     }
 
-    @GetMapping("/findById/{id}")
-    public ResponseEntity<Optional<SchedulingResponseDTO>> findSchedulingById(@PathVariable("id") Long id) {
+    @GetMapping("/{id}")
+    public ResponseEntity<Optional<SchedulingResponseDTO>> findSchedulingById(@PathVariable Long id) {
         return ResponseEntity.ok(Optional.of(findScheduling.findScheduling(id)));
     }
 
-    @GetMapping("/findUserScheduling/{id}")
-    public ResponseEntity<List<SchedulingResponseDTO>> findUserScheduling(@PathVariable(name = "id") Long userId ,
+    @GetMapping("/user/{userId}")
+    public ResponseEntity<List<SchedulingResponseDTO>> findUserScheduling(@PathVariable(name = "userId") Long id ,
                                                                            @RequestParam(value = "page", defaultValue = "0") int page,
                                                                            @RequestParam(value = "size", defaultValue = "5") int size) {
-        return ResponseEntity.ok(findUserScheduling.findUserScheduling(userId , PageRequest.of(page , size)));
+        return ResponseEntity.ok(findUserScheduling.findUserScheduling(id , PageRequest.of(page , size)));
     }
 
-    @DeleteMapping("/delete/{id}")
-    public ResponseEntity<ApiResponseDTO> deleteScheduling(@PathVariable(name = "id") Long idScheduling) {
-        deleteScheduling.deleteScheduling(idScheduling);
+    @DeleteMapping("/{id}")
+    public ResponseEntity<ApiResponseDTO> deleteScheduling(@PathVariable Long id) {
+        deleteScheduling.deleteScheduling(id);
         return ResponseEntity.ok(new ApiResponseDTO("Agendamento deletado com sucesso!"));
     }
 
-    @PostMapping("/changeStatus/{id}")
-    public ResponseEntity<SchedulingResponseDTO> changeStatus(@PathVariable(name = "id") Long idScheduling , @RequestBody SchedulingStatus status) {
-        return ResponseEntity.ok(changeStatusScheduling.changeStatus(status , idScheduling));
+    @PatchMapping("/{id}/status")
+    public ResponseEntity<SchedulingResponseDTO> changeStatus(@PathVariable Long id, @RequestBody SchedulingStatus status) {
+        return ResponseEntity.ok(changeStatusScheduling.changeStatus(status , id));
     }
 
-    @PostMapping("/joinScheduling/{id}")
-    public ResponseEntity<SchedulingResponseDTO> joinScheduling(@PathVariable(name = "id") Long userId ,@RequestBody SchedulingRequestDTO schedulingRequestDTO) {
-        return ResponseEntity.ok(joinScheduling.joinScheduling(userId , schedulingRequestDTO));
+    @PostMapping("/{id}/join")
+    public ResponseEntity<SchedulingResponseDTO> joinScheduling(@PathVariable Long id) {
+        return ResponseEntity.ok(joinScheduling.joinScheduling(id));
     }
 }
