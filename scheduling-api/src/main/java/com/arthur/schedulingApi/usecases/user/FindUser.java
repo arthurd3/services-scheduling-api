@@ -28,4 +28,9 @@ public class FindUser {
         return userRepository.findById(userId)
                 .orElseThrow(() -> new UserNotFoundException("Usuario com id "+ userId +" nao encontrado!"));
     }
+
+//    public User findUserByName(Long name) {
+//        return userRepository.findByName(name)
+//                .orElseThrow(() -> new UserNotFoundException("Usuario com nome "+ name +" nao encontrado!"));
+//    }
 }
