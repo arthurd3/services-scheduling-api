@@ -6,6 +6,7 @@ import com.arthur.schedulingApi.controllers.user.request.UserRequestDTO;
 import com.arthur.schedulingApi.controllers.user.response.UserResponseDTO;
 import com.arthur.schedulingApi.models.user.User;
 import com.arthur.schedulingApi.security.authSecurity.TokenService;
+import com.arthur.schedulingApi.security.userAuth.UserAuthenticated;
 import com.arthur.schedulingApi.usecases.user.RegisterUser;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -35,7 +36,9 @@ public class AuthenticationController {
 
         var usernamePassword = new UsernamePasswordAuthenticationToken(authDTO.userName() ,  authDTO.password());
         var auth = authenticationManager.authenticate(usernamePassword);
-        var token = tokenService.generateToken((User) auth.getPrincipal());
+        var userAuthenticated = (UserAuthenticated) auth.getPrincipal();
+        User userEntity = userAuthenticated.getUser();
+        var token = tokenService.generateToken(userEntity);
 
         return ResponseEntity.ok(new LoginResponseDTO("Login efetuado com Sucesso" , token));
     }

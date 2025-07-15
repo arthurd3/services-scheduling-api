@@ -46,4 +46,16 @@ public class Scheduling {
     public Scheduling(){
 
     }
+
+    public void setClient(User client) {
+        this.client = client;
+    }
+
+    public void setStatus(SchedulingStatus status) {
+        this.status = status;
+    }
+
+    public void getStatus(SchedulingStatus status) {
+        this.status = status;
+    }
 }

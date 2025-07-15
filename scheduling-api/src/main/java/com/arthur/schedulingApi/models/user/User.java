@@ -54,4 +54,8 @@ public class User {
     public void setEncodePassword(String rawPassword, PasswordEncoder passwordEncoder) {
         this.password = passwordEncoder.encode(rawPassword);
     }
+
+    public void addScheduling(Scheduling scheduling) {
+        this.schedulings.add(scheduling);
+    }
 }

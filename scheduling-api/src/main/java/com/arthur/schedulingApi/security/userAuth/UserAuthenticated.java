@@ -71,4 +71,8 @@ public class UserAuthenticated implements UserDetails {
     public boolean isEnabled() {
         return UserDetails.super.isEnabled();
     }
+
+    public User getUser() {
+        return this.user;
+    }
 }
