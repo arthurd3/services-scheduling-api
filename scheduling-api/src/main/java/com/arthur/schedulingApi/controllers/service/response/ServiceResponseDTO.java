@@ -1,7 +1,7 @@
 package com.arthur.schedulingApi.controllers.service.response;
 
 import com.arthur.schedulingApi.controllers.scheduling.response.SchedulingResponseDTO;
-import com.arthur.schedulingApi.controllers.user.response.UserResumeDTO;
+import com.arthur.schedulingApi.controllers.user.resume.UserResumeDTO;
 
 
 import java.time.LocalDateTime;

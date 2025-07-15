@@ -4,6 +4,8 @@ import com.arthur.schedulingApi.controllers.ApiResponseDTO;
 import com.arthur.schedulingApi.controllers.service.request.ServiceRequestDTO;
 import com.arthur.schedulingApi.controllers.service.response.ServiceResponseDTO;
 import com.arthur.schedulingApi.usecases.service.*;
+import jakarta.validation.Valid;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,36 +29,30 @@ public class ServiceController {
         this.editService = editService;
     }
 
-    @PostMapping("/create/{ownerId}")
-    public ResponseEntity<Optional<ServiceResponseDTO>> createService(@PathVariable(name = "ownerId") Long ownerId ,
-                                                                      @RequestBody ServiceRequestDTO serviceRequestDTO){
-        return ResponseEntity.ok(createService.createService(ownerId,serviceRequestDTO));
+    @PostMapping
+    public ResponseEntity<Optional<ServiceResponseDTO>> createService(@RequestBody @Valid ServiceRequestDTO serviceRequestDTO){
+        return ResponseEntity.status(HttpStatus.CREATED).body(createService.createService(serviceRequestDTO));
     }
 
-    @GetMapping("/findByName/{name}")
-    public ResponseEntity<Optional<ServiceResponseDTO>> findByNameService(@PathVariable(name = "name") String name){
+    @GetMapping
+    public ResponseEntity<Optional<ServiceResponseDTO>> findByNameService(@RequestParam(name = "name") String name){
         return ResponseEntity.ok(findServiceByName.findService(name));
     }
 
-    @GetMapping("/findById/{id}")
-    public ResponseEntity<Optional<ServiceResponseDTO>> findByIdService(@PathVariable(name = "id") Long id){
+    @GetMapping("/{id}")
+    public ResponseEntity<Optional<ServiceResponseDTO>> findByIdService(@PathVariable Long id){
         return ResponseEntity.ok(findServiceById.findById(id));
     }
 
-    @DeleteMapping("/deleteById/{id}")
-    public ResponseEntity<ApiResponseDTO> deleteService(@PathVariable(name = "id") Long id){
+    @DeleteMapping("/{id}")
+    public ResponseEntity<ApiResponseDTO> deleteService(@PathVariable Long id){
         deleteById.deleteById(id);
         return ResponseEntity.ok(new ApiResponseDTO("Servico deletado com id: " + id));
     }
 
-    @PutMapping("/edit/{id}")
-    public ResponseEntity<Optional<ServiceResponseDTO>> editService(@PathVariable Long id, @RequestBody ServiceRequestDTO serviceRequestDTO){
+    @PutMapping("/{id}")
+    public ResponseEntity<Optional<ServiceResponseDTO>> editService(@PathVariable Long id, @Valid @RequestBody ServiceRequestDTO serviceRequestDTO){
         return ResponseEntity.ok(editService.editService(id,serviceRequestDTO));
-
     }
-
-
-
-
 
 }
