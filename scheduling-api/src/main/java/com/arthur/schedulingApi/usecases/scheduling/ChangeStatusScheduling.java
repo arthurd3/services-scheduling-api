@@ -1,7 +1,9 @@
 package com.arthur.schedulingApi.usecases.scheduling;
 
+import com.arthur.schedulingApi.controllers.scheduling.request.UpdateStatusRequestDTO;
 import com.arthur.schedulingApi.controllers.scheduling.response.SchedulingResponseDTO;
 import com.arthur.schedulingApi.exceptions.SchedulingNotFoundException;
+import com.arthur.schedulingApi.models.scheduling.Scheduling;
 import com.arthur.schedulingApi.models.scheduling.SchedulingStatus;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
@@ -17,14 +19,14 @@ public class ChangeStatusScheduling {
     }
 
     @Transactional
-    public SchedulingResponseDTO changeStatus(SchedulingStatus status , Long idScheduling) {
-        for(SchedulingStatus schedulingStatus : SchedulingStatus.values()) {
-            if(schedulingStatus.equals(status)) {
-                var returnedScheduling = findScheduling.findSchedulingAsModel(idScheduling);
-                returnedScheduling.setStatus(schedulingStatus);
-                return schedulingToResponse(returnedScheduling);
-            }
-        }
-        throw new SchedulingNotFoundException("Status nao Encontrado!!!");
+    public SchedulingResponseDTO changeStatus(UpdateStatusRequestDTO status , Long idScheduling) {
+
+        Scheduling schedulingToUpdate = findScheduling.findSchedulingAsModel(idScheduling);
+
+        SchedulingStatus newStatus = status.newStatus();
+
+        schedulingToUpdate.setStatus(newStatus);
+
+        return schedulingToResponse(schedulingToUpdate);
     }
 }

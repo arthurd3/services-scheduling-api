@@ -1,9 +1,9 @@
 package com.arthur.schedulingApi.controllers.scheduling;
 
 import com.arthur.schedulingApi.controllers.ApiResponseDTO;
-import com.arthur.schedulingApi.controllers.scheduling.request.SchedulingRequestDTO;
+import com.arthur.schedulingApi.controllers.scheduling.request.SchedulingSlotRequestDTO;
+import com.arthur.schedulingApi.controllers.scheduling.request.UpdateStatusRequestDTO;
 import com.arthur.schedulingApi.controllers.scheduling.response.SchedulingResponseDTO;
-import com.arthur.schedulingApi.models.scheduling.SchedulingStatus;
 import com.arthur.schedulingApi.usecases.scheduling.*;
 import jakarta.validation.Valid;
 import org.springframework.data.domain.PageRequest;
@@ -34,9 +34,9 @@ public class SchedulingController {
         this.joinScheduling = joinScheduling;
     }
 
-    @PostMapping("/create")
-    public ResponseEntity<Optional<SchedulingResponseDTO>> createScheduling(@RequestBody @Valid SchedulingRequestDTO schedulingRequestDTO) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(createScheduling.createScheduling(schedulingRequestDTO));
+    @PostMapping("/{serviceId}/create")
+    public ResponseEntity<Optional<SchedulingResponseDTO>> createScheduling(@PathVariable Long serviceId , @RequestBody @Valid SchedulingSlotRequestDTO schedulingSlotRequestDTO) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(createScheduling.createScheduling(schedulingSlotRequestDTO, serviceId));
     }
 
     @GetMapping("/{id}")
@@ -58,8 +58,8 @@ public class SchedulingController {
     }
 
     @PatchMapping("/{id}/status")
-    public ResponseEntity<SchedulingResponseDTO> changeStatus(@PathVariable Long id, @RequestBody SchedulingStatus status) {
-        return ResponseEntity.ok(changeStatusScheduling.changeStatus(status , id));
+    public ResponseEntity<SchedulingResponseDTO> changeStatus(@PathVariable Long id, @RequestBody UpdateStatusRequestDTO statusDTO) {
+        return ResponseEntity.ok(changeStatusScheduling.changeStatus(statusDTO , id));
     }
 
     @PostMapping("/{id}/join")

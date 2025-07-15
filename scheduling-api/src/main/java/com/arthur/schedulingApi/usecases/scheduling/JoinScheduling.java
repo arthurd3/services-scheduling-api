@@ -1,11 +1,9 @@
 package com.arthur.schedulingApi.usecases.scheduling;
 
-import com.arthur.schedulingApi.controllers.scheduling.request.SchedulingRequestDTO;
 import com.arthur.schedulingApi.controllers.scheduling.response.SchedulingResponseDTO;
 import com.arthur.schedulingApi.exceptions.SchedulingNotFoundException;
 import com.arthur.schedulingApi.models.scheduling.SchedulingStatus;
 import com.arthur.schedulingApi.security.userAuth.AuthenticatedUserService;
-import com.arthur.schedulingApi.usecases.user.FindUser;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
@@ -36,7 +34,6 @@ public class JoinScheduling {
 
         scheduling.setClient(client);
         scheduling.setStatus(SchedulingStatus.BOOKED);
-        client.addScheduling(scheduling);
 
         return schedulingToResponse(scheduling);
     }

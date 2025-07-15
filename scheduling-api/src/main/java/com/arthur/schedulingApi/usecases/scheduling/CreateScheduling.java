@@ -1,8 +1,9 @@
 package com.arthur.schedulingApi.usecases.scheduling;
 
-import com.arthur.schedulingApi.controllers.scheduling.request.SchedulingRequestDTO;
+import com.arthur.schedulingApi.controllers.scheduling.request.SchedulingSlotRequestDTO;
 import com.arthur.schedulingApi.controllers.scheduling.response.SchedulingResponseDTO;
 import com.arthur.schedulingApi.models.scheduling.Scheduling;
+import com.arthur.schedulingApi.models.scheduling.SchedulingStatus;
 import com.arthur.schedulingApi.models.service.Services;
 import com.arthur.schedulingApi.repositories.scheduling.SchedulingRepository;
 import com.arthur.schedulingApi.usecases.service.FindServiceById;
@@ -26,13 +27,16 @@ public class CreateScheduling {
     }
 
     @Transactional
-    public Optional<SchedulingResponseDTO> createScheduling(SchedulingRequestDTO schedulingRequestDTO) {
+    public Optional<SchedulingResponseDTO> createScheduling(SchedulingSlotRequestDTO schedulingSlotRequestDTO, Long serviceId) {
 
-        Services service = findServiceById.findByIdAsModel(schedulingRequestDTO.serviceId());
+        Services service = findServiceById.findByIdAsModel(serviceId);
 
-        Scheduling scheduling = schedulingToModel(schedulingRequestDTO , service);
+        Scheduling scheduling = schedulingToModel(schedulingSlotRequestDTO, service);
+
+        scheduling.setStatus(SchedulingStatus.AVAILABLE);
 
         var schedulingReturn = schedulingRepository.save(scheduling);
+
         service.addScheduling(scheduling);
 
         return Optional.of(schedulingToResponse(schedulingReturn));
