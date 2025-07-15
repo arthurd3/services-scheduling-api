@@ -33,8 +33,7 @@ public class Services {
     @OneToMany(mappedBy = "services", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<Scheduling> scheduling;
 
-    public Services(Long id, String name, Integer capacity, String description, String location, String url_image , List<Scheduling> scheduling) {
-        this.id = id;
+    public Services(String name, Integer capacity, String description, String location, String url_image , List<Scheduling> scheduling) {
         this.name = name;
         this.capacity = capacity;
         this.description = description;

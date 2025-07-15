@@ -4,8 +4,7 @@ import com.arthur.schedulingApi.controllers.scheduling.request.SchedulingSlotReq
 
 import java.util.List;
 
-public record ServiceRequestDTO (Long id ,
-                                 String name ,
+public record ServiceRequestDTO (String name ,
                                  Integer capacity ,
                                  String url_image ,
                                  String description ,

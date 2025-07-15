@@ -9,7 +9,6 @@ public class ServiceToRequest {
 
     public static ServiceRequestDTO serviceToRequest(Services service) {
         return new ServiceRequestDTO(
-                service.getId(),
                 service.getName(),
                 service.getCapacity(),
                 service.getUrl_image(),
