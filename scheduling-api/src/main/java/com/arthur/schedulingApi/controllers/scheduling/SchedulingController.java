@@ -21,13 +21,15 @@ public class SchedulingController {
     private final FindUserScheduling findUserScheduling;
     private final DeleteScheduling deleteScheduling;
     private final ChangeStatusScheduling changeStatusScheduling;
+    private final JoinScheduling joinScheduling;
 
-    public SchedulingController(CreateScheduling createScheduling, FindScheduling findScheduling, FindUserScheduling findUserScheduling, DeleteScheduling deleteScheduling, ChangeStatusScheduling changeStatusScheduling) {
+    public SchedulingController(CreateScheduling createScheduling, FindScheduling findScheduling, FindUserScheduling findUserScheduling, DeleteScheduling deleteScheduling, ChangeStatusScheduling changeStatusScheduling, JoinScheduling joinScheduling) {
         this.createScheduling = createScheduling;
         this.findScheduling = findScheduling;
         this.findUserScheduling = findUserScheduling;
         this.deleteScheduling = deleteScheduling;
         this.changeStatusScheduling = changeStatusScheduling;
+        this.joinScheduling = joinScheduling;
     }
 
     @PostMapping("/create")
@@ -56,5 +58,10 @@ public class SchedulingController {
     @PostMapping("/changeStatus/{id}")
     public ResponseEntity<SchedulingResponseDTO> changeStatus(@PathVariable(name = "id") Long idScheduling , @RequestBody SchedulingStatus status) {
         return ResponseEntity.ok(changeStatusScheduling.changeStatus(status , idScheduling));
+    }
+
+    @PostMapping("/joinScheduling/{id}")
+    public ResponseEntity<SchedulingResponseDTO> joinScheduling(@PathVariable(name = "id") Long userId ,@RequestBody SchedulingRequestDTO schedulingRequestDTO) {
+        return ResponseEntity.ok(joinScheduling.joinScheduling(userId , schedulingRequestDTO));
     }
 }
