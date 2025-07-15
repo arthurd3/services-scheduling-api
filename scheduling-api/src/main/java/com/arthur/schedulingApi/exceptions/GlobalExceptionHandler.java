@@ -33,14 +33,14 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(EmailAlreadyExistsException.class)
     public final ErrorResponse handleResourceAlreadyExistsException(EmailAlreadyExistsException ex) {
-        var error = ErrorResponse.create(ex , HttpStatus.NOT_FOUND , ex.getMessage());
+        var error = ErrorResponse.create(ex , HttpStatus.CONFLICT , ex.getMessage());
         error.getBody().setTitle("E-mail ja utilizado");
         return error;
     }
 
     @ExceptionHandler(PhoneAlreadyExistsException.class)
     public final ErrorResponse handleResourceAlreadyExistsException(PhoneAlreadyExistsException ex) {
-        var error = ErrorResponse.create(ex , HttpStatus.NOT_FOUND , ex.getMessage());
+        var error = ErrorResponse.create(ex , HttpStatus.CONFLICT , ex.getMessage());
         error.getBody().setTitle("Telefone ja utilizado");
         return error;
     }

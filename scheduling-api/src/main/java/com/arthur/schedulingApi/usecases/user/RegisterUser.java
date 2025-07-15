@@ -27,11 +27,11 @@ public class RegisterUser {
     public UserResponseDTO registerUser(UserRequestDTO userRequestDTO) {
 
         if (userRepository.existsByEmail(userRequestDTO.email())) {
-            throw new EmailAlreadyExistsException("O e-mail '" + userRequestDTO.email() + "' já está em uso.");
+            throw new EmailAlreadyExistsException("O E-mail '" + userRequestDTO.email() + "' já está em uso.");
         }
 
         if (userRepository.existsByPhoneNumber(userRequestDTO.phoneNumber())) {
-            throw new PhoneAlreadyExistsException("O telefone '" + userRequestDTO.phoneNumber() + "' já está em uso.");
+            throw new PhoneAlreadyExistsException("O Telefone '" + userRequestDTO.phoneNumber() + "' já está em uso.");
         }
 
         User userModel = userToModel(userRequestDTO);
