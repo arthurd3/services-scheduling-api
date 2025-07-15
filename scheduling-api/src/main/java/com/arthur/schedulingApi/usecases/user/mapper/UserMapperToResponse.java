@@ -13,7 +13,7 @@ public class UserMapperToResponse {
 
         return new UserResponseDTO(
                 userModel.getId(),
-                userModel.getUsername(),
+                userModel.getName(),
                 userModel.getEmail(),
                 userModel.getPhoneNumber(),
                 userModel.getRole().toString(),

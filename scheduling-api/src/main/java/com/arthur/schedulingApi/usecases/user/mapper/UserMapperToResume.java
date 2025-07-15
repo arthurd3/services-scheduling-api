@@ -9,7 +9,7 @@ public class UserMapperToResume {
 
         return new UserResumeDTO(
                 userModel.getId() ,
-                userModel.getUsername() ,
+                userModel.getName() ,
                 userModel.getEmail() ,
                 userModel.getPhoneNumber()
         );
