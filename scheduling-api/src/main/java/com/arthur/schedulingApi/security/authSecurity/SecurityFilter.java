@@ -1,6 +1,8 @@
 package com.arthur.schedulingApi.security.authSecurity;
 
 import com.arthur.schedulingApi.repositories.users.UserRepository;
+import com.arthur.schedulingApi.security.userAuth.UserAuthenticated;
+import com.arthur.schedulingApi.usecases.user.FindUserByName;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -17,12 +19,13 @@ import java.io.IOException;
 public class SecurityFilter extends OncePerRequestFilter {
 
     private final TokenService tokenService;
+    private final FindUserByName findUser;
 
-    private final UserRepository userRepository;
 
-    public SecurityFilter(TokenService tokenService, UserRepository userRepository) {
+    public SecurityFilter(TokenService tokenService, FindUserByName findUser) {
         this.tokenService = tokenService;
-        this.userRepository = userRepository;
+
+        this.findUser = findUser;
     }
 
     @Override
@@ -30,7 +33,7 @@ public class SecurityFilter extends OncePerRequestFilter {
         var token = this.recoverToken(request);
         if(token != null){
             var login = tokenService.validateToken(token);
-            UserDetails user = userRepository.findByName(login);
+            UserDetails user = new UserAuthenticated(findUser.findUserByName(login));
 
             var authentication = new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
             SecurityContextHolder.getContext().setAuthentication(authentication);

@@ -1,23 +1,25 @@
 package com.arthur.schedulingApi.security.authSecurity;
 
-import com.arthur.schedulingApi.repositories.users.UserRepository;
+import com.arthur.schedulingApi.security.userAuth.UserAuthenticated;
+import com.arthur.schedulingApi.usecases.user.FindUserByName;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 @Service
-public class AuthorizationSecurity implements UserDetailsService {
+public class UserDetailsServiceImpl implements UserDetailsService {
 
-    private final UserRepository userRepository;
+    private final FindUserByName findUser;
 
-    public AuthorizationSecurity(UserRepository userRepository) {
-        this.userRepository = userRepository;
+    public UserDetailsServiceImpl(FindUserByName findUser) {
+        this.findUser = findUser;
+
     }
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return userRepository.findByName(username);
+        return new UserAuthenticated(findUser.findUserByName(username));
     }
 
 

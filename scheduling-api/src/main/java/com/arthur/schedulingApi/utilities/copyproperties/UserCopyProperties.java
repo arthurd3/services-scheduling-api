@@ -10,7 +10,7 @@ public class UserCopyProperties {
 
     public static User copyProperties(User originalUser, UserRequestDTO userRequestDTO) {
 
-        originalUser.setName(getUpdatedValue(userRequestDTO.name(), originalUser.getUsername()));
+        originalUser.setName(getUpdatedValue(userRequestDTO.name(), originalUser.getName()));
         originalUser.setEmail(getUpdatedValue(userRequestDTO.email(), originalUser.getEmail()));
         originalUser.setPhoneNumber(getUpdatedValue(userRequestDTO.phoneNumber(), originalUser.getPhoneNumber()));
 
