@@ -2,6 +2,7 @@ package com.arthur.schedulingApi.usecases.user;
 
 import com.arthur.schedulingApi.controllers.user.request.UserRequestDTO;
 import com.arthur.schedulingApi.exceptions.EmailAlreadyExistsException;
+import com.arthur.schedulingApi.exceptions.PhoneAlreadyExistsException;
 import com.arthur.schedulingApi.repositories.users.UserRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -27,10 +28,9 @@ class RegisterUserTest {
 
 
     @Test
-    void deveLancarExcecao_QuandoEmailJaExistir() {
+    void deveLancarExcecaoQuandoEmailJaExistir() {
 
         var userRequest = new UserRequestDTO("Arthur", "arthur@email.com", "1234", "321312321312");
-
 
         when(userRepository.existsByEmail("arthur@email.com")).thenReturn(true);
 
@@ -39,6 +39,23 @@ class RegisterUserTest {
         });
 
         assertEquals("O E-mail 'arthur@email.com' já está em uso.", exception.getMessage());
+
+        verify(userRepository, never()).save(any());
+    }
+
+
+    @Test
+    void deveLancarExcecaoQuandoTelefoneJaExistir() {
+
+        var userRequest = new UserRequestDTO("Arthur", "arthur@email.com", "1234", "321312321312");
+
+        when(userRepository.existsByPhoneNumber("321312321312")).thenReturn(true);
+
+        PhoneAlreadyExistsException exception = assertThrows(PhoneAlreadyExistsException.class, () -> {
+            registerUser.registerUser(userRequest);
+        });
+
+        assertEquals("O Telefone '321312321312' já está em uso.",exception.getMessage());
 
         verify(userRepository, never()).save(any());
     }
