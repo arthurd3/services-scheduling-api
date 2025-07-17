@@ -4,10 +4,14 @@ import com.arthur.schedulingApi.controllers.user.request.UserRequestDTO;
 import com.arthur.schedulingApi.exceptions.EmailAlreadyExistsException;
 import com.arthur.schedulingApi.exceptions.PhoneAlreadyExistsException;
 import com.arthur.schedulingApi.models.user.User;
+import com.arthur.schedulingApi.models.user.UserRoles;
 import com.arthur.schedulingApi.repositories.users.UserRepository;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.ArgumentCaptor;
+import org.mockito.Captor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -28,12 +32,16 @@ class RegisterUserTest {
     @Mock
     private PasswordEncoder passwordEncoder;
 
+    @Captor
+    private ArgumentCaptor<User> userCaptor;
+
     @Nested
     class registerUser{
 
-        @Test
-        void deveLancarExcecaoQuandoEmailJaExistir() {
 
+        @Test
+        @DisplayName("Should a exception on create user with the already exists e-mail")
+        void shouldCreateUserEmailException() {
             var userRequest = new UserRequestDTO("Arthur", "arthur@email.com", "1234", "321312321312");
 
             when(userRepository.existsByEmail("arthur@email.com")).thenReturn(true);
@@ -46,9 +54,10 @@ class RegisterUserTest {
 
             verify(userRepository, never()).save(any());
         }
-        
+
         @Test
-        void deveLancarExcecaoQuandoTelefoneJaExistir() {
+        @DisplayName("Should a exception on create user with the already exists phone")
+        void shouldCreateUserPhoneException() {
 
             var userRequest = new UserRequestDTO("Arthur", "arthur@email.com", "1234", "321312321312");
 
@@ -64,13 +73,14 @@ class RegisterUserTest {
         }
 
         @Test
-        void deveRegistrarUsuarioComSucesso_QuandoDadosSaoUnicos() {
+        @DisplayName("Should create a user if it contains an email or phone number not used")
+        void shouldCreateUser() {
+
             var requestDTO = new UserRequestDTO("Arthur", "arthur@email.com", "senha123", "1199998888");
 
             when(userRepository.existsByEmail(requestDTO.email())).thenReturn(false);
             when(userRepository.existsByPhoneNumber(requestDTO.phoneNumber())).thenReturn(false);
             when(passwordEncoder.encode("senha123")).thenReturn("senha_criptografada");
-
 
             when(userRepository.save(any(User.class))).thenAnswer(invocation -> {
                 User userToSave = invocation.getArgument(0);
@@ -80,10 +90,18 @@ class RegisterUserTest {
 
             var response = registerUser.registerUser(requestDTO);
 
+            verify(userRepository).save(userCaptor.capture());
+
+            User capturedUser = userCaptor.getValue();
+
+            assertEquals("senha_criptografada", capturedUser.getPassword());
+            assertEquals(UserRoles.USER, capturedUser.getRole());
+            assertEquals("Arthur", capturedUser.getName());
+
             assertNotNull(response);
             assertEquals(1L, response.id());
-            assertEquals("Arthur", response.name());
-            verify(userRepository).save(any(User.class));
         }
     }
+
+
 }
