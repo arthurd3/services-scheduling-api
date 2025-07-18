@@ -32,9 +32,6 @@ class FindAllUsersTest {
     @Nested
     class findAllUsers{
 
-
-
-
         @Test
         @DisplayName("Should find pageable list users")
         void shouldReturnPageableUsers() {
@@ -67,9 +64,7 @@ class FindAllUsersTest {
 
 
             // ACTION
-
             Page<UserResponseDTO> foundPage = findAllUsers.findAllUsers(pageRequest);
-
 
             // ASSERT
             assertNotNull(foundPage);
@@ -81,7 +76,25 @@ class FindAllUsersTest {
 
         }
 
+        @Test
+        @DisplayName("Should return nothing users")
+        void shouldReturnNothingUsers() {
+            //ARRANGE
+            var pageRequest = PageRequest.of(0, 5);
 
+            Page<User> emptyPage = Page.empty();
+
+            when(userRepository.findAll(pageRequest)).thenReturn(emptyPage);
+
+            // ACTION
+            Page<UserResponseDTO> foundPage = findAllUsers.findAllUsers(pageRequest);
+
+            // ASSERT
+            assertNotNull(foundPage);
+            assertTrue(foundPage.isEmpty());
+            assertEquals(0, foundPage.getTotalElements());
+            assertEquals(0, foundPage.getContent().size());
+        }
     }
 
 }
