@@ -1,5 +1,6 @@
 package com.arthur.schedulingApi.usecases.service;
 
+import com.arthur.schedulingApi.exceptions.ServiceNotFoundException;
 import com.arthur.schedulingApi.models.service.Services;
 import com.arthur.schedulingApi.models.user.User;
 import com.arthur.schedulingApi.repositories.services.ServiceRepository;
@@ -16,7 +17,7 @@ import java.util.ArrayList;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class FindServiceByIdTest {
@@ -52,6 +53,28 @@ class FindServiceByIdTest {
             assertEquals(serviceFromDb.getCapacity(), returnedService.capacity());
             assertEquals(serviceFromDb.getDescription(), returnedService.description());
             assertEquals(serviceFromDb.getCreatedAt(), returnedService.createdAt());
+
+            verify(svcRepository, times(1)).findById(serviceId);
+        }
+
+        @Test
+        @DisplayName("Should Throw a ServiceNotFoundException")
+        void shouldThrowServiceNotFoundException() {
+            //ARRANGE
+            var serviceId = 113L;
+
+            when(svcRepository.findById(serviceId)).thenReturn(Optional.empty());
+
+            //ACT
+
+            ServiceNotFoundException exception = assertThrows(
+                    ServiceNotFoundException.class, () -> serviceFindById.findById(serviceId));
+
+            //ASSERT
+            
+            assertEquals("Servico com id "+ serviceId +" nao encontrado",exception.getMessage());
+
+            verify(svcRepository, times(1)).findById(serviceId);
         }
     }
 

@@ -82,6 +82,7 @@ class EditUserTest {
             });
 
             //ASSERT
+
             assertEquals("Usuario com id " + userIdInexistente + " nao encontrado!", exception.getMessage());
         }
     }

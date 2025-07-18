@@ -70,6 +70,7 @@ class FindUserTest {
             });
 
             // ASSERT
+
             assertEquals("Usuario com id "+ userIdFind +" nao encontrado!" , exception.getMessage());
 
             verify(userRepository, times(1)).findById(userIdFind);

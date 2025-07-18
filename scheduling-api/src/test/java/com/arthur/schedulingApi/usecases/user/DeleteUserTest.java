@@ -58,6 +58,7 @@ class DeleteUserTest {
 
 
             //ASSERT
+
             assertEquals("Nao foi possivel deletar o Usuario com id " + userDeleteId, exception.getMessage());
         }
 
