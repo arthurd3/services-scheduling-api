@@ -22,13 +22,13 @@ public class EditService {
 
 
     @Transactional
-    public Optional<ServiceResponseDTO> editService(Long id ,ServiceRequestDTO serviceRequestDTO) {
+    public ServiceResponseDTO editService(Long id ,ServiceRequestDTO serviceRequestDTO) {
 
         var originalService = findServiceById.findByIdAsModel(id);
 
         var editedService = copyServiceProperties(serviceRequestDTO , originalService);
 
-        return Optional.of(serviceToResponse(editedService));
+        return serviceToResponse(editedService);
     }
 
 
