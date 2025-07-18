@@ -80,6 +80,7 @@ class FindServiceByNameTest {
 
 
             //ASSERT
+
             assertEquals("Servico com nome " + serviceFindName + " não encontrado.", exception.getMessage());
         }
     }
