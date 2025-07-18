@@ -9,7 +9,7 @@ public class DeleteById {
 
     private final ServiceRepository serviceRepository;
 
-    public DeleteById(ServiceRepository serviceRepository, FindServiceById findServiceById) {
+    public DeleteById(ServiceRepository serviceRepository) {
         this.serviceRepository = serviceRepository;
     }
 

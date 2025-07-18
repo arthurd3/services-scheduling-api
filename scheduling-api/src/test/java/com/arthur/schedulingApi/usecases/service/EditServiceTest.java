@@ -2,6 +2,8 @@ package com.arthur.schedulingApi.usecases.service;
 
 import com.arthur.schedulingApi.controllers.scheduling.request.SchedulingSlotRequestDTO;
 import com.arthur.schedulingApi.controllers.service.request.ServiceRequestDTO;
+import com.arthur.schedulingApi.exceptions.ServiceNotFoundException;
+import com.arthur.schedulingApi.exceptions.UserNotFoundException;
 import com.arthur.schedulingApi.models.service.Services;
 import com.arthur.schedulingApi.models.user.User;
 import jakarta.validation.constraints.Min;
@@ -18,6 +20,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
@@ -59,12 +62,45 @@ class EditServiceTest {
             var editedService = editService.editService(serviceId, requestServiceDTO);
 
             //ASSERT
-            
+
             assertNotNull(editedService);
             assertEquals(editedService.id() , serviceDb.getId());
             assertEquals("Consulta Apenas" , editedService.name());
             assertEquals(3 , editedService.capacity());
             assertEquals("Avaliação completa e plano alimentar." , editedService.description());
+
+        }
+
+        @Test
+        @DisplayName("Should Throw ServiceNotFoundException on edit not exist service")
+        void shouldThrowServiceNotFoundException() {
+            //ARRANGE
+
+            var serviceId = 142L;
+
+            when(findServiceById.findByIdAsModel(serviceId))
+                    .thenThrow(new ServiceNotFoundException("Servico com id "+ serviceId +" nao encontrado"));
+
+            var requestServiceDTO = new ServiceRequestDTO(
+                    "Consulta Apenas",
+                    3,
+                    "https://example.com/images/nutricao.png",
+                    "Avaliação completa e plano alimentar.",
+                    "Jf",
+                    new ArrayList<>(){}
+            );
+
+            //ACT
+
+            Exception exception = assertThrows(ServiceNotFoundException.class,
+                    () -> editService.editService(serviceId, requestServiceDTO ));
+
+
+            //ASSERT
+
+            assertNotNull(exception);
+
+            assertEquals("Servico com id "+ serviceId +" nao encontrado", exception.getMessage());
 
         }
 
