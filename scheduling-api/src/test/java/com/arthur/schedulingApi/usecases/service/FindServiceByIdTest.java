@@ -71,7 +71,7 @@ class FindServiceByIdTest {
                     ServiceNotFoundException.class, () -> serviceFindById.findById(serviceId));
 
             //ASSERT
-            
+
             assertEquals("Servico com id "+ serviceId +" nao encontrado",exception.getMessage());
 
             verify(svcRepository, times(1)).findById(serviceId);
