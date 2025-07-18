@@ -27,9 +27,6 @@ class FindUserByNameTest {
     @Mock
     private UserRepository userRepository;
 
-    @Captor
-    private ArgumentCaptor<User> userCaptor;
-
 
     @Nested
     class findUser{
