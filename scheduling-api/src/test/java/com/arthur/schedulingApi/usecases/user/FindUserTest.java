@@ -3,6 +3,7 @@ package com.arthur.schedulingApi.usecases.user;
 import com.arthur.schedulingApi.controllers.user.response.UserResponseDTO;
 import com.arthur.schedulingApi.exceptions.UserNotFoundException;
 import com.arthur.schedulingApi.models.user.User;
+import com.arthur.schedulingApi.models.user.UserRoles;
 import com.arthur.schedulingApi.repositories.users.UserRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -31,9 +32,6 @@ class FindUserTest {
     @Nested
     class findUserDTO{
 
-
-
-
         @Test
         @DisplayName("Should Find User DTO with success")
         void shouldFindUserAsDto() {
@@ -42,6 +40,7 @@ class FindUserTest {
 
             var userFounded = new User("Arthur" , "arthur_camposl@yahoo.com" , "312312312" ,"321312312452");
             userFounded.setId(1L);
+            userFounded.setRole(UserRoles.USER);
 
             when(userRepository.findById(userIdFind)).thenReturn(Optional.of(userFounded));
 
