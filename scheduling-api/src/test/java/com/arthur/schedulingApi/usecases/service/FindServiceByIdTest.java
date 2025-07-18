@@ -52,8 +52,6 @@ class FindServiceByIdTest {
             assertEquals(serviceFromDb.getCapacity(), returnedService.capacity());
             assertEquals(serviceFromDb.getDescription(), returnedService.description());
             assertEquals(serviceFromDb.getCreatedAt(), returnedService.createdAt());
-
-
         }
     }
 
@@ -62,7 +60,26 @@ class FindServiceByIdTest {
 
         @Test
         @DisplayName("Should find by id with success as Model")
-        void findByIdAsModel() {
+        void shouldFindByIdAsModel() {
+            //ARRANGE
+            var serviceId = 101L;
+            Services serviceFromDb = createTestService();
+
+            when(svcRepository.findById(serviceId)).thenReturn(Optional.of(serviceFromDb));
+
+            //ACT
+
+            var returnedService = serviceFindById.findByIdAsModel(serviceId);
+
+            //ASSERT
+
+            assertNotNull(returnedService);
+            assertEquals(serviceFromDb.getName(), returnedService.getName());
+            assertEquals(serviceFromDb.getId(), returnedService.getId());
+            assertEquals(serviceFromDb.getCapacity(), returnedService.getCapacity());
+            assertEquals(serviceFromDb.getDescription(), returnedService.getDescription());
+            assertEquals(serviceFromDb.getCreatedAt(), returnedService.getCreatedAt());
+
         }
 
     }
