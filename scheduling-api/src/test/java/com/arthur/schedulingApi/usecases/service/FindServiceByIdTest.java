@@ -105,6 +105,25 @@ class FindServiceByIdTest {
 
         }
 
+        @Test
+        @DisplayName("Should Throw ServiceNotFoundException")
+        void shouldThrowServiceNotFoundException() {
+            //ARRANGE
+            var serviceId = 113L;
+
+            when(svcRepository.findById(serviceId)).thenReturn(Optional.empty());
+
+            //ACT
+
+            ServiceNotFoundException exception = assertThrows(
+                    ServiceNotFoundException.class, () -> serviceFindById.findByIdAsModel(serviceId));
+
+            //ASSERT
+
+            assertEquals("Servico com id "+ serviceId +" nao encontrado",exception.getMessage());
+
+            verify(svcRepository, times(1)).findById(serviceId);
+        }
     }
 
 
