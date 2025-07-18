@@ -65,7 +65,7 @@ class EditUserTest {
 
 
         @Test
-        @DisplayName("Shoul UserNotFoundException erro")
+        @DisplayName("Should UserNotFoundException error")
         void shouldUserNotFoundException() {
 
             // ARRANGE
