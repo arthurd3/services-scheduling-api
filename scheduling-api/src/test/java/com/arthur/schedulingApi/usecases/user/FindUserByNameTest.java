@@ -1,6 +1,8 @@
 package com.arthur.schedulingApi.usecases.user;
 
 import com.arthur.schedulingApi.controllers.user.response.UserResponseDTO;
+import com.arthur.schedulingApi.exceptions.PhoneAlreadyExistsException;
+import com.arthur.schedulingApi.exceptions.UserNotFoundException;
 import com.arthur.schedulingApi.models.user.User;
 import com.arthur.schedulingApi.models.user.UserRoles;
 import com.arthur.schedulingApi.repositories.users.UserRepository;
@@ -53,6 +55,26 @@ class FindUserByNameTest {
 
             verify(userRepository, times(1)).findByName(searchName);
         }
+
+
+        @Test
+        @DisplayName("Should a Not Found Exception on Find User with not exists")
+        void shouldFindUserNotFoundException() {
+
+            String searchName = "Arthur";
+
+            when(userRepository.findByName(searchName)).thenReturn(Optional.empty());
+
+            UserNotFoundException exception = assertThrows(UserNotFoundException.class, () -> {
+                findUserByName.findUserByName(searchName);
+            });
+
+            assertEquals("Usuario com nome "+ searchName +" nao encontrado!",exception.getMessage());
+
+        }
+
+
+
     }
 
 
