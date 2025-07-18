@@ -17,6 +17,7 @@ import static com.arthur.schedulingApi.usecases.user.mapper.UserMapperToResponse
 public class EditUser {
 
     private final FindUser findUser;
+
     public EditUser(FindUser findUser) {
         this.findUser = findUser;
     }
