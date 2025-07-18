@@ -52,7 +52,7 @@ public class ServiceController {
 
     @PutMapping("/edit/{id}")
     public ResponseEntity<Optional<ServiceResponseDTO>> editService(@PathVariable Long id, @Valid @RequestBody ServiceRequestDTO serviceRequestDTO){
-        return ResponseEntity.ok(editService.editService(id,serviceRequestDTO));
+        return ResponseEntity.ok(Optional.of(editService.editService(id,serviceRequestDTO)));
     }
 
 }
