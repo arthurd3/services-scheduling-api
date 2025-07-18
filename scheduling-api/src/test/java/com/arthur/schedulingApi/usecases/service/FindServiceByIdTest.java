@@ -1,7 +1,5 @@
 package com.arthur.schedulingApi.usecases.service;
 
-import com.arthur.schedulingApi.exceptions.ServiceNotFoundException;
-import com.arthur.schedulingApi.models.scheduling.Scheduling;
 import com.arthur.schedulingApi.models.service.Services;
 import com.arthur.schedulingApi.models.user.User;
 import com.arthur.schedulingApi.repositories.services.ServiceRepository;
@@ -9,51 +7,42 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.ArgumentCaptor;
-import org.mockito.Captor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-class FindServiceByNameTest {
+class FindServiceByIdTest {
 
     @InjectMocks
-    private FindServiceByName findServiceByName;
+    private FindServiceById serviceFindById;
 
     @Mock
-    private ServiceRepository serviceRepository;
-
-    @Captor
-    private ArgumentCaptor<Services> serviceCaptor;
+    private ServiceRepository svcRepository;
 
     @Nested
-    class findServiceByName {
+    class findServiceByIdAsDTO {
 
         @Test
-        @DisplayName("Should return a service by name with successful")
-        void shouldFindServiceSuccessfully() {
+        @DisplayName("Should find by id with success as DTO")
+        void shouldFindByIdWithSuccess() {
             //ARRANGE
 
-            var serviceFindName = "Consulta de Nutricao";
-
+            var serviceId = 101L;
             Services serviceFromDb = createTestService();
 
-            when(serviceRepository.findByName(serviceFindName)).thenReturn(Optional.of(serviceFromDb));
+            when(svcRepository.findById(serviceId)).thenReturn(Optional.of(serviceFromDb));
 
-            //ACTION
+            //ACT
 
-            var returnedService = findServiceByName.findService(serviceFindName);
-
+            var returnedService = serviceFindById.findById(serviceId);
 
             //ASSERT
 
@@ -64,25 +53,20 @@ class FindServiceByNameTest {
             assertEquals(serviceFromDb.getDescription(), returnedService.description());
             assertEquals(serviceFromDb.getCreatedAt(), returnedService.createdAt());
 
-        }
 
-        @Test
-        @DisplayName("Should Throw a ServiceNotFoundException")
-        void shouldThrowServiceNotFoundException() {
-            //ARRANGE
-            var serviceFindName = "Consulta de Nutricao";
-
-            when(serviceRepository.findByName(serviceFindName)).thenReturn(Optional.empty());
-
-            //ACTION
-            ServiceNotFoundException exception = assertThrows(
-                    ServiceNotFoundException.class, () -> findServiceByName.findService(serviceFindName));
-
-
-            //ASSERT
-            assertEquals("Servico com nome " + serviceFindName + " não encontrado.", exception.getMessage());
         }
     }
+
+    @Nested
+    class findServiceByIdAsModel {
+
+        @Test
+        @DisplayName("Should find by id with success as Model")
+        void findByIdAsModel() {
+        }
+
+    }
+
 
     @DisplayName("Create a fake Test User")
     private User createTestUser() {

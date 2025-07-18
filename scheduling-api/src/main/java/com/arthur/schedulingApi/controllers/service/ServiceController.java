@@ -36,12 +36,12 @@ public class ServiceController {
 
     @GetMapping
     public ResponseEntity<Optional<ServiceResponseDTO>> findByNameService(@RequestParam(name = "name") String name){
-        return ResponseEntity.ok(findServiceByName.findService(name));
+        return ResponseEntity.ok(Optional.of(findServiceByName.findService(name)));
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<Optional<ServiceResponseDTO>> findByIdService(@PathVariable Long id){
-        return ResponseEntity.ok(findServiceById.findById(id));
+        return ResponseEntity.ok(Optional.of(findServiceById.findById(id)));
     }
 
     @DeleteMapping("/{id}")

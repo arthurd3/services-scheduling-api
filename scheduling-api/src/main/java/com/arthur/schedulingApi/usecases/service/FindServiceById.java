@@ -19,11 +19,10 @@ public class FindServiceById {
         this.serviceRepository = serviceRepository;
     }
 
-    public Optional<ServiceResponseDTO> findById(Long id){
+    public ServiceResponseDTO findById(Long id){
         var findService = serviceRepository.findById(id)
                 .orElseThrow(() -> new ServiceNotFoundException("Servico com id "+ id +" nao encontrado"));
-
-        return Optional.of(serviceToResponse(findService));
+        return serviceToResponse(findService);
     }
 
     public Services findByIdAsModel(Long id){
