@@ -5,6 +5,7 @@ import com.arthur.schedulingApi.controllers.ApiResponseDTO;
 import com.arthur.schedulingApi.controllers.user.response.UserResponseDTO;
 import com.arthur.schedulingApi.usecases.user.*;
 import jakarta.validation.Valid;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -35,7 +36,7 @@ public class UserController {
     }
 
     @GetMapping("/findAll")
-    public ResponseEntity<List<UserResponseDTO>> findAllUsers(@RequestParam(value = "page", defaultValue = "0") int page,
+    public ResponseEntity<Page<UserResponseDTO>> findAllUsers(@RequestParam(value = "page", defaultValue = "0") int page,
                                                               @RequestParam(value = "size", defaultValue = "5") int size) {
         return ResponseEntity.ok(findAllUsers.findAllUsers(PageRequest.of(page, size)));
     }

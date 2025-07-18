@@ -1,15 +1,13 @@
 package com.arthur.schedulingApi.usecases.user;
 
 import com.arthur.schedulingApi.controllers.user.response.UserResponseDTO;
-import com.arthur.schedulingApi.exceptions.UserNotFoundException;
+import com.arthur.schedulingApi.models.user.User;
 import com.arthur.schedulingApi.repositories.users.UserRepository;
 
 import com.arthur.schedulingApi.usecases.user.mapper.UserMapperToResponse;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class FindAllUsers {
@@ -20,10 +18,10 @@ public class FindAllUsers {
         this.userRepository = userRepository;
     }
 
-    public List<UserResponseDTO> findAllUsers(PageRequest pageRequest){
-        var pageToResponse = userRepository.findAll(pageRequest);
-        return pageToResponse.map(UserMapperToResponse::userToResponse)
-                .stream()
-                .collect(Collectors.toList());
+    public Page<UserResponseDTO> findAllUsers(PageRequest pageRequest){
+
+        Page<User> userPage = userRepository.findAll(pageRequest);
+        return userPage.map(UserMapperToResponse::userToResponse);
+
     }
 }
