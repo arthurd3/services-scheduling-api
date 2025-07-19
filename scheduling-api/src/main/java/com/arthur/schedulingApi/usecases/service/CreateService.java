@@ -6,10 +6,7 @@ import com.arthur.schedulingApi.exceptions.UserNotFoundException;
 import com.arthur.schedulingApi.models.user.User;
 import com.arthur.schedulingApi.repositories.services.ServiceRepository;
 import com.arthur.schedulingApi.security.userAuth.AuthenticatedUserService;
-import com.arthur.schedulingApi.usecases.user.FindUser;
 import org.springframework.stereotype.Service;
-
-import java.util.Optional;
 
 import static com.arthur.schedulingApi.usecases.service.mapper.ServiceToModel.serviceToModel;
 import static com.arthur.schedulingApi.usecases.service.mapper.ServiceToResponse.serviceToResponse;
@@ -28,9 +25,6 @@ public class CreateService {
     public ServiceResponseDTO createService(ServiceRequestDTO serviceRequestDTO) {
 
         User ownerUser = authenticatedUserService.getAuthenticatedUser();
-
-        if(ownerUser != authenticatedUserService.getAuthenticatedUser())
-            throw new UserNotFoundException("O Usuario precisa estar autenticado");
 
         var serviceModel = serviceToModel(serviceRequestDTO);
         serviceModel.setOwner(ownerUser);
