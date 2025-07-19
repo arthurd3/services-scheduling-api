@@ -31,7 +31,7 @@ public class ServiceController {
 
     @PostMapping("/create")
     public ResponseEntity<Optional<ServiceResponseDTO>> createService(@RequestBody @Valid ServiceRequestDTO serviceRequestDTO){
-        return ResponseEntity.status(HttpStatus.CREATED).body(createService.createService(serviceRequestDTO));
+        return ResponseEntity.status(HttpStatus.CREATED).body(Optional.of(createService.createService(serviceRequestDTO)));
     }
 
     @GetMapping
