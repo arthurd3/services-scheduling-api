@@ -1,6 +1,7 @@
 package com.arthur.schedulingApi.usecases.service;
 
 import com.arthur.schedulingApi.controllers.service.request.ServiceRequestDTO;
+import com.arthur.schedulingApi.exceptions.UserNotFoundException;
 import com.arthur.schedulingApi.models.service.Services;
 import com.arthur.schedulingApi.models.user.User;
 import com.arthur.schedulingApi.models.user.UserRoles;
@@ -18,8 +19,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.mockito.ArgumentMatchers.any;
@@ -80,6 +80,29 @@ class CreateServiceTest {
 
     }
 
+    @Test
+    @DisplayName("Should Throw a UserNotFoundException")
+    void  shouldThrowUserNotFoundException() {
+        //ARRANGE
+        var requestServiceDTO = new ServiceRequestDTO(
+                "Consulta Apenas",
+                3,
+                "https://example.com/images/nutricao.png",
+                "Avaliação completa e plano alimentar.",
+                "Jf",
+                new ArrayList<>(){}
+        );
+
+        when(authenticatedUserService.getAuthenticatedUser())
+                .thenThrow(new UserNotFoundException("O Usuario precisa estar autenticado"));
+
+        //ACT
+
+        UserNotFoundException exception = assertThrows(
+                UserNotFoundException.class , () -> createService.createService(requestServiceDTO));
+
+        assertEquals("O Usuario precisa estar autenticado", exception.getMessage());
+    }
 
 
     @DisplayName("Create a fake Test User")
@@ -92,20 +115,4 @@ class CreateServiceTest {
         return user;
     }
 
-    @DisplayName("Create a fake Test Service")
-    private Services createTestService() {
-        Services service = new Services();
-
-        service.setId(101L);
-        service.setName("Consulta de Nutrição");
-        service.setCapacity(1);
-        service.setDescription("Avaliação completa e plano alimentar personalizado.");
-        service.setLocation("Atendimento Online via Google Meet");
-        service.setUrl_image("https://example.com/images/nutricao.png");
-        service.setOwner(createTestUser());
-        service.setScheduling(new ArrayList<>());
-        service.setCreatedAt(LocalDateTime.now());
-
-        return service;
-    }
 }
