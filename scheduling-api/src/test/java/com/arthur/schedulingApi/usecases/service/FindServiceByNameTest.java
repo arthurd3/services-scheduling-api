@@ -5,6 +5,7 @@ import com.arthur.schedulingApi.models.scheduling.Scheduling;
 import com.arthur.schedulingApi.models.service.Services;
 import com.arthur.schedulingApi.models.user.User;
 import com.arthur.schedulingApi.repositories.services.ServiceRepository;
+import com.arthur.schedulingApi.usecases.factory.TestDataFactory;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -46,7 +47,7 @@ class FindServiceByNameTest {
 
             var serviceFindName = "Consulta de Nutricao";
 
-            Services serviceFromDb = createTestService();
+            Services serviceFromDb = TestDataFactory.createTestService();
 
             when(serviceRepository.findByName(serviceFindName)).thenReturn(Optional.of(serviceFromDb));
 
@@ -85,30 +86,4 @@ class FindServiceByNameTest {
         }
     }
 
-    @DisplayName("Create a fake Test User")
-    private User createTestUser() {
-        User user = new User();
-
-        user.setId(1L);
-        user.setName("Arthur - O Profissional");
-
-        return user;
-    }
-
-    @DisplayName("Create a fake Test Service")
-    private Services createTestService() {
-        Services service = new Services();
-
-        service.setId(101L);
-        service.setName("Consulta de Nutrição");
-        service.setCapacity(1);
-        service.setDescription("Avaliação completa e plano alimentar personalizado.");
-        service.setLocation("Atendimento Online via Google Meet");
-        service.setUrl_image("https://example.com/images/nutricao.png");
-        service.setOwner(createTestUser());
-        service.setScheduling(new ArrayList<>());
-        service.setCreatedAt(LocalDateTime.now());
-
-        return service;
-    }
 }

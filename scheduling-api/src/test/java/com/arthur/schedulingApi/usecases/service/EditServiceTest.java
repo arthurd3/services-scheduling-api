@@ -6,6 +6,7 @@ import com.arthur.schedulingApi.exceptions.ServiceNotFoundException;
 import com.arthur.schedulingApi.exceptions.UserNotFoundException;
 import com.arthur.schedulingApi.models.service.Services;
 import com.arthur.schedulingApi.models.user.User;
+import com.arthur.schedulingApi.usecases.factory.TestDataFactory;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -44,7 +45,7 @@ class EditServiceTest {
             //ARRANGE
 
             long serviceId = 1L;
-            var serviceDb = createTestService();
+            var serviceDb = TestDataFactory.createTestService();
 
             var requestServiceDTO = new ServiceRequestDTO(
                     "Consulta Apenas",
@@ -107,30 +108,4 @@ class EditServiceTest {
     }
 
 
-    @DisplayName("Create a fake Test User")
-    private User createTestUser() {
-        User user = new User();
-
-        user.setId(1L);
-        user.setName("Arthur - O Profissional");
-
-        return user;
-    }
-
-    @DisplayName("Create a fake Test Service")
-    private Services createTestService() {
-        Services service = new Services();
-
-        service.setId(101L);
-        service.setName("Consulta de Nutrição");
-        service.setCapacity(1);
-        service.setDescription("Avaliação completa e plano alimentar personalizado.");
-        service.setLocation("Atendimento Online via Google Meet");
-        service.setUrl_image("https://example.com/images/nutricao.png");
-        service.setOwner(createTestUser());
-        service.setScheduling(new ArrayList<>());
-        service.setCreatedAt(LocalDateTime.now());
-
-        return service;
-    }
 }

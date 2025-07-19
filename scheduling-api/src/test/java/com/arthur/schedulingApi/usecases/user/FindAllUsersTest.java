@@ -4,6 +4,7 @@ import com.arthur.schedulingApi.controllers.user.response.UserResponseDTO;
 import com.arthur.schedulingApi.models.user.User;
 import com.arthur.schedulingApi.models.user.UserRoles;
 import com.arthur.schedulingApi.repositories.users.UserRepository;
+import com.arthur.schedulingApi.usecases.factory.TestDataFactory;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -39,7 +40,7 @@ class FindAllUsersTest {
             //ARRANGE
             var pageRequest = PageRequest.of(0, 5);
 
-            List<User> userList = createdUsers();
+            List<User> userList = TestDataFactory.createdListOfUsers();
 
             List<User> pageContent = userList.subList(0, 5);
 
@@ -82,26 +83,5 @@ class FindAllUsersTest {
         }
     }
 
-    @DisplayName("Create a User List for test")
-    private List<User> createdUsers()
-    {
-        List<User> userList = List.of(
-                new User("Carlos Silva", "carlos.silva@email.com", "senhaHash1", "32991234567"),
-                new User("Beatriz Costa", "beatriz.costa@email.com", "senhaHash2", "21987654321"),
-                new User("Fernanda Lima", "fernanda.lima@email.com", "senhaHash3", "11988887777"),
-                new User("Ricardo Souza", "ricardo.souza@email.com", "senhaHash4", "41977778888"),
-                new User("Juliana Alves", "juliana.alves@email.com", "senhaHash5", "85966665555"),
-                new User("Admin Principal", "admin@schedulingapi.com", "senhaHashAdmin", "99999999999")
-        );
-
-        userList.get(0).setRole(UserRoles.USER);
-        userList.get(1).setRole(UserRoles.USER);
-        userList.get(2).setRole(UserRoles.USER);
-        userList.get(3).setRole(UserRoles.USER);
-        userList.get(4).setRole(UserRoles.USER);
-        userList.get(5).setRole(UserRoles.USER);
-
-        return userList;
-    }
 
 }

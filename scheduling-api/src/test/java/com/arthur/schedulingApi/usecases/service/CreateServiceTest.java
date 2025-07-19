@@ -7,6 +7,7 @@ import com.arthur.schedulingApi.models.user.User;
 import com.arthur.schedulingApi.models.user.UserRoles;
 import com.arthur.schedulingApi.repositories.services.ServiceRepository;
 import com.arthur.schedulingApi.security.userAuth.AuthenticatedUserService;
+import com.arthur.schedulingApi.usecases.factory.TestDataFactory;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -44,7 +45,7 @@ class CreateServiceTest {
     void shouldCreateService() {
         //ARRANGE
 
-        var userAuth = createTestUser();
+        var userAuth = TestDataFactory.createTestUser();
         var requestServiceDTO = new ServiceRequestDTO(
                 "Consulta Apenas",
                 3,
@@ -107,14 +108,6 @@ class CreateServiceTest {
     }
 
 
-    @DisplayName("Create a fake Test User")
-    private User createTestUser() {
-        User user = new User();
 
-        user.setId(1L);
-        user.setName("Arthur - O Profissional");
-
-        return user;
-    }
 
 }
