@@ -101,6 +101,8 @@ class CreateServiceTest {
         UserNotFoundException exception = assertThrows(
                 UserNotFoundException.class , () -> createService.createService(requestServiceDTO));
 
+
+        //ASSERT
         assertEquals("O Usuario precisa estar autenticado", exception.getMessage());
     }
 
