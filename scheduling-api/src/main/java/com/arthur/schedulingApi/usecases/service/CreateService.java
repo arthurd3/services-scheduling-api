@@ -25,15 +25,18 @@ public class CreateService {
         this.authenticatedUserService = authenticatedUserService;
     }
 
-    public Optional<ServiceResponseDTO> createService(ServiceRequestDTO serviceRequestDTO) {
+    public ServiceResponseDTO createService(ServiceRequestDTO serviceRequestDTO) {
 
         User ownerUser = authenticatedUserService.getAuthenticatedUser();
+
+        if(ownerUser != authenticatedUserService.getAuthenticatedUser())
+            throw new UserNotFoundException("O Usuario precisa estar autenticado");
 
         var serviceModel = serviceToModel(serviceRequestDTO);
         serviceModel.setOwner(ownerUser);
 
         var savedService = serviceRepository.save(serviceModel);
 
-        return Optional.of(serviceToResponse(savedService));
+        return serviceToResponse(savedService);
     }
 }
