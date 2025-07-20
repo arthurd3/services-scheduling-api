@@ -1,6 +1,7 @@
 package com.arthur.schedulingApi.usecases.scheduling;
 
 import com.arthur.schedulingApi.controllers.scheduling.request.SchedulingSlotRequestDTO;
+import com.arthur.schedulingApi.exceptions.ServiceNotFoundException;
 import com.arthur.schedulingApi.models.scheduling.Scheduling;
 import com.arthur.schedulingApi.models.scheduling.SchedulingStatus;
 import com.arthur.schedulingApi.models.user.User;
@@ -75,6 +76,21 @@ class CreateSchedulingTest {
             var schedulingResponse = schedulingResponseOptional.get();
             assertEquals(301L, schedulingResponse.id());
             assertEquals(startTime, schedulingResponse.startTime());
+        }
+
+
+        @Test
+        @DisplayName("Should Throw ServiceNotFoundException")
+        void shouldThrowServiceNotFoundException() {
+             var serviceId = 104L;
+
+             when(findServiceById.findByIdAsModel(serviceId))
+                     .thenThrow(new ServiceNotFoundException("Servico com id "+ serviceId +" nao encontrado"));
+
+             ServiceNotFoundException exception = assertThrows(
+                     ServiceNotFoundException.class, () -> createScheduling.createScheduling(null, serviceId));
+
+             assertEquals("Servico com id "+ serviceId +" nao encontrado" , exception.getMessage());
         }
 
     }

@@ -2,7 +2,6 @@ package com.arthur.schedulingApi.usecases.scheduling;
 
 import com.arthur.schedulingApi.controllers.scheduling.request.UpdateStatusRequestDTO;
 import com.arthur.schedulingApi.controllers.scheduling.response.SchedulingResponseDTO;
-import com.arthur.schedulingApi.exceptions.SchedulingNotFoundException;
 import com.arthur.schedulingApi.models.scheduling.Scheduling;
 import com.arthur.schedulingApi.models.scheduling.SchedulingStatus;
 import jakarta.transaction.Transactional;
