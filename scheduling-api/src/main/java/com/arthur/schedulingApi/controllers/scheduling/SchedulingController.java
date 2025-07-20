@@ -6,6 +6,7 @@ import com.arthur.schedulingApi.controllers.scheduling.request.UpdateStatusReque
 import com.arthur.schedulingApi.controllers.scheduling.response.SchedulingResponseDTO;
 import com.arthur.schedulingApi.usecases.scheduling.*;
 import jakarta.validation.Valid;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -44,11 +45,9 @@ public class SchedulingController {
         return ResponseEntity.ok(Optional.of(findScheduling.findScheduling(id)));
     }
 
-    @GetMapping("/user/{userId}")
-    public ResponseEntity<List<SchedulingResponseDTO>> findUserScheduling(@PathVariable(name = "userId") Long id ,
-                                                                           @RequestParam(value = "page", defaultValue = "0") int page,
-                                                                           @RequestParam(value = "size", defaultValue = "5") int size) {
-        return ResponseEntity.ok(findUserScheduling.findUserScheduling(id , PageRequest.of(page , size)));
+    @GetMapping("/user")
+    public ResponseEntity<Page<SchedulingResponseDTO>> findUserScheduling(@RequestParam(value = "page", defaultValue = "0") int page) {
+        return ResponseEntity.ok(findUserScheduling.findUserScheduling(page));
     }
 
     @DeleteMapping("/{id}")
