@@ -95,7 +95,7 @@ class CreateServiceTest {
         );
 
         when(authenticatedUserService.getAuthenticatedUser())
-                .thenThrow(new UserNotFoundException("O Usuario precisa estar autenticado"));
+                .thenThrow(new UserNotFoundException("Nenhum usuário autenticado encontrado ou o tipo da autenticação é inválido."));
 
         //ACT
 
@@ -104,10 +104,7 @@ class CreateServiceTest {
 
 
         //ASSERT
-        assertEquals("O Usuario precisa estar autenticado", exception.getMessage());
+        assertEquals("Nenhum usuário autenticado encontrado ou o tipo da autenticação é inválido.", exception.getMessage());
     }
-
-
-
 
 }
