@@ -22,9 +22,9 @@ public class ChangeStatusScheduling {
 
         Scheduling schedulingToUpdate = findScheduling.findSchedulingAsModel(idScheduling);
 
-        SchedulingStatus newStatus = status.newStatus();
+        SchedulingStatus updateStatus = status.newStatus();
 
-        schedulingToUpdate.setStatus(newStatus);
+        schedulingToUpdate.setStatus(updateStatus);
 
         return schedulingToResponse(schedulingToUpdate);
     }
