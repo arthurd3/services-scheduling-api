@@ -22,11 +22,9 @@ public class FindUserScheduling {
         this.authenticatedUserService = authenticatedUserService;
     }
 
-    public Page<SchedulingResponseDTO> findUserScheduling( Integer page) {
-
+    public Page<SchedulingResponseDTO> findUserScheduling(Pageable pageable) {
         Long userId = authenticatedUserService.getAuthenticatedUser().getId();
 
-        Pageable pageable = PageRequest.of(page, 10);
         Page<Scheduling> schedulingPage = schedulingRepository.findByClientId(userId, pageable);
 
         return schedulingPage

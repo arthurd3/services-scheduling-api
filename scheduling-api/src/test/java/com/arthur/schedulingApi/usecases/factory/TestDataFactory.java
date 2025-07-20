@@ -10,6 +10,7 @@ import org.junit.jupiter.api.DisplayName;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 
@@ -37,8 +38,10 @@ public class TestDataFactory {
         user.setName("Arthur - O Profissional");
         user.setEmail("profissional@email.com");
         user.setRole(UserRoles.MANAGER);
+        user.setPhoneNumber("3123123412412412");
         return user;
     }
+
 
     @DisplayName("Create a Service for test")
     public static Services createTestService() {
@@ -93,5 +96,50 @@ public class TestDataFactory {
 
         return userList;
     }
+
+    @DisplayName("Create a List of Schedulings for test")
+    public static List<Scheduling> createListOfSchedulings() {
+
+        Services parentService = createTestService();
+        User client1 = createRandomUserTest();
+        User client2 = createRandomUserTest();
+
+
+        Scheduling scheduling1_booked = new Scheduling();
+        scheduling1_booked.setId(201L);
+        scheduling1_booked.setServices(parentService);
+        scheduling1_booked.setStartTime(LocalDateTime.now().plusDays(2).withHour(9).withMinute(0).withNano(0));
+        scheduling1_booked.setEndTime(LocalDateTime.now().plusDays(2).withHour(10).withMinute(0).withNano(0));
+        scheduling1_booked.setStatus(SchedulingStatus.BOOKED);
+        scheduling1_booked.setClient(client1);
+
+        Scheduling scheduling2_booked = new Scheduling();
+        scheduling2_booked.setId(202L);
+        scheduling2_booked.setServices(parentService);
+        scheduling2_booked.setStartTime(LocalDateTime.now().plusDays(2).withHour(10).withMinute(0).withNano(0));
+        scheduling2_booked.setEndTime(LocalDateTime.now().plusDays(2).withHour(11).withMinute(0).withNano(0));
+        scheduling2_booked.setStatus(SchedulingStatus.BOOKED);
+        scheduling2_booked.setClient(client2);
+
+        Scheduling scheduling3_available = new Scheduling();
+        scheduling3_available.setId(203L);
+        scheduling3_available.setServices(parentService);
+        scheduling3_available.setStartTime(LocalDateTime.now().plusDays(2).withHour(11).withMinute(0).withNano(0));
+        scheduling3_available.setEndTime(LocalDateTime.now().plusDays(2).withHour(12).withMinute(0).withNano(0));
+        scheduling3_available.setStatus(SchedulingStatus.AVAILABLE);
+        scheduling3_available.setClient(null);
+
+        Scheduling scheduling4_past = new Scheduling();
+        scheduling4_past.setId(204L);
+        scheduling4_past.setServices(parentService);
+        scheduling4_past.setStartTime(LocalDateTime.now().minusDays(1).withHour(15).withMinute(0).withNano(0));
+        scheduling4_past.setEndTime(LocalDateTime.now().minusDays(1).withHour(16).withMinute(0).withNano(0));
+        scheduling4_past.setStatus(SchedulingStatus.COMPLETED);
+        scheduling4_past.setClient(client1);
+
+        return new ArrayList<>(Arrays.asList(scheduling1_booked, scheduling2_booked, scheduling3_available, scheduling4_past));
+    }
+
+
 
 }

@@ -45,9 +45,11 @@ public class SchedulingController {
         return ResponseEntity.ok(Optional.of(findScheduling.findScheduling(id)));
     }
 
-    @GetMapping("/user")
-    public ResponseEntity<Page<SchedulingResponseDTO>> findUserScheduling(@RequestParam(value = "page", defaultValue = "0") int page) {
-        return ResponseEntity.ok(findUserScheduling.findUserScheduling(page));
+    @GetMapping("/user/{userId}")
+    public ResponseEntity<Page<SchedulingResponseDTO>> findUserScheduling(@PathVariable(name = "userId") Long id ,
+                                                                          @RequestParam(value = "page", defaultValue = "0") int page,
+                                                                          @RequestParam(value = "size", defaultValue = "5") int size) {
+        return ResponseEntity.ok(findUserScheduling.findUserScheduling(PageRequest.of(page , size)));
     }
 
     @DeleteMapping("/{id}")
