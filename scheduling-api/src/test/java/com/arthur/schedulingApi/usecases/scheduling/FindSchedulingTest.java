@@ -1,9 +1,7 @@
 package com.arthur.schedulingApi.usecases.scheduling;
 
-import com.arthur.schedulingApi.models.scheduling.Scheduling;
 import com.arthur.schedulingApi.repositories.scheduling.SchedulingRepository;
 import com.arthur.schedulingApi.usecases.factory.TestDataFactory;
-import org.hibernate.validator.constraints.ru.INN;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -30,7 +28,7 @@ class FindSchedulingTest {
     class findScheduling{
 
         @Test
-        @DisplayName("Find Scheduling with success")
+        @DisplayName("Find Scheduling Response with success")
         void shouldFindSchedulingWithSuccess() {
             var client = TestDataFactory.createTestUser();
             var newService = TestDataFactory.createTestService();
@@ -52,7 +50,25 @@ class FindSchedulingTest {
         }
 
         @Test
+        @DisplayName("Find Scheduling Entity with success")
         void shouldFindSchedulingAsModelWithSuccess() {
+            var client = TestDataFactory.createTestUser();
+            var newService = TestDataFactory.createTestService();
+            var newScheduling = TestDataFactory.createTestScheduling(newService);
+            newScheduling.setClient(client);
+            var schedulingId = newScheduling.getId();
+
+            when(schedulingRepository.findById(schedulingId)).thenReturn(Optional.of(newScheduling));
+
+            var schedulingFound = findScheduling.findSchedulingAsModel(schedulingId);
+
+            assertNotNull(schedulingFound);
+            assertEquals(newScheduling.getClient().getId(), schedulingFound.getClient().getId());
+            assertEquals(newScheduling.getClient().getName(), schedulingFound.getClient().getName());
+            assertEquals(newScheduling.getStatus(), schedulingFound.getStatus());
+            assertEquals(newScheduling.getStartTime(), schedulingFound.getStartTime());
+            assertEquals(newScheduling.getEndTime(), schedulingFound.getEndTime());
+            assertEquals(newScheduling.getServices().getId() , schedulingFound.getServices().getId());
         }
 
     }
