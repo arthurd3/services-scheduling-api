@@ -25,14 +25,16 @@ public class SchedulingController {
     private final DeleteScheduling deleteScheduling;
     private final ChangeStatusScheduling changeStatusScheduling;
     private final JoinScheduling joinScheduling;
+    private final EditScheduling editScheduling;
 
-    public SchedulingController(CreateScheduling createScheduling, FindScheduling findScheduling, FindUserScheduling findUserScheduling, DeleteScheduling deleteScheduling, ChangeStatusScheduling changeStatusScheduling, JoinScheduling joinScheduling) {
+    public SchedulingController(CreateScheduling createScheduling, FindScheduling findScheduling, FindUserScheduling findUserScheduling, DeleteScheduling deleteScheduling, ChangeStatusScheduling changeStatusScheduling, JoinScheduling joinScheduling, EditScheduling editScheduling) {
         this.createScheduling = createScheduling;
         this.findScheduling = findScheduling;
         this.findUserScheduling = findUserScheduling;
         this.deleteScheduling = deleteScheduling;
         this.changeStatusScheduling = changeStatusScheduling;
         this.joinScheduling = joinScheduling;
+        this.editScheduling = editScheduling;
     }
 
     @PostMapping("/{serviceId}/create")
@@ -45,9 +47,15 @@ public class SchedulingController {
         return ResponseEntity.ok(Optional.of(findScheduling.findScheduling(id)));
     }
 
-    @GetMapping("/user/{userId}")
-    public ResponseEntity<Page<SchedulingResponseDTO>> findUserScheduling(@PathVariable(name = "userId") Long id ,
-                                                                          @RequestParam(value = "page", defaultValue = "0") int page,
+    @PatchMapping("/{id}")
+    public ResponseEntity<Optional<SchedulingResponseDTO>> editSchedulingById(@PathVariable Long id ,
+                                                                              @RequestBody SchedulingSlotRequestDTO schedulingSlotRequestDTO) {
+        return ResponseEntity.ok(Optional.of(editScheduling.editScheduling(id , schedulingSlotRequestDTO)));
+
+    }
+
+    @GetMapping("/userScheduling")
+    public ResponseEntity<Page<SchedulingResponseDTO>> findUserScheduling(@RequestParam(value = "page", defaultValue = "0") int page,
                                                                           @RequestParam(value = "size", defaultValue = "5") int size) {
         return ResponseEntity.ok(findUserScheduling.findUserScheduling(PageRequest.of(page , size)));
     }

@@ -1,5 +1,7 @@
 package com.arthur.schedulingApi.utilities.copyproperties;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 public class GetUpdateValue {
@@ -12,6 +14,12 @@ public class GetUpdateValue {
 
         if (newValue instanceof String) {
             if (((String) newValue).isBlank()) {
+                return oldValue;
+            }
+        }
+
+        if(newValue instanceof LocalDate) {
+            if(((String) newValue).isBlank()) {
                 return oldValue;
             }
         }
