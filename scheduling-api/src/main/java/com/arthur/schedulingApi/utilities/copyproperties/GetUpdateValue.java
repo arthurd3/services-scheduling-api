@@ -18,11 +18,6 @@ public class GetUpdateValue {
             }
         }
 
-        if(newValue instanceof LocalDate) {
-            if(((String) newValue).isBlank()) {
-                return oldValue;
-            }
-        }
 
         return newValue;
     }

@@ -18,9 +18,16 @@ public class EditScheduling {
     }
 
     @Transactional
-    public SchedulingResponseDTO editScheduling(Long id , SchedulingSlotRequestDTO schedulingSlotRequestDTO) {
+    public SchedulingResponseDTO editSchedulingTime(Long id , SchedulingSlotRequestDTO schedulingSlotRequestDTO) {
         var schedulingOriginal = findScheduling.findSchedulingAsModel(id);
-        copyProperties(schedulingOriginal, schedulingSlotRequestDTO);
+
+        if (schedulingSlotRequestDTO.startTime() != null) {
+            schedulingOriginal.setStartTime(schedulingSlotRequestDTO.startTime());
+        }
+        if (schedulingSlotRequestDTO.endTime() != null) {
+            schedulingOriginal.setEndTime(schedulingSlotRequestDTO.endTime());
+        }
+
         return schedulingToResponse(schedulingOriginal);
     }
 }

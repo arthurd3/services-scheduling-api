@@ -47,11 +47,10 @@ public class SchedulingController {
         return ResponseEntity.ok(Optional.of(findScheduling.findScheduling(id)));
     }
 
-    @PatchMapping("/{id}")
-    public ResponseEntity<Optional<SchedulingResponseDTO>> editSchedulingById(@PathVariable Long id ,
+    @PatchMapping("/{id}/time")
+    public ResponseEntity<Optional<SchedulingResponseDTO>> editSchedulingTimeById(@PathVariable Long id ,
                                                                               @RequestBody SchedulingSlotRequestDTO schedulingSlotRequestDTO) {
-        return ResponseEntity.ok(Optional.of(editScheduling.editScheduling(id , schedulingSlotRequestDTO)));
-
+        return ResponseEntity.ok(Optional.of(editScheduling.editSchedulingTime(id , schedulingSlotRequestDTO)));
     }
 
     @GetMapping("/userScheduling")
