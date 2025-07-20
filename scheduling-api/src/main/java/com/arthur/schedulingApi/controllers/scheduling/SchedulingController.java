@@ -49,7 +49,7 @@ public class SchedulingController {
 
     @PatchMapping("/{id}/time")
     public ResponseEntity<Optional<SchedulingResponseDTO>> editSchedulingTimeById(@PathVariable Long id ,
-                                                                              @RequestBody SchedulingSlotRequestDTO schedulingSlotRequestDTO) {
+                                                                                  @RequestBody SchedulingSlotRequestDTO schedulingSlotRequestDTO) {
         return ResponseEntity.ok(Optional.of(editScheduling.editSchedulingTime(id , schedulingSlotRequestDTO)));
     }
 

@@ -6,7 +6,6 @@ import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import static com.arthur.schedulingApi.usecases.scheduling.mapper.SchedulingToResponse.schedulingToResponse;
-import static com.arthur.schedulingApi.utilities.copyproperties.SchedulingCopyProperties.copyProperties;
 
 @Service
 public class EditScheduling {
