@@ -1,5 +1,7 @@
 package com.arthur.schedulingApi.usecases.factory;
 
+import com.arthur.schedulingApi.models.scheduling.Scheduling;
+import com.arthur.schedulingApi.models.scheduling.SchedulingStatus;
 import com.arthur.schedulingApi.models.service.Services;
 import com.arthur.schedulingApi.models.user.User;
 import com.arthur.schedulingApi.models.user.UserRoles;
@@ -36,6 +38,22 @@ public class TestDataFactory {
         service.setCreatedAt(LocalDateTime.now());
         return service;
     }
+
+    @DisplayName("Create a Scheduling for Test")
+    public static Scheduling createTestScheduling(Services service) {
+
+        Scheduling scheduling = new Scheduling();
+
+        scheduling.setId(201L);
+        scheduling.setStartTime(LocalDateTime.now().plusDays(1).withHour(14).withMinute(0));
+        scheduling.setEndTime(LocalDateTime.now().plusDays(1).withHour(15).withMinute(0));
+        scheduling.setStatus(SchedulingStatus.AVAILABLE);
+        scheduling.setServices(service);
+        scheduling.setClient(null);
+
+        return scheduling;
+    }
+
 
 
     @DisplayName("Create a List<User> with size 6 for test")

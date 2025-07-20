@@ -53,7 +53,8 @@ public class Scheduling {
         this.status = status;
     }
 
-    public void getStatus(SchedulingStatus status) {
-        this.status = status;
+    public SchedulingStatus getStatus() {
+        return this.status;
     }
+
 }
