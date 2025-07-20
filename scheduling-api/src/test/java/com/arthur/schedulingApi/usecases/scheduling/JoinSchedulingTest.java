@@ -1,6 +1,8 @@
 package com.arthur.schedulingApi.usecases.scheduling;
 
 import com.arthur.schedulingApi.models.scheduling.Scheduling;
+import com.arthur.schedulingApi.models.scheduling.SchedulingStatus;
+import com.arthur.schedulingApi.models.user.UserRoles;
 import com.arthur.schedulingApi.security.userAuth.AuthenticatedUserService;
 import com.arthur.schedulingApi.usecases.factory.TestDataFactory;
 import org.junit.jupiter.api.DisplayName;
@@ -18,7 +20,7 @@ import static org.mockito.Mockito.when;
 class JoinSchedulingTest {
 
     @InjectMocks
-    private JoinScheduling createService;
+    private JoinScheduling joinScheduling;
 
     @Mock
     private AuthenticatedUserService authenticatedUserService;
@@ -38,11 +40,25 @@ class JoinSchedulingTest {
             var schedulingIdJoin = 201L;
 
             var newService = TestDataFactory.createTestService();
+
+            var user = TestDataFactory.createRandomUserTest();
+
             var newScheduling = TestDataFactory.createTestScheduling(newService);
 
             when(findScheduling.findSchedulingAsModel(schedulingIdJoin)).thenReturn(newScheduling);
+            when(authenticatedUserService.getAuthenticatedUser()).thenReturn(user);
 
             //ACT
+
+            var schedulingResponse = joinScheduling.joinScheduling(schedulingIdJoin);
+
+            //ASSERTION
+
+            assertNotNull(schedulingResponse);
+
+            assertEquals(schedulingResponse.client().id() , user.getId());
+            assertEquals(SchedulingStatus.BOOKED , schedulingResponse.status());
+            assertEquals(schedulingResponse.service().id() , newService.getId());
 
 
 
