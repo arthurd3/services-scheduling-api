@@ -26,6 +26,7 @@ public class JoinScheduling {
     public SchedulingResponseDTO joinScheduling(Long id) {
 
         var client = authenticatedUserService.getAuthenticatedUser();
+
         var scheduling = findScheduling.findSchedulingAsModel(id);
 
         if (scheduling.getStatus() != SchedulingStatus.AVAILABLE) {

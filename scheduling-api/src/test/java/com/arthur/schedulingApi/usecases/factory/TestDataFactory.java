@@ -5,14 +5,30 @@ import com.arthur.schedulingApi.models.scheduling.SchedulingStatus;
 import com.arthur.schedulingApi.models.service.Services;
 import com.arthur.schedulingApi.models.user.User;
 import com.arthur.schedulingApi.models.user.UserRoles;
+import com.github.javafaker.Faker;
 import org.junit.jupiter.api.DisplayName;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
+
 
 @DisplayName("Factory from create Objects for Test")
 public class TestDataFactory {
+
+    private static final Faker FAKER = new Faker(new Locale("pt-BR"));
+
+    @DisplayName("Create a random User for test")
+    public static User createRandomUserTest() {
+        User user = new User();
+        user.setId(FAKER.number().randomNumber());
+        user.setName(FAKER.name().fullName());
+        user.setEmail(FAKER.internet().emailAddress());
+        user.setPhoneNumber(FAKER.phoneNumber().cellPhone().replaceAll("[^0-9]", ""));
+        user.setRole(UserRoles.USER);
+        return user;
+    }
 
     @DisplayName("Create a User for test")
     public static User createTestUser() {
