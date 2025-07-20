@@ -1,5 +1,6 @@
 package com.arthur.schedulingApi.usecases.scheduling;
 
+import com.arthur.schedulingApi.exceptions.SchedulingNotFoundException;
 import com.arthur.schedulingApi.repositories.scheduling.SchedulingRepository;
 import com.arthur.schedulingApi.usecases.factory.TestDataFactory;
 import org.junit.jupiter.api.DisplayName;
@@ -25,10 +26,10 @@ class FindSchedulingTest {
     private SchedulingRepository schedulingRepository;
 
     @Nested
-    class findScheduling{
+    class findSchedulingResponse{
 
         @Test
-        @DisplayName("Find Scheduling Response with success")
+        @DisplayName("Should Find Scheduling Response with success")
         void shouldFindSchedulingWithSuccess() {
             var client = TestDataFactory.createTestUser();
             var newService = TestDataFactory.createTestService();
@@ -49,8 +50,28 @@ class FindSchedulingTest {
             assertEquals(newScheduling.getServices().getId() , schedulingFound.service().id());
         }
 
+
         @Test
-        @DisplayName("Find Scheduling Entity with success")
+        @DisplayName("Should Throw SchedulingNotFoundException on find Scheduling Response")
+        void shouldThrowSchedulingNotFoundException() {
+
+            var schedulingId = 101L;
+
+            when(schedulingRepository.findById(schedulingId)).thenReturn(Optional.empty());
+
+            SchedulingNotFoundException exception =  assertThrows(
+                    SchedulingNotFoundException.class, () -> findScheduling.findScheduling(schedulingId));
+
+            assertNotNull(exception);
+            assertEquals("Agendamento com id: "+ schedulingId +" Nao encontrado!!" , exception.getMessage());
+        }
+    }
+
+    @Nested
+    class findSchedulingEntity{
+
+        @Test
+        @DisplayName("Should Find Scheduling Entity with success")
         void shouldFindSchedulingAsModelWithSuccess() {
             var client = TestDataFactory.createTestUser();
             var newService = TestDataFactory.createTestService();
@@ -71,5 +92,19 @@ class FindSchedulingTest {
             assertEquals(newScheduling.getServices().getId() , schedulingFound.getServices().getId());
         }
 
+        @Test
+        @DisplayName("Should Throw SchedulingNotFoundException on find Scheduling Entity")
+        void shouldThrowSchedulingNotFoundException() {
+
+            var schedulingId = 101L;
+
+            when(schedulingRepository.findById(schedulingId)).thenReturn(Optional.empty());
+
+            SchedulingNotFoundException exception =  assertThrows(
+                    SchedulingNotFoundException.class, () -> findScheduling.findSchedulingAsModel(schedulingId));
+
+            assertNotNull(exception);
+            assertEquals("Agendamento com id: "+ schedulingId +" Nao encontrado!!" , exception.getMessage());
+        }
     }
 }
