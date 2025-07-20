@@ -53,6 +53,20 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         return error;
     }
 
+    @ExceptionHandler(UserNotAuthenticatedException.class)
+    public final ErrorResponse handleResourceAlreadyExistsException(UserNotAuthenticatedException ex) {
+        var error = ErrorResponse.create(ex , HttpStatus.CONFLICT , ex.getMessage());
+        error.getBody().setTitle("Usuario Nao autenticado");
+        return error;
+    }
+
+    @ExceptionHandler(SchedulingNotAvailableException.class)
+    public final ErrorResponse handleResourceAlreadyExistsException(SchedulingNotAvailableException ex) {
+        var error = ErrorResponse.create(ex , HttpStatus.CONFLICT , ex.getMessage());
+        error.getBody().setTitle("Agendamento nao Disponivel");
+        return error;
+    }
+
     @Override
     protected ResponseEntity<Object> handleMethodArgumentNotValid(
             MethodArgumentNotValidException ex, HttpHeaders headers, HttpStatusCode status, WebRequest request) {

@@ -1,6 +1,7 @@
 package com.arthur.schedulingApi.usecases.service;
 
 import com.arthur.schedulingApi.controllers.service.request.ServiceRequestDTO;
+import com.arthur.schedulingApi.exceptions.UserNotAuthenticatedException;
 import com.arthur.schedulingApi.exceptions.UserNotFoundException;
 import com.arthur.schedulingApi.models.service.Services;
 import com.arthur.schedulingApi.models.user.User;
@@ -82,8 +83,8 @@ class CreateServiceTest {
     }
 
     @Test
-    @DisplayName("Should Throw a UserNotFoundException")
-    void  shouldThrowUserNotFoundException() {
+    @DisplayName("Should Throw a UserNotAuthenticatedException")
+    void  shouldThrowUserNotAuthenticatedException() {
         //ARRANGE
         var requestServiceDTO = new ServiceRequestDTO(
                 "Consulta Apenas",
@@ -95,12 +96,12 @@ class CreateServiceTest {
         );
 
         when(authenticatedUserService.getAuthenticatedUser())
-                .thenThrow(new UserNotFoundException("Nenhum usuário autenticado encontrado ou o tipo da autenticação é inválido."));
+                .thenThrow(new UserNotAuthenticatedException("Nenhum usuário autenticado encontrado ou o tipo da autenticação é inválido."));
 
         //ACT
 
-        UserNotFoundException exception = assertThrows(
-                UserNotFoundException.class , () -> createService.createService(requestServiceDTO));
+        UserNotAuthenticatedException exception = assertThrows(
+                UserNotAuthenticatedException.class , () -> createService.createService(requestServiceDTO));
 
 
         //ASSERT

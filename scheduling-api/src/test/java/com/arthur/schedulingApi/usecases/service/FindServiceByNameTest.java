@@ -34,9 +34,6 @@ class FindServiceByNameTest {
     @Mock
     private ServiceRepository serviceRepository;
 
-    @Captor
-    private ArgumentCaptor<Services> serviceCaptor;
-
     @Nested
     class findServiceByName {
 

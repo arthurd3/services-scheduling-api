@@ -1,7 +1,7 @@
 package com.arthur.schedulingApi.usecases.scheduling;
 
 import com.arthur.schedulingApi.controllers.scheduling.response.SchedulingResponseDTO;
-import com.arthur.schedulingApi.exceptions.SchedulingNotFoundException;
+import com.arthur.schedulingApi.exceptions.SchedulingNotAvailableException;
 import com.arthur.schedulingApi.models.scheduling.SchedulingStatus;
 import com.arthur.schedulingApi.security.userAuth.AuthenticatedUserService;
 import jakarta.transaction.Transactional;
@@ -30,7 +30,7 @@ public class JoinScheduling {
         var scheduling = findScheduling.findSchedulingAsModel(id);
 
         if (scheduling.getStatus() != SchedulingStatus.AVAILABLE) {
-            throw new SchedulingNotFoundException("Este horário não está mais disponível.");
+            throw new SchedulingNotAvailableException("Este horário não está mais disponível.");
         }
 
         scheduling.setClient(client);

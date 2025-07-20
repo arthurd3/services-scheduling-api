@@ -2,6 +2,7 @@ package com.arthur.schedulingApi.security.userAuth;
 
 import com.arthur.schedulingApi.controllers.auth.loginResponseDTO.LoginResponseDTO;
 import com.arthur.schedulingApi.controllers.auth.request.AuthRequestDTO;
+import com.arthur.schedulingApi.exceptions.UserNotAuthenticatedException;
 import com.arthur.schedulingApi.exceptions.UserNotFoundException;
 import com.arthur.schedulingApi.models.user.User;
 import com.arthur.schedulingApi.security.authSecurity.TokenService;
@@ -27,7 +28,7 @@ public class AuthenticatedUserService {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
         if (authentication == null || !authentication.isAuthenticated() || !(authentication.getPrincipal() instanceof UserAuthenticated userAuthenticated)) {
-            throw new UserNotFoundException("Nenhum usuário autenticado encontrado ou o tipo da autenticação é inválido.");
+            throw new UserNotAuthenticatedException("Nenhum usuário autenticado encontrado ou o tipo da autenticação é inválido.");
         }
 
         return userAuthenticated.getUser();

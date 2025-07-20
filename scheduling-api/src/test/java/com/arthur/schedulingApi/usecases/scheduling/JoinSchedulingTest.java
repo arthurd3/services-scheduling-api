@@ -1,10 +1,10 @@
 package com.arthur.schedulingApi.usecases.scheduling;
 
+import com.arthur.schedulingApi.exceptions.SchedulingNotAvailableException;
 import com.arthur.schedulingApi.exceptions.SchedulingNotFoundException;
+import com.arthur.schedulingApi.exceptions.UserNotAuthenticatedException;
 import com.arthur.schedulingApi.exceptions.UserNotFoundException;
-import com.arthur.schedulingApi.models.scheduling.Scheduling;
 import com.arthur.schedulingApi.models.scheduling.SchedulingStatus;
-import com.arthur.schedulingApi.models.user.UserRoles;
 import com.arthur.schedulingApi.security.userAuth.AuthenticatedUserService;
 import com.arthur.schedulingApi.usecases.factory.TestDataFactory;
 import org.junit.jupiter.api.DisplayName;
@@ -65,8 +65,8 @@ class JoinSchedulingTest {
 
 
         @Test
-        @DisplayName("Should Throw SchedulingNotFoundException with scheduling is booked")
-        void shouldThrowSchedulingNotFoundException() {
+        @DisplayName("Should Throw SchedulingNotAvailableException with scheduling is booked")
+        void shouldThrowSchedulingNotAvailableException() {
 
             //ARRANGE
             var schedulingIdJoin = 201L;
@@ -83,8 +83,8 @@ class JoinSchedulingTest {
 
             //ACT
 
-            SchedulingNotFoundException exception = assertThrows(
-                    SchedulingNotFoundException.class,() -> joinScheduling.joinScheduling(schedulingIdJoin));
+            SchedulingNotAvailableException exception = assertThrows(
+                    SchedulingNotAvailableException.class,() -> joinScheduling.joinScheduling(schedulingIdJoin));
 
             //ASSERTION
 
@@ -101,12 +101,12 @@ class JoinSchedulingTest {
             var schedulingIdJoin = 201L;
 
             when(authenticatedUserService.getAuthenticatedUser())
-                    .thenThrow(new UserNotFoundException("Nenhum usuário autenticado encontrado ou o tipo da autenticação é inválido."));
+                    .thenThrow(new UserNotAuthenticatedException("Nenhum usuário autenticado encontrado ou o tipo da autenticação é inválido."));
 
             //ACT
 
-            UserNotFoundException exception = assertThrows(
-                    UserNotFoundException.class,() -> joinScheduling.joinScheduling(schedulingIdJoin));
+            UserNotAuthenticatedException exception = assertThrows(
+                    UserNotAuthenticatedException.class,() -> joinScheduling.joinScheduling(schedulingIdJoin));
 
             //ASSERTION
 
