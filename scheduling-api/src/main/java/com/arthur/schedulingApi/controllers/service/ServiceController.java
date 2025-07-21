@@ -30,18 +30,18 @@ public class ServiceController {
     }
 
     @PostMapping("/create")
-    public ResponseEntity<Optional<ServiceResponseDTO>> createService(@RequestBody @Valid ServiceRequestDTO serviceRequestDTO){
-        return ResponseEntity.status(HttpStatus.CREATED).body(Optional.of(createService.createService(serviceRequestDTO)));
+    public ResponseEntity<ServiceResponseDTO> createService(@RequestBody @Valid ServiceRequestDTO serviceRequestDTO){
+        return ResponseEntity.status(HttpStatus.CREATED).body(createService.createService(serviceRequestDTO));
     }
 
     @GetMapping
-    public ResponseEntity<Optional<ServiceResponseDTO>> findByNameService(@RequestParam(name = "name") String name){
-        return ResponseEntity.ok(Optional.of(findServiceByName.findService(name)));
+    public ResponseEntity<ServiceResponseDTO> findByNameService(@RequestParam(name = "name") String name){
+        return ResponseEntity.ok(findServiceByName.findService(name));
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Optional<ServiceResponseDTO>> findByIdService(@PathVariable Long id){
-        return ResponseEntity.ok(Optional.of(findServiceById.findById(id)));
+    public ResponseEntity<ServiceResponseDTO> findByIdService(@PathVariable Long id){
+        return ResponseEntity.ok(findServiceById.findById(id));
     }
 
 
@@ -53,8 +53,8 @@ public class ServiceController {
     }
 
     @PutMapping("/edit/{id}")
-    public ResponseEntity<Optional<ServiceResponseDTO>> editService(@PathVariable Long id, @Valid @RequestBody ServiceRequestDTO serviceRequestDTO){
-        return ResponseEntity.ok(Optional.of(editService.editService(id,serviceRequestDTO)));
+    public ResponseEntity<ServiceResponseDTO> editService(@PathVariable Long id, @Valid @RequestBody ServiceRequestDTO serviceRequestDTO){
+        return ResponseEntity.ok(editService.editService(id,serviceRequestDTO));
     }
 
 }

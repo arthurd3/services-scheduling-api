@@ -38,19 +38,20 @@ public class SchedulingController {
     }
 
     @PostMapping("/{serviceId}/create")
-    public ResponseEntity<Optional<SchedulingResponseDTO>> createScheduling(@PathVariable Long serviceId , @RequestBody @Valid SchedulingSlotRequestDTO schedulingSlotRequestDTO) {
+    public ResponseEntity<SchedulingResponseDTO> createScheduling(@PathVariable Long serviceId ,
+                                                                  @RequestBody @Valid SchedulingSlotRequestDTO schedulingSlotRequestDTO) {
         return ResponseEntity.status(HttpStatus.CREATED).body(createScheduling.createScheduling(schedulingSlotRequestDTO, serviceId));
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Optional<SchedulingResponseDTO>> findSchedulingById(@PathVariable Long id) {
-        return ResponseEntity.ok(Optional.of(findScheduling.findScheduling(id)));
+    public ResponseEntity<SchedulingResponseDTO> findSchedulingById(@PathVariable Long id) {
+        return ResponseEntity.ok(findScheduling.findScheduling(id));
     }
 
     @PatchMapping("/{id}/time")
-    public ResponseEntity<Optional<SchedulingResponseDTO>> editSchedulingTimeById(@PathVariable Long id ,
+    public ResponseEntity<SchedulingResponseDTO> editSchedulingTimeById(@PathVariable Long id ,
                                                                                   @RequestBody SchedulingSlotRequestDTO schedulingSlotRequestDTO) {
-        return ResponseEntity.ok(Optional.of(editScheduling.editSchedulingTime(id , schedulingSlotRequestDTO)));
+        return ResponseEntity.ok(editScheduling.editSchedulingTime(id , schedulingSlotRequestDTO));
     }
 
     @GetMapping("/userScheduling")

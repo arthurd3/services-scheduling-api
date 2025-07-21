@@ -53,8 +53,8 @@ public class UserController {
 
     @ResponseStatus(OK)
     @GetMapping("/{id}")
-    public Optional<UserResponseDTO> findAllUsers(@PathVariable Long id ) {
-        return Optional.of(findUser.findUserAsDto(id));
+    public UserResponseDTO findAllUsers(@PathVariable Long id ) {
+        return findUser.findUserAsDto(id);
     }
 
     @DeleteMapping("/{id}")
@@ -64,7 +64,7 @@ public class UserController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Optional<UserResponseDTO>> editUser(@PathVariable Long id, @Valid @RequestBody UserRequestDTO userRequestDTO) {
+    public ResponseEntity<UserResponseDTO> editUser(@PathVariable Long id, @Valid @RequestBody UserRequestDTO userRequestDTO) {
         return ResponseEntity.ok(editUser.editUser(id , userRequestDTO));
     }
 }

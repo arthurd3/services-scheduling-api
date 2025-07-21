@@ -23,13 +23,13 @@ public class EditUser {
     }
 
     @Transactional
-    public Optional<UserResponseDTO> editUser(Long id , UserRequestDTO userRequestDTO) {
+    public UserResponseDTO editUser(Long id , UserRequestDTO userRequestDTO) {
 
         User originalUser = findUser.findUserEntity(id);
 
         var editedUser = copyProperties(originalUser , userRequestDTO);
 
-        return Optional.of(userToResponse(editedUser));
+        return userToResponse(editedUser);
     }
 
 }

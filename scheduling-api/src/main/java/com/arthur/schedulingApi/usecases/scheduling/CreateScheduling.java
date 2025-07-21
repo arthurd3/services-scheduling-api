@@ -27,7 +27,7 @@ public class CreateScheduling {
     }
 
     @Transactional
-    public Optional<SchedulingResponseDTO> createScheduling(SchedulingSlotRequestDTO schedulingSlotRequestDTO, Long serviceId) {
+    public SchedulingResponseDTO createScheduling(SchedulingSlotRequestDTO schedulingSlotRequestDTO, Long serviceId) {
 
         Services service = findServiceById.findByIdAsModel(serviceId);
 
@@ -39,7 +39,7 @@ public class CreateScheduling {
 
         service.addScheduling(scheduling);
 
-        return Optional.of(schedulingToResponse(schedulingReturn));
+        return schedulingToResponse(schedulingReturn);
 
     }
 
