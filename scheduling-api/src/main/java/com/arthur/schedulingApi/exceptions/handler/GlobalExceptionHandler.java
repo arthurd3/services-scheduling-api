@@ -40,20 +40,6 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         return error;
     }
 
-    @ExceptionHandler(EmailAlreadyExistsException.class)
-    public final ErrorResponse handleResourceAlreadyExistsException(EmailAlreadyExistsException ex) {
-        var error = ErrorResponse.create(ex , HttpStatus.CONFLICT , ex.getMessage());
-        error.getBody().setTitle("E-mail ja utilizado");
-        return error;
-    }
-
-    @ExceptionHandler(PhoneAlreadyExistsException.class)
-    public final ErrorResponse handleResourceAlreadyExistsException(PhoneAlreadyExistsException ex) {
-        var error = ErrorResponse.create(ex , HttpStatus.CONFLICT , ex.getMessage());
-        error.getBody().setTitle("Telefone ja utilizado");
-        return error;
-    }
-
     @ExceptionHandler(UserNotAuthenticatedException.class)
     public final ErrorResponse handleResourceAlreadyExistsException(UserNotAuthenticatedException ex) {
         var error = ErrorResponse.create(ex , HttpStatus.CONFLICT , ex.getMessage());
@@ -80,5 +66,16 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         });
 
         return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
+    }
+
+
+    @ExceptionHandler({
+            EmailAlreadyExistsException.class,
+            PhoneAlreadyExistsException.class
+    })
+    public final ErrorResponse handleConflictExceptions(RuntimeException ex) {
+        var error = ErrorResponse.create(ex , HttpStatus.CONFLICT , ex.getMessage());
+        error.getBody().setTitle("Conflito de Dados");
+        return error;
     }
 }
