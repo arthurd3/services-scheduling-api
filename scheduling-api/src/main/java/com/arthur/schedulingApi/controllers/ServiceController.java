@@ -28,7 +28,7 @@ public class ServiceController {
     }
 
     @ResponseStatus(FOUND)
-    @GetMapping("{name}")
+    @GetMapping("name/{name}")
     public ServiceResponseDTO findByName(@PathVariable String name){
         return findServiceByName.findService(name);
     }

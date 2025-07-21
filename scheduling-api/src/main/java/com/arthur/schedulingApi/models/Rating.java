@@ -14,8 +14,9 @@ import lombok.Setter;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
-public class Rating {
-
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name = "rating_type")
+public abstract class Rating {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
@@ -27,12 +28,7 @@ public class Rating {
     @JoinColumn(name = "appraiser_id")
     private User appraiser;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "ratee_id")
-    private User ratee;
-
     @Min(0)
     @Max(5)
     private Integer score;
-
 }

@@ -39,7 +39,7 @@ class FindServiceByNameTest {
 
             Services serviceFromDb = TestDataFactory.createTestService();
 
-            when(serviceRepository.findByName(serviceFindName)).thenReturn(Optional.of(serviceFromDb));
+            when(serviceRepository.findServicesByName(serviceFindName)).thenReturn(Optional.of(serviceFromDb));
 
             //ACTION
 
@@ -63,7 +63,7 @@ class FindServiceByNameTest {
             //ARRANGE
             var serviceFindName = "Consulta de Nutricao";
 
-            when(serviceRepository.findByName(serviceFindName)).thenReturn(Optional.empty());
+            when(serviceRepository.findServicesByName(serviceFindName)).thenReturn(Optional.empty());
 
             //ACTION
             ServiceNotFoundException exception = assertThrows(

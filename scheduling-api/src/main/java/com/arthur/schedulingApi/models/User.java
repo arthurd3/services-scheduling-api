@@ -1,6 +1,7 @@
 package com.arthur.schedulingApi.models;
 
 import com.arthur.schedulingApi.models.enums.UserRoles;
+import com.arthur.schedulingApi.models.ratingImpl.UserRating;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -38,10 +39,10 @@ public class User {
     private List<Services> servicesOwned = new ArrayList<>();
 
     @OneToMany(mappedBy = "appraiser", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Rating> ratingsGiven = new ArrayList<>();
+    private List<UserRating> ratingsGiven = new ArrayList<>();
 
     @OneToMany(mappedBy = "ratee", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Rating> ratingsReceived = new ArrayList<>();
+    private List<UserRating> ratingsReceived = new ArrayList<>();
 
     @OneToMany(mappedBy = "client", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<Scheduling> schedulings = new ArrayList<>();
@@ -66,7 +67,7 @@ public class User {
             DecimalFormat format = new DecimalFormat("#.##");
 
             double number = this.ratingsReceived.stream()
-                    .collect(averagingInt(Rating::getScore));
+                    .collect(averagingInt(UserRating::getScore));
 
             return Double.parseDouble(format.format(number));
         }

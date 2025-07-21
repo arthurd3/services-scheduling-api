@@ -1,12 +1,16 @@
 package com.arthur.schedulingApi.models;
 
+import com.arthur.schedulingApi.models.ratingImpl.ServiceRating;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 
+import java.text.DecimalFormat;
 import java.time.LocalDateTime;
 import java.util.List;
+
+import static java.util.stream.Collectors.averagingInt;
 
 @Entity
 @Table(name = "services")
@@ -27,6 +31,9 @@ public class Services {
     private String description;
     private String location;
     private String url_image;
+
+    @OneToMany(mappedBy = "serviceRatee", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<ServiceRating> ratingsReceived;
 
     @OneToMany(mappedBy = "services", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<Scheduling> scheduling;
@@ -59,5 +66,20 @@ public class Services {
 
     public void addScheduling(Scheduling scheduling) {
         this.scheduling.add(scheduling);
+    }
+
+
+    @Transient
+    public double updateScore() {
+        if (this.ratingsReceived != null) {
+            DecimalFormat format = new DecimalFormat("#.##");
+
+            double number = this.ratingsReceived.stream()
+                    .collect(averagingInt(ServiceRating::getScore));
+
+            return Double.parseDouble(format.format(number));
+        } else {
+            return 0;
+        }
     }
 }

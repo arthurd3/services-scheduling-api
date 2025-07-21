@@ -18,7 +18,7 @@ public class FindServiceByName {
 
 
     public ServiceResponseDTO findService(String name){
-        var findService = serviceRepository.findByName(name)
+        var findService = serviceRepository.findServicesByName(name)
                 .orElseThrow(() -> new ServiceNotFoundException("Servico com nome " + name + " não encontrado."));
 
         return serviceToResponse(findService);
