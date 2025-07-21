@@ -9,5 +9,6 @@ public record UserResponseDTO (Long id ,
                                String role,
                                List<SchedulingResponseDTO> schedulingList,
                                List<ServiceResponseDTO> serviceList,
-                               Double score
+                               Double score,
+                               Integer ratingAmount
 ) {}

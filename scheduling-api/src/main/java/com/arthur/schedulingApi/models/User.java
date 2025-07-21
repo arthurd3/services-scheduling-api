@@ -76,4 +76,10 @@ public class User {
         }
     }
 
+    public int getRatingsReceivedSize(){
+        if(this.ratingsReceived != null)
+            return this.ratingsReceived.size();
+        return 0;
+    }
+
 }

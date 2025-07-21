@@ -20,7 +20,8 @@ public class UserMapperToResponse {
                 userModel.getRole().toString(),
                 schedulingList,
                 serviceList,
-                userModel.updateScore()
+                userModel.updateScore(),
+                userModel.getRatingsReceivedSize()
         );
     }
 }

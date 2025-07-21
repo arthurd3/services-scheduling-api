@@ -12,5 +12,7 @@ public record ServiceResponseDTO (Long id,
                                   String location,
                                   String url_image,
                                   List<SchedulingResponseDTO>scheduling,
-                                  LocalDateTime createdAt) {
-}
+                                  LocalDateTime createdAt,
+                                  Double score,
+                                  Integer ratingAmount
+) {}

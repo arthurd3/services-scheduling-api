@@ -21,7 +21,9 @@ public class ServiceToResponse {
                 services.getLocation(),
                 services.getUrl_image(),
                 schedulingList,
-                services.getCreatedAt()
+                services.getCreatedAt(),
+                services.updateScore(),
+                services.getRatingsReceivedSize()
         );
     }
 

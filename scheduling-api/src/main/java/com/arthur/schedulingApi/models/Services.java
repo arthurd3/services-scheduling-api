@@ -82,4 +82,12 @@ public class Services {
             return 0;
         }
     }
+
+    public int getRatingsReceivedSize() {
+
+        if (this.ratingsReceived != null)
+            return this.ratingsReceived.size();
+
+        return 0;
+    }
 }
