@@ -31,11 +31,14 @@ public class SecurityFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         var token = this.recoverToken(request);
         if(token != null){
-            var login = tokenService.validateToken(token);
-            UserDetails user = new UserAuthenticated(findUser.findUserByName(login));
+            String login = tokenService.validateToken(token);
+            if(login != null && !login.isEmpty()){
 
-            var authentication = new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
-            SecurityContextHolder.getContext().setAuthentication(authentication);
+                UserDetails user = new UserAuthenticated(findUser.findUserByName(login));
+
+                var authentication = new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
+                SecurityContextHolder.getContext().setAuthentication(authentication);
+            }
         }
         filterChain.doFilter(request, response);
     }
