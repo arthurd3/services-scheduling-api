@@ -7,14 +7,14 @@ import com.arthur.schedulingApi.usecases.user.*;
 import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
-import java.util.List;
 import java.util.Optional;
+
+import static org.springframework.http.HttpStatus.OK;
 
 @RestController()
 @RequestMapping("/api/v1/users")
@@ -51,9 +51,10 @@ public class UserController {
         return ResponseEntity.created(location).body(newUser);
     }
 
+    @ResponseStatus(OK)
     @GetMapping("/{id}")
-    public ResponseEntity<Optional<UserResponseDTO>> findAllUsers(@PathVariable Long id ) {
-        return ResponseEntity.ok(Optional.of(findUser.findUserAsDto(id)));
+    public Optional<UserResponseDTO> findAllUsers(@PathVariable Long id ) {
+        return Optional.of(findUser.findUserAsDto(id));
     }
 
     @DeleteMapping("/{id}")

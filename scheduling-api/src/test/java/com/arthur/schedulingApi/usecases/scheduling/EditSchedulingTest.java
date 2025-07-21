@@ -83,7 +83,7 @@ class EditSchedulingTest {
 
             assertEquals("Agendamento com id: "+ schedulingId +" Nao encontrado!!" , exception.getMessage());
 
-            
+
 
         }
 
