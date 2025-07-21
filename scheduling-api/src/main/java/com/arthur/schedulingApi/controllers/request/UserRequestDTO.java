@@ -4,9 +4,11 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
+import org.hibernate.validator.constraints.Length;
 
 public record UserRequestDTO(
         @NotBlank(message = "O nome não pode estar em branco.")
+        @Length(min = 4, max = 70)
         String name,
 
         @NotBlank(message = "O e-mail não pode estar em branco.")

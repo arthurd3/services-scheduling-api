@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.Setter;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -62,8 +63,12 @@ public class User {
     @Transient
     public double updateScore(){
         if(this.ratingsReceived != null){
-            return this.ratingsReceived.stream()
+            DecimalFormat format = new DecimalFormat("#.##");
+
+            double number = this.ratingsReceived.stream()
                     .collect(averagingInt(Rating::getScore));
+
+            return Double.parseDouble(format.format(number));
         }
         else{
             return 0;
