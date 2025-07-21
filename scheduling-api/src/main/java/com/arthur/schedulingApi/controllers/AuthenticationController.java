@@ -22,7 +22,7 @@ public class AuthenticationController {
 
 
     @ResponseStatus(OK)
-    @PostMapping("/ login")
+    @PostMapping("/login")
     public LoginResponseDTO login(@Valid @RequestBody AuthRequestDTO authDTO) {
         return authenticationUseCase.login(authDTO);
     }
