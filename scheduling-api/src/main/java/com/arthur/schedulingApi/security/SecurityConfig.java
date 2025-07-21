@@ -1,6 +1,6 @@
 package com.arthur.schedulingApi.security;
 
-import com.arthur.schedulingApi.security.authSecurity.SecurityFilter;
+import com.arthur.schedulingApi.security.jwt.SecurityFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;

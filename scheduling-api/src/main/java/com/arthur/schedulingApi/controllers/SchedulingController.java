@@ -3,7 +3,7 @@ package com.arthur.schedulingApi.controllers;
 import com.arthur.schedulingApi.controllers.request.SchedulingSlotRequestDTO;
 import com.arthur.schedulingApi.controllers.request.UpdateStatusRequestDTO;
 import com.arthur.schedulingApi.controllers.response.SchedulingResponseDTO;
-import com.arthur.schedulingApi.usecases.scheduling.*;
+import com.arthur.schedulingApi.usecases.*;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;

@@ -1,7 +1,6 @@
 package com.arthur.schedulingApi.security.authSecurity;
 
-import com.arthur.schedulingApi.security.userAuth.UserAuthenticated;
-import com.arthur.schedulingApi.usecases.user.FindUserByName;
+import com.arthur.schedulingApi.usecases.FindUserByName;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;

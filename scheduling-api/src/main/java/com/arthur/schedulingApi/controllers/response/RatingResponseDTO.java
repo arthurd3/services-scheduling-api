@@ -1,4 +1,4 @@
 package com.arthur.schedulingApi.controllers.response;
 
-public class RatingResponseDTO {
+public record RatingResponseDTO (Long id , String description , String userRateeName , Integer score) {
 }

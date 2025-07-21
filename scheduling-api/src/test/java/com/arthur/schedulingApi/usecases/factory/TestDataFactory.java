@@ -1,10 +1,10 @@
 package com.arthur.schedulingApi.usecases.factory;
 
-import com.arthur.schedulingApi.models.scheduling.Scheduling;
-import com.arthur.schedulingApi.models.scheduling.SchedulingStatus;
-import com.arthur.schedulingApi.models.service.Services;
-import com.arthur.schedulingApi.models.user.User;
-import com.arthur.schedulingApi.models.user.UserRoles;
+import com.arthur.schedulingApi.models.Scheduling;
+import com.arthur.schedulingApi.models.enums.SchedulingStatus;
+import com.arthur.schedulingApi.models.Services;
+import com.arthur.schedulingApi.models.User;
+import com.arthur.schedulingApi.models.enums.UserRoles;
 import com.github.javafaker.Faker;
 import org.junit.jupiter.api.DisplayName;
 

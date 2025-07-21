@@ -1,11 +1,11 @@
 package com.arthur.schedulingApi.usecases.scheduling;
 
 import com.arthur.schedulingApi.exceptions.SchedulingNotAvailableException;
-import com.arthur.schedulingApi.exceptions.SchedulingNotFoundException;
 import com.arthur.schedulingApi.exceptions.UserNotAuthenticatedException;
-import com.arthur.schedulingApi.exceptions.UserNotFoundException;
-import com.arthur.schedulingApi.models.scheduling.SchedulingStatus;
-import com.arthur.schedulingApi.security.userAuth.AuthenticatedUserService;
+import com.arthur.schedulingApi.models.enums.SchedulingStatus;
+import com.arthur.schedulingApi.security.jwt.AuthenticatedUserService;
+import com.arthur.schedulingApi.usecases.FindScheduling;
+import com.arthur.schedulingApi.usecases.JoinScheduling;
 import com.arthur.schedulingApi.usecases.factory.TestDataFactory;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;

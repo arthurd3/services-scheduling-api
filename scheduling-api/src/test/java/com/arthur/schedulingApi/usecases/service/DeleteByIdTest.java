@@ -1,9 +1,8 @@
 package com.arthur.schedulingApi.usecases.service;
 
 import com.arthur.schedulingApi.exceptions.ServiceNotFoundException;
-import com.arthur.schedulingApi.models.service.Services;
-import com.arthur.schedulingApi.models.user.User;
-import com.arthur.schedulingApi.repositories.services.ServiceRepository;
+import com.arthur.schedulingApi.repositories.ServiceRepository;
+import com.arthur.schedulingApi.usecases.DeleteById;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -11,10 +10,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;

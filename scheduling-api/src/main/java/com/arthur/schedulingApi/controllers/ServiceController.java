@@ -2,7 +2,7 @@ package com.arthur.schedulingApi.controllers;
 
 import com.arthur.schedulingApi.controllers.request.ServiceRequestDTO;
 import com.arthur.schedulingApi.controllers.response.ServiceResponseDTO;
-import com.arthur.schedulingApi.usecases.service.*;
+import com.arthur.schedulingApi.usecases.*;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;

@@ -1,9 +1,8 @@
 package com.arthur.schedulingApi.usecases.user;
 
 import com.arthur.schedulingApi.exceptions.UserNotFoundException;
-import com.arthur.schedulingApi.models.user.User;
-import com.arthur.schedulingApi.models.user.UserRoles;
-import com.arthur.schedulingApi.repositories.users.UserRepository;
+import com.arthur.schedulingApi.repositories.UserRepository;
+import com.arthur.schedulingApi.usecases.DeleteUser;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;

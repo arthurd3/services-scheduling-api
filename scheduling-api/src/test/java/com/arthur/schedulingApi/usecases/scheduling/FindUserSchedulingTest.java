@@ -1,9 +1,10 @@
 package com.arthur.schedulingApi.usecases.scheduling;
 
 import com.arthur.schedulingApi.controllers.response.SchedulingResponseDTO;
-import com.arthur.schedulingApi.models.scheduling.Scheduling;
-import com.arthur.schedulingApi.repositories.scheduling.SchedulingRepository;
-import com.arthur.schedulingApi.security.userAuth.AuthenticatedUserService;
+import com.arthur.schedulingApi.models.Scheduling;
+import com.arthur.schedulingApi.repositories.SchedulingRepository;
+import com.arthur.schedulingApi.security.jwt.AuthenticatedUserService;
+import com.arthur.schedulingApi.usecases.FindUserScheduling;
 import com.arthur.schedulingApi.usecases.factory.TestDataFactory;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;

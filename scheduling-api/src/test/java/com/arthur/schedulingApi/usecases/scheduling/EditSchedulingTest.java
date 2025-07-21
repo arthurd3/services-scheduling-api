@@ -3,6 +3,8 @@ package com.arthur.schedulingApi.usecases.scheduling;
 import com.arthur.schedulingApi.controllers.request.SchedulingSlotRequestDTO;
 import com.arthur.schedulingApi.controllers.response.SchedulingResponseDTO;
 import com.arthur.schedulingApi.exceptions.SchedulingNotFoundException;
+import com.arthur.schedulingApi.usecases.EditScheduling;
+import com.arthur.schedulingApi.usecases.FindScheduling;
 import com.arthur.schedulingApi.usecases.factory.TestDataFactory;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -25,7 +27,7 @@ class EditSchedulingTest {
     private EditScheduling editScheduling;
 
     @Mock
-    private  FindScheduling findScheduling;
+    private FindScheduling findScheduling;
 
     @Nested
     class editScheduling {

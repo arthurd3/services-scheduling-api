@@ -2,9 +2,10 @@ package com.arthur.schedulingApi.usecases.service;
 
 import com.arthur.schedulingApi.controllers.request.ServiceRequestDTO;
 import com.arthur.schedulingApi.exceptions.UserNotAuthenticatedException;
-import com.arthur.schedulingApi.models.service.Services;
-import com.arthur.schedulingApi.repositories.services.ServiceRepository;
-import com.arthur.schedulingApi.security.userAuth.AuthenticatedUserService;
+import com.arthur.schedulingApi.models.Services;
+import com.arthur.schedulingApi.repositories.ServiceRepository;
+import com.arthur.schedulingApi.security.jwt.AuthenticatedUserService;
+import com.arthur.schedulingApi.usecases.CreateService;
 import com.arthur.schedulingApi.usecases.factory.TestDataFactory;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

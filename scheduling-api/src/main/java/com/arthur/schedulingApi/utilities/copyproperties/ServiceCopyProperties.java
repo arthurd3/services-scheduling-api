@@ -1,13 +1,13 @@
 package com.arthur.schedulingApi.utilities.copyproperties;
 
 import com.arthur.schedulingApi.controllers.request.ServiceRequestDTO;
-import com.arthur.schedulingApi.models.scheduling.Scheduling;
-import com.arthur.schedulingApi.models.service.Services;
+import com.arthur.schedulingApi.models.Scheduling;
+import com.arthur.schedulingApi.models.Services;
 
 import java.util.List;
 
 import static com.arthur.schedulingApi.utilities.copyproperties.GetUpdateValue.getUpdatedValue;
-import static com.arthur.schedulingApi.usecases.scheduling.mapper.SchedulingListToModel.schedulingListToModel;
+import static com.arthur.schedulingApi.usecases.mapper.SchedulingListToModel.schedulingListToModel;
 
 public class ServiceCopyProperties {
 

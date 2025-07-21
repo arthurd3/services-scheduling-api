@@ -12,5 +12,5 @@ public record RatingRequestDTO (
         @NotNull(message = "O Score nao pode ser Nulo")
         @Min(value = 0 , message = "O Score nao Pode ser Abaixo de 0")
         @Max(value = 5 , message = "O Score nao Pode ser Acima de 5")
-        Integer rating
+        Integer score
 ) {}

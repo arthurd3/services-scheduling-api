@@ -1,8 +1,9 @@
 package com.arthur.schedulingApi.usecases.user;
 
 import com.arthur.schedulingApi.controllers.response.UserResponseDTO;
-import com.arthur.schedulingApi.models.user.User;
-import com.arthur.schedulingApi.repositories.users.UserRepository;
+import com.arthur.schedulingApi.models.User;
+import com.arthur.schedulingApi.repositories.UserRepository;
+import com.arthur.schedulingApi.usecases.FindAllUsers;
 import com.arthur.schedulingApi.usecases.factory.TestDataFactory;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;

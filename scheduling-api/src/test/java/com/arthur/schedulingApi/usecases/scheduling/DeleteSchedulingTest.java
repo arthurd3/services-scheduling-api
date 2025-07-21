@@ -1,7 +1,8 @@
 package com.arthur.schedulingApi.usecases.scheduling;
 
 import com.arthur.schedulingApi.exceptions.SchedulingNotFoundException;
-import com.arthur.schedulingApi.repositories.scheduling.SchedulingRepository;
+import com.arthur.schedulingApi.repositories.SchedulingRepository;
+import com.arthur.schedulingApi.usecases.DeleteScheduling;
 import com.arthur.schedulingApi.usecases.factory.TestDataFactory;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;

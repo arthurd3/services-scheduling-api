@@ -1,6 +1,6 @@
 package com.arthur.schedulingApi.controllers.response;
 
-import com.arthur.schedulingApi.models.scheduling.SchedulingStatus;
+import com.arthur.schedulingApi.models.enums.SchedulingStatus;
 
 import java.time.LocalDateTime;
 

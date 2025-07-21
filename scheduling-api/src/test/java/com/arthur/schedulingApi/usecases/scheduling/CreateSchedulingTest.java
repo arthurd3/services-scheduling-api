@@ -2,11 +2,12 @@ package com.arthur.schedulingApi.usecases.scheduling;
 
 import com.arthur.schedulingApi.controllers.request.SchedulingSlotRequestDTO;
 import com.arthur.schedulingApi.exceptions.ServiceNotFoundException;
-import com.arthur.schedulingApi.models.scheduling.Scheduling;
-import com.arthur.schedulingApi.models.scheduling.SchedulingStatus;
-import com.arthur.schedulingApi.repositories.scheduling.SchedulingRepository;
+import com.arthur.schedulingApi.models.Scheduling;
+import com.arthur.schedulingApi.models.enums.SchedulingStatus;
+import com.arthur.schedulingApi.repositories.SchedulingRepository;
+import com.arthur.schedulingApi.usecases.CreateScheduling;
 import com.arthur.schedulingApi.usecases.factory.TestDataFactory;
-import com.arthur.schedulingApi.usecases.service.FindServiceById;
+import com.arthur.schedulingApi.usecases.FindServiceById;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;

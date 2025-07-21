@@ -2,6 +2,8 @@ package com.arthur.schedulingApi.usecases.service;
 
 import com.arthur.schedulingApi.controllers.request.ServiceRequestDTO;
 import com.arthur.schedulingApi.exceptions.ServiceNotFoundException;
+import com.arthur.schedulingApi.usecases.EditService;
+import com.arthur.schedulingApi.usecases.FindServiceById;
 import com.arthur.schedulingApi.usecases.factory.TestDataFactory;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;

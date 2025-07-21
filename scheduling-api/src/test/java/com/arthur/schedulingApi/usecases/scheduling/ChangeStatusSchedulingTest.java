@@ -2,7 +2,9 @@ package com.arthur.schedulingApi.usecases.scheduling;
 
 import com.arthur.schedulingApi.controllers.request.UpdateStatusRequestDTO;
 import com.arthur.schedulingApi.exceptions.SchedulingNotFoundException;
-import com.arthur.schedulingApi.models.scheduling.SchedulingStatus;
+import com.arthur.schedulingApi.models.enums.SchedulingStatus;
+import com.arthur.schedulingApi.usecases.ChangeStatusScheduling;
+import com.arthur.schedulingApi.usecases.FindScheduling;
 import com.arthur.schedulingApi.usecases.factory.TestDataFactory;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
