@@ -1,7 +1,4 @@
-package com.arthur.schedulingApi.controllers.user.response;
-
-import com.arthur.schedulingApi.controllers.scheduling.response.SchedulingResponseDTO;
-import com.arthur.schedulingApi.controllers.service.response.ServiceResponseDTO;
+package com.arthur.schedulingApi.controllers.response;
 
 import java.util.List;
 

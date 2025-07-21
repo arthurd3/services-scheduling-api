@@ -1,6 +1,6 @@
 package com.arthur.schedulingApi.usecases.scheduling.mapper;
 
-import com.arthur.schedulingApi.controllers.scheduling.request.SchedulingSlotRequestDTO;
+import com.arthur.schedulingApi.controllers.request.SchedulingSlotRequestDTO;
 import com.arthur.schedulingApi.models.scheduling.Scheduling;
 import com.arthur.schedulingApi.models.service.Services;
 

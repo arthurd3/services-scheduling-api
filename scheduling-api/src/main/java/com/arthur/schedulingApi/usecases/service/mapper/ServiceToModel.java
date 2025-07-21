@@ -1,6 +1,6 @@
 package com.arthur.schedulingApi.usecases.service.mapper;
 
-import com.arthur.schedulingApi.controllers.service.request.ServiceRequestDTO;
+import com.arthur.schedulingApi.controllers.request.ServiceRequestDTO;
 import com.arthur.schedulingApi.models.service.Services;
 
 import java.util.ArrayList;

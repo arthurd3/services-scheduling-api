@@ -1,7 +1,7 @@
 package com.arthur.schedulingApi.usecases.scheduling;
 
-import com.arthur.schedulingApi.controllers.scheduling.request.SchedulingSlotRequestDTO;
-import com.arthur.schedulingApi.controllers.scheduling.response.SchedulingResponseDTO;
+import com.arthur.schedulingApi.controllers.request.SchedulingSlotRequestDTO;
+import com.arthur.schedulingApi.controllers.response.SchedulingResponseDTO;
 import com.arthur.schedulingApi.models.scheduling.Scheduling;
 import com.arthur.schedulingApi.models.scheduling.SchedulingStatus;
 import com.arthur.schedulingApi.models.service.Services;
@@ -9,8 +9,6 @@ import com.arthur.schedulingApi.repositories.scheduling.SchedulingRepository;
 import com.arthur.schedulingApi.usecases.service.FindServiceById;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
-
-import java.util.Optional;
 
 import static com.arthur.schedulingApi.usecases.scheduling.mapper.SchedulingToModel.schedulingToModel;
 import static com.arthur.schedulingApi.usecases.scheduling.mapper.SchedulingToResponse.schedulingToResponse;

@@ -1,6 +1,6 @@
 package com.arthur.schedulingApi.usecases.scheduling;
 
-import com.arthur.schedulingApi.controllers.scheduling.response.SchedulingResponseDTO;
+import com.arthur.schedulingApi.controllers.response.SchedulingResponseDTO;
 import com.arthur.schedulingApi.exceptions.SchedulingNotAvailableException;
 import com.arthur.schedulingApi.models.scheduling.SchedulingStatus;
 import com.arthur.schedulingApi.security.userAuth.AuthenticatedUserService;

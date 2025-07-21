@@ -1,4 +1,4 @@
-package com.arthur.schedulingApi.controllers.auth.request;
+package com.arthur.schedulingApi.controllers.request;
 
 import jakarta.validation.constraints.NotBlank;
 

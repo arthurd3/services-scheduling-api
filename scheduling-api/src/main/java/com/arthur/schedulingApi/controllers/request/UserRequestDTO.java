@@ -1,4 +1,4 @@
-package com.arthur.schedulingApi.controllers.user.request;
+package com.arthur.schedulingApi.controllers.request;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;

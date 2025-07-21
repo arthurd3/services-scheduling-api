@@ -1,6 +1,6 @@
 package com.arthur.schedulingApi.usecases.user;
 
-import com.arthur.schedulingApi.controllers.user.response.UserResponseDTO;
+import com.arthur.schedulingApi.controllers.response.UserResponseDTO;
 import com.arthur.schedulingApi.exceptions.UserNotFoundException;
 import com.arthur.schedulingApi.models.user.User;
 import com.arthur.schedulingApi.repositories.users.UserRepository;

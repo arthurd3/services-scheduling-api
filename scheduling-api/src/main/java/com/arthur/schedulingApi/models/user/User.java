@@ -1,5 +1,6 @@
 package com.arthur.schedulingApi.models.user;
 
+import com.arthur.schedulingApi.models.rating.Rating;
 import com.arthur.schedulingApi.models.scheduling.Scheduling;
 import com.arthur.schedulingApi.models.service.Services;
 import jakarta.persistence.*;
@@ -35,6 +36,12 @@ public class User {
     @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Services> servicesOwned = new ArrayList<>();
 
+    @OneToMany(mappedBy = "appraiser", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Rating> ratingsGiven = new ArrayList<>();
+
+    @OneToMany(mappedBy = "ratee", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Rating> ratingsReceived = new ArrayList<>();
+
     @OneToMany(mappedBy = "client", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<Scheduling> schedulings = new ArrayList<>();
 
@@ -53,7 +60,4 @@ public class User {
         this.password = passwordEncoder.encode(rawPassword);
     }
 
-    public void addScheduling(Scheduling scheduling) {
-        this.schedulings.add(scheduling);
-    }
 }

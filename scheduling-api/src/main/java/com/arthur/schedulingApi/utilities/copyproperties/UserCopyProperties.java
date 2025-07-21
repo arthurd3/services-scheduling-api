@@ -1,6 +1,6 @@
 package com.arthur.schedulingApi.utilities.copyproperties;
 
-import com.arthur.schedulingApi.controllers.user.request.UserRequestDTO;
+import com.arthur.schedulingApi.controllers.request.UserRequestDTO;
 import com.arthur.schedulingApi.models.user.User;
 
 import static com.arthur.schedulingApi.utilities.copyproperties.GetUpdateValue.getUpdatedValue;

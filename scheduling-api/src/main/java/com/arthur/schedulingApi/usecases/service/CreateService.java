@@ -1,7 +1,7 @@
 package com.arthur.schedulingApi.usecases.service;
 
-import com.arthur.schedulingApi.controllers.service.request.ServiceRequestDTO;
-import com.arthur.schedulingApi.controllers.service.response.ServiceResponseDTO;
+import com.arthur.schedulingApi.controllers.request.ServiceRequestDTO;
+import com.arthur.schedulingApi.controllers.response.ServiceResponseDTO;
 import com.arthur.schedulingApi.models.user.User;
 import com.arthur.schedulingApi.repositories.services.ServiceRepository;
 import com.arthur.schedulingApi.security.userAuth.AuthenticatedUserService;

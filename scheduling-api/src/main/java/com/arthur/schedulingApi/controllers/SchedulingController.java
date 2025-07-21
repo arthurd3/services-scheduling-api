@@ -1,8 +1,8 @@
-package com.arthur.schedulingApi.controllers.scheduling;
+package com.arthur.schedulingApi.controllers;
 
-import com.arthur.schedulingApi.controllers.scheduling.request.SchedulingSlotRequestDTO;
-import com.arthur.schedulingApi.controllers.scheduling.request.UpdateStatusRequestDTO;
-import com.arthur.schedulingApi.controllers.scheduling.response.SchedulingResponseDTO;
+import com.arthur.schedulingApi.controllers.request.SchedulingSlotRequestDTO;
+import com.arthur.schedulingApi.controllers.request.UpdateStatusRequestDTO;
+import com.arthur.schedulingApi.controllers.response.SchedulingResponseDTO;
 import com.arthur.schedulingApi.usecases.scheduling.*;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import static org.springframework.http.HttpStatus.*;
 
 @RestController
-@RequestMapping("/api/v1/scheduling")
+@RequestMapping("api/v1/scheduling")
 @RequiredArgsConstructor
 public class SchedulingController {
 
@@ -26,10 +26,11 @@ public class SchedulingController {
     private final JoinScheduling joinScheduling;
     private final EditScheduling editScheduling;
 
+
     @ResponseStatus(CREATED)
     @PostMapping("{id}")
     public SchedulingResponseDTO create(@PathVariable(name = "id") Long serviceId ,
-                                                  @RequestBody @Valid SchedulingSlotRequestDTO schedulingSlotRequestDTO) {
+                                        @RequestBody @Valid SchedulingSlotRequestDTO schedulingSlotRequestDTO) {
         return createScheduling.createScheduling(schedulingSlotRequestDTO, serviceId);
     }
 
@@ -70,4 +71,5 @@ public class SchedulingController {
     public SchedulingResponseDTO join(@PathVariable Long id) {
         return joinScheduling.joinScheduling(id);
     }
+
 }

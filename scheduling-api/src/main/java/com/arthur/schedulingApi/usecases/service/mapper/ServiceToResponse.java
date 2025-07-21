@@ -1,6 +1,6 @@
 package com.arthur.schedulingApi.usecases.service.mapper;
 
-import com.arthur.schedulingApi.controllers.service.response.ServiceResponseDTO;
+import com.arthur.schedulingApi.controllers.response.ServiceResponseDTO;
 import com.arthur.schedulingApi.models.service.Services;
 import com.arthur.schedulingApi.usecases.scheduling.mapper.SchedulingToResponse;
 

@@ -1,7 +1,7 @@
-package com.arthur.schedulingApi.controllers.user;
+package com.arthur.schedulingApi.controllers;
 
-import com.arthur.schedulingApi.controllers.user.request.UserRequestDTO;
-import com.arthur.schedulingApi.controllers.user.response.UserResponseDTO;
+import com.arthur.schedulingApi.controllers.request.UserRequestDTO;
+import com.arthur.schedulingApi.controllers.response.UserResponseDTO;
 import com.arthur.schedulingApi.usecases.user.*;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import static org.springframework.http.HttpStatus.*;
 
 @RestController
-@RequestMapping("/api/v1/users")
+@RequestMapping("api/v1/users")
 @RequiredArgsConstructor
 public class UserController {
 
@@ -54,4 +54,5 @@ public class UserController {
                                   @Valid @RequestBody UserRequestDTO userRequestDTO) {
         return editUser.editUser(id , userRequestDTO);
     }
+
 }

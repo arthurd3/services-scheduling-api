@@ -1,17 +1,16 @@
-package com.arthur.schedulingApi.controllers.service;
+package com.arthur.schedulingApi.controllers;
 
-import com.arthur.schedulingApi.controllers.service.request.ServiceRequestDTO;
-import com.arthur.schedulingApi.controllers.service.response.ServiceResponseDTO;
+import com.arthur.schedulingApi.controllers.request.ServiceRequestDTO;
+import com.arthur.schedulingApi.controllers.response.ServiceResponseDTO;
 import com.arthur.schedulingApi.usecases.service.*;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
-
 import static org.springframework.http.HttpStatus.*;
 
 @RestController
-@RequestMapping("/api/v1/services")
+@RequestMapping("api/v1/services")
 @RequiredArgsConstructor
 public class ServiceController {
 
@@ -20,6 +19,7 @@ public class ServiceController {
     private final FindServiceById findServiceById;
     private final DeleteById deleteById;
     private final EditService editService;
+
 
     @ResponseStatus(CREATED)
     @PostMapping
@@ -51,5 +51,7 @@ public class ServiceController {
                                      @Valid @RequestBody ServiceRequestDTO serviceRequestDTO){
         return editService.editService(id,serviceRequestDTO);
     }
+
+
 
 }

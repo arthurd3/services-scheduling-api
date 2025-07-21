@@ -1,31 +1,28 @@
-package com.arthur.schedulingApi.controllers.auth;
+package com.arthur.schedulingApi.controllers;
 
-import com.arthur.schedulingApi.controllers.auth.loginResponseDTO.LoginResponseDTO;
-import com.arthur.schedulingApi.controllers.auth.request.AuthRequestDTO;
-import com.arthur.schedulingApi.controllers.user.request.UserRequestDTO;
-import com.arthur.schedulingApi.controllers.user.response.UserResponseDTO;
+import com.arthur.schedulingApi.controllers.response.LoginResponseDTO;
+import com.arthur.schedulingApi.controllers.request.AuthRequestDTO;
+import com.arthur.schedulingApi.controllers.request.UserRequestDTO;
+import com.arthur.schedulingApi.controllers.response.UserResponseDTO;
 import com.arthur.schedulingApi.security.userAuth.AuthenticatedUserService;
 import com.arthur.schedulingApi.usecases.user.RegisterUser;
 import jakarta.validation.Valid;
-import org.springframework.http.ResponseEntity;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import static org.springframework.http.HttpStatus.OK;
 
 @RestController
-@RequestMapping("/auth")
+@RequestMapping("auth")
+@RequiredArgsConstructor
 public class AuthenticationController {
 
     private final AuthenticatedUserService authenticationUseCase;
     private final RegisterUser registerUser;
 
-    public AuthenticationController(AuthenticatedUserService authenticationUseCase, RegisterUser registerUser) {
-        this.authenticationUseCase = authenticationUseCase;
-        this.registerUser = registerUser;
-    }
 
     @ResponseStatus(OK)
-    @PostMapping("/login")
+    @PostMapping("/ login")
     public LoginResponseDTO login(@Valid @RequestBody AuthRequestDTO authDTO) {
         return authenticationUseCase.login(authDTO);
     }

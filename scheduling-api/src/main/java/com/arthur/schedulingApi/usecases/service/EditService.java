@@ -1,12 +1,10 @@
 package com.arthur.schedulingApi.usecases.service;
 
-import com.arthur.schedulingApi.controllers.service.request.ServiceRequestDTO;
-import com.arthur.schedulingApi.controllers.service.response.ServiceResponseDTO;
+import com.arthur.schedulingApi.controllers.request.ServiceRequestDTO;
+import com.arthur.schedulingApi.controllers.response.ServiceResponseDTO;
 
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
-
-import java.util.Optional;
 
 import static com.arthur.schedulingApi.utilities.copyproperties.ServiceCopyProperties.copyServiceProperties;
 import static com.arthur.schedulingApi.usecases.service.mapper.ServiceToResponse.serviceToResponse;

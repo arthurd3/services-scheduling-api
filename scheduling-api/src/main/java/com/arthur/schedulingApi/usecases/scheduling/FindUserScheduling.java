@@ -1,15 +1,13 @@
 package com.arthur.schedulingApi.usecases.scheduling;
 
-import com.arthur.schedulingApi.controllers.scheduling.response.SchedulingResponseDTO;
+import com.arthur.schedulingApi.controllers.response.SchedulingResponseDTO;
 import com.arthur.schedulingApi.models.scheduling.Scheduling;
 import com.arthur.schedulingApi.repositories.scheduling.SchedulingRepository;
 import com.arthur.schedulingApi.security.userAuth.AuthenticatedUserService;
 import com.arthur.schedulingApi.usecases.scheduling.mapper.SchedulingToResponse;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import java.util.List;
 
 @Service
 public class FindUserScheduling {

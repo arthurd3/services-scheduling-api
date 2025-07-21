@@ -1,10 +1,9 @@
 package com.arthur.schedulingApi.usecases.scheduling;
 
-import com.arthur.schedulingApi.controllers.scheduling.request.SchedulingSlotRequestDTO;
+import com.arthur.schedulingApi.controllers.request.SchedulingSlotRequestDTO;
 import com.arthur.schedulingApi.exceptions.ServiceNotFoundException;
 import com.arthur.schedulingApi.models.scheduling.Scheduling;
 import com.arthur.schedulingApi.models.scheduling.SchedulingStatus;
-import com.arthur.schedulingApi.models.user.User;
 import com.arthur.schedulingApi.repositories.scheduling.SchedulingRepository;
 import com.arthur.schedulingApi.usecases.factory.TestDataFactory;
 import com.arthur.schedulingApi.usecases.service.FindServiceById;
@@ -60,7 +59,7 @@ class CreateSchedulingTest {
             });
 
 
-            var schedulingResponseOptional = createScheduling.createScheduling(schedulingCreate , newService.getId());
+            var schedulingResponse = createScheduling.createScheduling(schedulingCreate , newService.getId());
 
 
             verify(schedulingRepository).save(schedulingCaptor.capture());
@@ -72,8 +71,7 @@ class CreateSchedulingTest {
             assertEquals(newService, capturedScheduling.getServices());
             assertEquals(SchedulingStatus.AVAILABLE, capturedScheduling.getStatus());
 
-            assertTrue(schedulingResponseOptional.isPresent());
-            var schedulingResponse = schedulingResponseOptional.get();
+            assertNotNull(schedulingResponse);
             assertEquals(301L, schedulingResponse.id());
             assertEquals(startTime, schedulingResponse.startTime());
         }

@@ -1,7 +1,7 @@
 package com.arthur.schedulingApi.usecases.scheduling;
 
-import com.arthur.schedulingApi.controllers.scheduling.request.SchedulingSlotRequestDTO;
-import com.arthur.schedulingApi.controllers.scheduling.response.SchedulingResponseDTO;
+import com.arthur.schedulingApi.controllers.request.SchedulingSlotRequestDTO;
+import com.arthur.schedulingApi.controllers.response.SchedulingResponseDTO;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 

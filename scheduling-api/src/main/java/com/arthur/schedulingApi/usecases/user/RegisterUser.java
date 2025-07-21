@@ -1,7 +1,7 @@
 package com.arthur.schedulingApi.usecases.user;
 
-import com.arthur.schedulingApi.controllers.user.request.UserRequestDTO;
-import com.arthur.schedulingApi.controllers.user.response.UserResponseDTO;
+import com.arthur.schedulingApi.controllers.request.UserRequestDTO;
+import com.arthur.schedulingApi.controllers.response.UserResponseDTO;
 import com.arthur.schedulingApi.exceptions.EmailAlreadyExistsException;
 import com.arthur.schedulingApi.exceptions.PhoneAlreadyExistsException;
 import com.arthur.schedulingApi.models.user.User;

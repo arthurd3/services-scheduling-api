@@ -1,6 +1,6 @@
 package com.arthur.schedulingApi.utilities.copyproperties;
 
-import com.arthur.schedulingApi.controllers.service.request.ServiceRequestDTO;
+import com.arthur.schedulingApi.controllers.request.ServiceRequestDTO;
 import com.arthur.schedulingApi.models.scheduling.Scheduling;
 import com.arthur.schedulingApi.models.service.Services;
 

@@ -1,11 +1,8 @@
 package com.arthur.schedulingApi.usecases.service;
 
-import com.arthur.schedulingApi.controllers.service.request.ServiceRequestDTO;
+import com.arthur.schedulingApi.controllers.request.ServiceRequestDTO;
 import com.arthur.schedulingApi.exceptions.UserNotAuthenticatedException;
-import com.arthur.schedulingApi.exceptions.UserNotFoundException;
 import com.arthur.schedulingApi.models.service.Services;
-import com.arthur.schedulingApi.models.user.User;
-import com.arthur.schedulingApi.models.user.UserRoles;
 import com.arthur.schedulingApi.repositories.services.ServiceRepository;
 import com.arthur.schedulingApi.security.userAuth.AuthenticatedUserService;
 import com.arthur.schedulingApi.usecases.factory.TestDataFactory;
@@ -18,7 +15,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;

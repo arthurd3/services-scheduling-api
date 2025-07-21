@@ -1,6 +1,6 @@
 package com.arthur.schedulingApi.usecases.user;
 
-import com.arthur.schedulingApi.controllers.user.request.UserRequestDTO;
+import com.arthur.schedulingApi.controllers.request.UserRequestDTO;
 import com.arthur.schedulingApi.exceptions.UserNotFoundException;
 import com.arthur.schedulingApi.models.user.User;
 import com.arthur.schedulingApi.models.user.UserRoles;
@@ -12,8 +12,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-
-import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -54,12 +52,12 @@ class EditUserTest {
 
             //ASSERT
 
-            assertTrue(editedUser.isPresent());
+            assertNotNull(editedUser);
 
-            assertEquals(1L , editedUser.get().id() );
-            assertEquals("Arthur Claudio" , editedUser.get().name() );
-            assertEquals("arthur_camposl@yahoo.com" , editedUser.get().email() );
-            assertEquals("321312321" , editedUser.get().phoneNumber() );
+            assertEquals(1L , editedUser.id() );
+            assertEquals("Arthur Claudio" , editedUser.name() );
+            assertEquals("arthur_camposl@yahoo.com" , editedUser.email() );
+            assertEquals("321312321" , editedUser.phoneNumber() );
 
         }
 

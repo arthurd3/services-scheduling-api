@@ -1,9 +1,8 @@
 package com.arthur.schedulingApi.security.userAuth;
 
-import com.arthur.schedulingApi.controllers.auth.loginResponseDTO.LoginResponseDTO;
-import com.arthur.schedulingApi.controllers.auth.request.AuthRequestDTO;
+import com.arthur.schedulingApi.controllers.response.LoginResponseDTO;
+import com.arthur.schedulingApi.controllers.request.AuthRequestDTO;
 import com.arthur.schedulingApi.exceptions.UserNotAuthenticatedException;
-import com.arthur.schedulingApi.exceptions.UserNotFoundException;
 import com.arthur.schedulingApi.models.user.User;
 import com.arthur.schedulingApi.security.authSecurity.TokenService;
 import org.springframework.security.authentication.AuthenticationManager;

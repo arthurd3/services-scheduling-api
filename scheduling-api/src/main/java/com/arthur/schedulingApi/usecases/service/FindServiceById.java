@@ -1,12 +1,10 @@
 package com.arthur.schedulingApi.usecases.service;
 
-import com.arthur.schedulingApi.controllers.service.response.ServiceResponseDTO;
+import com.arthur.schedulingApi.controllers.response.ServiceResponseDTO;
 import com.arthur.schedulingApi.exceptions.ServiceNotFoundException;
 import com.arthur.schedulingApi.models.service.Services;
 import com.arthur.schedulingApi.repositories.services.ServiceRepository;
 import org.springframework.stereotype.Service;
-
-import java.util.Optional;
 
 import static com.arthur.schedulingApi.usecases.service.mapper.ServiceToResponse.serviceToResponse;
 

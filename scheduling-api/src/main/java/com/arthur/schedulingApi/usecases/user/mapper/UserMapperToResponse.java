@@ -1,6 +1,6 @@
 package com.arthur.schedulingApi.usecases.user.mapper;
 
-import com.arthur.schedulingApi.controllers.user.response.UserResponseDTO;
+import com.arthur.schedulingApi.controllers.response.UserResponseDTO;
 import com.arthur.schedulingApi.models.user.User;
 
 import static com.arthur.schedulingApi.usecases.scheduling.mapper.SchedulingListToResponse.schedulingListToResponse;

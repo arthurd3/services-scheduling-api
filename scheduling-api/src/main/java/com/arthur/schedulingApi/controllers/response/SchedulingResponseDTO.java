@@ -1,4 +1,4 @@
-package com.arthur.schedulingApi.controllers.scheduling.response;
+package com.arthur.schedulingApi.controllers.response;
 
 import com.arthur.schedulingApi.models.scheduling.SchedulingStatus;
 

@@ -1,6 +1,6 @@
 package com.arthur.schedulingApi.usecases.scheduling;
 
-import com.arthur.schedulingApi.controllers.scheduling.request.UpdateStatusRequestDTO;
+import com.arthur.schedulingApi.controllers.request.UpdateStatusRequestDTO;
 import com.arthur.schedulingApi.exceptions.SchedulingNotFoundException;
 import com.arthur.schedulingApi.models.scheduling.SchedulingStatus;
 import com.arthur.schedulingApi.usecases.factory.TestDataFactory;
@@ -11,8 +11,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-
-import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;

@@ -1,6 +1,5 @@
-package com.arthur.schedulingApi.controllers.service.request;
+package com.arthur.schedulingApi.controllers.request;
 
-import com.arthur.schedulingApi.controllers.scheduling.request.SchedulingSlotRequestDTO;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
