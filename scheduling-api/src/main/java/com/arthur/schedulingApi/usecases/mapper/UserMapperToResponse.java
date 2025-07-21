@@ -19,7 +19,8 @@ public class UserMapperToResponse {
                 userModel.getPhoneNumber(),
                 userModel.getRole().toString(),
                 schedulingList,
-                serviceList
+                serviceList,
+                userModel.updateScore()
         );
     }
 }

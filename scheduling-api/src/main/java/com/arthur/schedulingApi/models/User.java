@@ -9,6 +9,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import java.util.ArrayList;
 import java.util.List;
 
+import static java.util.stream.Collectors.averagingInt;
+
 @Entity
 @Table(name = "users")
 @Getter
@@ -51,11 +53,21 @@ public class User {
     }
 
     public User() {
-
     }
 
     public void setEncodePassword(String rawPassword, PasswordEncoder passwordEncoder) {
         this.password = passwordEncoder.encode(rawPassword);
+    }
+
+    @Transient
+    public double updateScore(){
+        if(this.ratingsReceived != null){
+            return this.ratingsReceived.stream()
+                    .collect(averagingInt(Rating::getScore));
+        }
+        else{
+            return 0;
+        }
     }
 
 }

@@ -8,5 +8,6 @@ public record UserResponseDTO (Long id ,
                                String phoneNumber,
                                String role,
                                List<SchedulingResponseDTO> schedulingList,
-                               List<ServiceResponseDTO> serviceList){
-}
+                               List<ServiceResponseDTO> serviceList,
+                               Double score
+) {}

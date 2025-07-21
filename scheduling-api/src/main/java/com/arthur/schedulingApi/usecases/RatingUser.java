@@ -2,7 +2,6 @@ package com.arthur.schedulingApi.usecases;
 
 import com.arthur.schedulingApi.controllers.request.RatingRequestDTO;
 import com.arthur.schedulingApi.controllers.response.RatingResponseDTO;
-import com.arthur.schedulingApi.models.Rating;
 import com.arthur.schedulingApi.models.User;
 import com.arthur.schedulingApi.repositories.RatingRepository;
 import com.arthur.schedulingApi.security.jwt.AuthenticatedUserService;
