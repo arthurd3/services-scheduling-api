@@ -8,10 +8,9 @@ import com.arthur.schedulingApi.security.userAuth.AuthenticatedUserService;
 import com.arthur.schedulingApi.usecases.user.RegisterUser;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import static org.springframework.http.HttpStatus.OK;
 
 @RestController
 @RequestMapping("/auth")
@@ -25,15 +24,15 @@ public class AuthenticationController {
         this.registerUser = registerUser;
     }
 
-
+    @ResponseStatus(OK)
     @PostMapping("/login")
-    public ResponseEntity<LoginResponseDTO> login(@Valid @RequestBody AuthRequestDTO authDTO) {
-        var loginResponse = authenticationUseCase.login(authDTO);
-        return ResponseEntity.ok(loginResponse);
+    public LoginResponseDTO login(@Valid @RequestBody AuthRequestDTO authDTO) {
+        return authenticationUseCase.login(authDTO);
     }
 
+    @ResponseStatus(OK)
     @PostMapping("/register")
-    public ResponseEntity<UserResponseDTO> registerUser(@Valid @RequestBody UserRequestDTO userRequestDTO) {
-        return ResponseEntity.ok(registerUser.registerUser(userRequestDTO));
+    public UserResponseDTO registerUser(@Valid @RequestBody UserRequestDTO userRequestDTO) {
+        return registerUser.registerUser(userRequestDTO);
     }
 }

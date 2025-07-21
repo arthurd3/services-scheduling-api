@@ -1,18 +1,18 @@
 package com.arthur.schedulingApi.controllers.service;
 
-import com.arthur.schedulingApi.controllers.ApiResponseDTO;
 import com.arthur.schedulingApi.controllers.service.request.ServiceRequestDTO;
 import com.arthur.schedulingApi.controllers.service.response.ServiceResponseDTO;
 import com.arthur.schedulingApi.usecases.service.*;
 import jakarta.validation.Valid;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Optional;
+
+import static org.springframework.http.HttpStatus.*;
 
 @RestController
 @RequestMapping("/api/v1/services")
+@RequiredArgsConstructor
 public class ServiceController {
 
     private final CreateService createService;
@@ -21,40 +21,35 @@ public class ServiceController {
     private final DeleteById deleteById;
     private final EditService editService;
 
-    public ServiceController(CreateService createService, FindServiceByName findServiceByName, FindServiceById findServiceById, DeleteById deleteById, EditService editService) {
-        this.createService = createService;
-        this.findServiceByName = findServiceByName;
-        this.findServiceById = findServiceById;
-        this.deleteById = deleteById;
-        this.editService = editService;
+    @ResponseStatus(CREATED)
+    @PostMapping
+    public ServiceResponseDTO create(@RequestBody @Valid ServiceRequestDTO serviceRequestDTO){
+        return createService.createService(serviceRequestDTO);
     }
 
-    @PostMapping("/create")
-    public ResponseEntity<ServiceResponseDTO> createService(@RequestBody @Valid ServiceRequestDTO serviceRequestDTO){
-        return ResponseEntity.status(HttpStatus.CREATED).body(createService.createService(serviceRequestDTO));
+    @ResponseStatus(FOUND)
+    @GetMapping("{name}")
+    public ServiceResponseDTO findByName(@PathVariable String name){
+        return findServiceByName.findService(name);
     }
 
-    @GetMapping
-    public ResponseEntity<ServiceResponseDTO> findByNameService(@RequestParam(name = "name") String name){
-        return ResponseEntity.ok(findServiceByName.findService(name));
+    @ResponseStatus(FOUND)
+    @GetMapping("{id}")
+    public ServiceResponseDTO findById(@PathVariable Long id){
+        return findServiceById.findById(id);
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<ServiceResponseDTO> findByIdService(@PathVariable Long id){
-        return ResponseEntity.ok(findServiceById.findById(id));
-    }
-
-
-
-    @DeleteMapping("/{id}")
-    public ResponseEntity<ApiResponseDTO> deleteService(@PathVariable Long id){
+    @ResponseStatus(NO_CONTENT)
+    @DeleteMapping("{id}")
+    public void delete(@PathVariable Long id){
         deleteById.deleteById(id);
-        return ResponseEntity.ok(new ApiResponseDTO("Servico deletado com id: " + id));
     }
 
-    @PutMapping("/edit/{id}")
-    public ResponseEntity<ServiceResponseDTO> editService(@PathVariable Long id, @Valid @RequestBody ServiceRequestDTO serviceRequestDTO){
-        return ResponseEntity.ok(editService.editService(id,serviceRequestDTO));
+    @ResponseStatus(OK)
+    @PutMapping("{id}")
+    public ServiceResponseDTO update(@PathVariable Long id,
+                                     @Valid @RequestBody ServiceRequestDTO serviceRequestDTO){
+        return editService.editService(id,serviceRequestDTO);
     }
 
 }

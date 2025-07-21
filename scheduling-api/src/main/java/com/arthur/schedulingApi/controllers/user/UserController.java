@@ -1,23 +1,19 @@
 package com.arthur.schedulingApi.controllers.user;
 
 import com.arthur.schedulingApi.controllers.user.request.UserRequestDTO;
-import com.arthur.schedulingApi.controllers.ApiResponseDTO;
 import com.arthur.schedulingApi.controllers.user.response.UserResponseDTO;
 import com.arthur.schedulingApi.usecases.user.*;
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import java.net.URI;
-import java.util.Optional;
+import static org.springframework.http.HttpStatus.*;
 
-import static org.springframework.http.HttpStatus.OK;
-
-@RestController()
+@RestController
 @RequestMapping("/api/v1/users")
+@RequiredArgsConstructor
 public class UserController {
 
     private final FindAllUsers findAllUsers;
@@ -27,44 +23,35 @@ public class UserController {
     private final EditUser editUser;
 
 
-    public UserController(FindAllUsers findAllUsers, RegisterUser registerUser, FindUser findUser, DeleteUser deleteUser, EditUser editUser) {
-        this.findAllUsers = findAllUsers;
-        this.registerUser = registerUser;
-        this.findUser = findUser;
-        this.deleteUser = deleteUser;
-        this.editUser = editUser;
+    @ResponseStatus(FOUND)
+    @GetMapping("findAll")
+    public Page<UserResponseDTO> findAll(@RequestParam(value = "page", defaultValue = "0") int page,
+                                         @RequestParam(value = "size", defaultValue = "5") int size) {
+        return findAllUsers.findAllUsers(PageRequest.of(page, size));
     }
 
-    @GetMapping("/findAll")
-    public ResponseEntity<Page<UserResponseDTO>> findAllUsers(@RequestParam(value = "page", defaultValue = "0") int page,
-                                                              @RequestParam(value = "size", defaultValue = "5") int size) {
-        return ResponseEntity.ok(findAllUsers.findAllUsers(PageRequest.of(page, size)));
+    @ResponseStatus(CREATED)
+    @PostMapping
+    public UserResponseDTO create(@Valid @RequestBody UserRequestDTO userRequestDTO) {
+        return registerUser.registerUser(userRequestDTO);
     }
 
-    @PostMapping("/create")
-    public ResponseEntity<UserResponseDTO> createUser(@Valid @RequestBody UserRequestDTO userRequestDTO) {
-        var newUser = registerUser.registerUser(userRequestDTO);
-
-        URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
-                .buildAndExpand(newUser.id()).toUri();
-
-        return ResponseEntity.created(location).body(newUser);
-    }
-
-    @ResponseStatus(OK)
-    @GetMapping("/{id}")
-    public UserResponseDTO findAllUsers(@PathVariable Long id ) {
+    @ResponseStatus(FOUND)
+    @GetMapping("{id}")
+    public UserResponseDTO findById(@PathVariable Long id ) {
         return findUser.findUserAsDto(id);
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<ApiResponseDTO> deleteUser(@PathVariable Long id) {
+    @ResponseStatus(NO_CONTENT)
+    @DeleteMapping("{id}")
+    public void delete(@PathVariable Long id) {
         deleteUser.deleteUser(id);
-        return ResponseEntity.ok(new ApiResponseDTO("Usuário com id "+ id +" deletado com sucesso!"));
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<UserResponseDTO> editUser(@PathVariable Long id, @Valid @RequestBody UserRequestDTO userRequestDTO) {
-        return ResponseEntity.ok(editUser.editUser(id , userRequestDTO));
+    @ResponseStatus(OK)
+    @PutMapping("{id}")
+    public UserResponseDTO update(@PathVariable Long id,
+                                  @Valid @RequestBody UserRequestDTO userRequestDTO) {
+        return editUser.editUser(id , userRequestDTO);
     }
 }
