@@ -1,5 +1,3 @@
-version: '3.8'
-
 services:
   cache:
     image: redis:6.2-alpine
@@ -24,7 +22,5 @@ services:
     restart: always
 
 volumes:
-  db_data:
-
-
-
+  db_data: {}
+  cache: {} 
