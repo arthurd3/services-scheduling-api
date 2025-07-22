@@ -1,4 +1,4 @@
-package com.arthur.schedulingApi.usecases.mapper;
+package com.arthur.schedulingApi.utilities;
 
 import com.arthur.schedulingApi.controllers.request.RatingRequestDTO;
 import com.arthur.schedulingApi.models.User;
@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
-public class RatingToModel {
+public class RatingToSave {
 
     private final FindUser findUser;
     private final FindServiceById findService;
