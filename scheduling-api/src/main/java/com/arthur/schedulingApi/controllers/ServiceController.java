@@ -17,7 +17,7 @@ public class ServiceController {
     private final CreateService createService;
     private final FindServiceByName findServiceByName;
     private final FindServiceById findServiceById;
-    private final DeleteById deleteById;
+    private final DeleteService deleteService;
     private final EditService editService;
 
 
@@ -42,7 +42,7 @@ public class ServiceController {
     @ResponseStatus(NO_CONTENT)
     @DeleteMapping("{id}")
     public void delete(@PathVariable Long id){
-        deleteById.deleteById(id);
+        deleteService.deleteById(id);
     }
 
     @ResponseStatus(OK)

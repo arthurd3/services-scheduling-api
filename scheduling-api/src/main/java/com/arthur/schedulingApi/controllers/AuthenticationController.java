@@ -5,7 +5,7 @@ import com.arthur.schedulingApi.controllers.request.AuthRequestDTO;
 import com.arthur.schedulingApi.controllers.request.UserRequestDTO;
 import com.arthur.schedulingApi.controllers.response.UserResponseDTO;
 import com.arthur.schedulingApi.security.jwt.AuthenticatedUserService;
-import com.arthur.schedulingApi.usecases.RegisterUser;
+import com.arthur.schedulingApi.usecases.CreateUser;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -18,7 +18,7 @@ import static org.springframework.http.HttpStatus.OK;
 public class AuthenticationController {
 
     private final AuthenticatedUserService authenticationUseCase;
-    private final RegisterUser registerUser;
+    private final CreateUser createUser;
 
 
     @ResponseStatus(OK)
@@ -30,6 +30,6 @@ public class AuthenticationController {
     @ResponseStatus(OK)
     @PostMapping("/register")
     public UserResponseDTO registerUser(@Valid @RequestBody UserRequestDTO userRequestDTO) {
-        return registerUser.registerUser(userRequestDTO);
+        return createUser.registerUser(userRequestDTO);
     }
 }

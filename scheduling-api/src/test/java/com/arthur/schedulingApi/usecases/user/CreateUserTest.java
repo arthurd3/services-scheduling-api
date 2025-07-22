@@ -6,7 +6,7 @@ import com.arthur.schedulingApi.exceptions.PhoneAlreadyExistsException;
 import com.arthur.schedulingApi.models.User;
 import com.arthur.schedulingApi.models.enums.UserRoles;
 import com.arthur.schedulingApi.repositories.UserRepository;
-import com.arthur.schedulingApi.usecases.RegisterUser;
+import com.arthur.schedulingApi.usecases.CreateUser;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -22,10 +22,10 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
-class RegisterUserTest {
+class CreateUserTest {
 
     @InjectMocks
-    private RegisterUser registerUser;
+    private CreateUser createUser;
 
     @Mock
     private UserRepository userRepository;
@@ -47,7 +47,7 @@ class RegisterUserTest {
             when(userRepository.existsByEmail("arthur@email.com")).thenReturn(true);
 
             EmailAlreadyExistsException exception = assertThrows(EmailAlreadyExistsException.class, () -> {
-                registerUser.registerUser(userRequest);
+                createUser.registerUser(userRequest);
             });
 
             assertEquals("O E-mail 'arthur@email.com' já está em uso.", exception.getMessage());
@@ -64,7 +64,7 @@ class RegisterUserTest {
             when(userRepository.existsByPhoneNumber("321312321312")).thenReturn(true);
 
             PhoneAlreadyExistsException exception = assertThrows(PhoneAlreadyExistsException.class, () -> {
-                registerUser.registerUser(userRequest);
+                createUser.registerUser(userRequest);
             });
 
             assertEquals("O Telefone '321312321312' já está em uso.",exception.getMessage());
@@ -88,7 +88,7 @@ class RegisterUserTest {
                 return userToSave;
             });
 
-            var response = registerUser.registerUser(requestDTO);
+            var response = createUser.registerUser(requestDTO);
 
             verify(userRepository).save(userCaptor.capture());
 

@@ -17,7 +17,7 @@ import static org.springframework.http.HttpStatus.*;
 public class UserController {
 
     private final FindAllUsers findAllUsers;
-    private final RegisterUser registerUser;
+    private final CreateUser createUser;
     private final FindUser findUser;
     private final DeleteUser deleteUser;
     private final EditUser editUser;
@@ -33,7 +33,7 @@ public class UserController {
     @ResponseStatus(CREATED)
     @PostMapping
     public UserResponseDTO create(@Valid @RequestBody UserRequestDTO userRequestDTO) {
-        return registerUser.registerUser(userRequestDTO);
+        return createUser.registerUser(userRequestDTO);
     }
 
     @ResponseStatus(FOUND)

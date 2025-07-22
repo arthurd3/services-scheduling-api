@@ -6,6 +6,7 @@ import com.arthur.schedulingApi.models.User;
 import com.arthur.schedulingApi.repositories.ServiceRepository;
 import com.arthur.schedulingApi.security.jwt.AuthenticatedUserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.CachePut;
 import org.springframework.stereotype.Service;
 
 import static com.arthur.schedulingApi.usecases.mapper.ServiceToModel.serviceToModel;
@@ -18,6 +19,7 @@ public class CreateService {
     private final ServiceRepository serviceRepository;
     private final AuthenticatedUserService authenticatedUserService;
 
+    @CachePut(value = "SERVICE_CACHE" , key = "#result.id()")
     public ServiceResponseDTO createService(ServiceRequestDTO serviceRequestDTO) {
 
         User ownerUser = authenticatedUserService.getAuthenticatedUser();

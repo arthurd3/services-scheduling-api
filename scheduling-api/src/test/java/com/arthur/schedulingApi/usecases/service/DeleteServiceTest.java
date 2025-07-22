@@ -2,7 +2,7 @@ package com.arthur.schedulingApi.usecases.service;
 
 import com.arthur.schedulingApi.exceptions.ServiceNotFoundException;
 import com.arthur.schedulingApi.repositories.ServiceRepository;
-import com.arthur.schedulingApi.usecases.DeleteById;
+import com.arthur.schedulingApi.usecases.DeleteService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -15,10 +15,10 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
-class DeleteByIdTest {
+class DeleteServiceTest {
 
     @InjectMocks
-    private DeleteById deleteById;
+    private DeleteService deleteService;
 
     @Mock
     private ServiceRepository serviceRepository;
@@ -37,7 +37,7 @@ class DeleteByIdTest {
             when(serviceRepository.existsById(serviceId)).thenReturn(true);
 
             //ACT
-            deleteById.deleteById(serviceId);
+            deleteService.deleteById(serviceId);
 
 
             //ASSERT
@@ -57,7 +57,7 @@ class DeleteByIdTest {
 
             //ACT
             ServiceNotFoundException exception = assertThrows(
-                    ServiceNotFoundException.class, () -> deleteById.deleteById(serviceId));
+                    ServiceNotFoundException.class, () -> deleteService.deleteById(serviceId));
 
             //ASSERT
             assertEquals("Não é possível deletar: Serviço com id " + serviceId + " não encontrado.", exception.getMessage());

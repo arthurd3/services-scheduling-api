@@ -17,7 +17,7 @@ import static com.arthur.schedulingApi.usecases.mapper.UserMapperToResponse.user
 
 @Service
 @RequiredArgsConstructor
-public class RegisterUser {
+public class CreateUser {
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
