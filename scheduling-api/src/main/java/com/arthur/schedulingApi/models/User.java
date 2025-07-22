@@ -1,5 +1,6 @@
 package com.arthur.schedulingApi.models;
 
+import com.arthur.schedulingApi.exceptions.ServiceNotFoundException;
 import com.arthur.schedulingApi.models.enums.UserRoles;
 import com.arthur.schedulingApi.models.ratingImpl.UserRating;
 import jakarta.persistence.*;
@@ -10,6 +11,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static java.util.stream.Collectors.averagingInt;
 

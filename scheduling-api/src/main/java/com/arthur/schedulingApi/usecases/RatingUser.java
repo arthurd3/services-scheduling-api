@@ -32,4 +32,8 @@ public class RatingUser {
 
         return ratingToResponse(savedRating);
     }
+
+//    private boolean verifyValidRating(User userAppraiser){
+//
+//    }
 }
