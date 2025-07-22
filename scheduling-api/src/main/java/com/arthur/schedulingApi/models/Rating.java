@@ -17,6 +17,7 @@ import lombok.Setter;
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "rating_type")
 public abstract class Rating {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;

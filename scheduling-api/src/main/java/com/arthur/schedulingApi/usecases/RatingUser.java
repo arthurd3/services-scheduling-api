@@ -4,39 +4,29 @@ import com.arthur.schedulingApi.controllers.request.RatingRequestDTO;
 import com.arthur.schedulingApi.controllers.response.RatingResponseDTO;
 import com.arthur.schedulingApi.models.User;
 import com.arthur.schedulingApi.models.enums.RatingType;
-import com.arthur.schedulingApi.models.ratingImpl.UserRating;
 import com.arthur.schedulingApi.repositories.RatingRepository;
 import com.arthur.schedulingApi.security.jwt.AuthenticatedUserService;
+import com.arthur.schedulingApi.usecases.mapper.RatingToModel;
 import jakarta.transaction.Transactional;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import static com.arthur.schedulingApi.usecases.mapper.RatingToModel.ratingToModel;
 import static com.arthur.schedulingApi.usecases.mapper.RatingToResponse.ratingToResponse;
 
 @Service
+@RequiredArgsConstructor
 public class RatingUser {
 
     private final RatingRepository ratingRepository;
-    private final FindUser findUser;
     private final AuthenticatedUserService  authenticatedUserService;
-
-    public RatingUser(RatingRepository ratingRepository, FindUser findUser, AuthenticatedUserService authenticatedUserService) {
-        this.ratingRepository = ratingRepository;
-        this.findUser = findUser;
-        this.authenticatedUserService = authenticatedUserService;
-    }
+    private final RatingToModel ratingToModel;
 
     @Transactional
     public RatingResponseDTO ratingUser(Long userRateeId , RatingRequestDTO ratingRequest) {
+
         User userAppraiser = authenticatedUserService.getAuthenticatedUser();
-        User userRatee = findUser.findUserEntity(userRateeId);
 
-        var modelRating = ratingToModel(ratingRequest , RatingType.USER);
-
-        modelRating.setAppraiser(userAppraiser);
-
-        if (modelRating instanceof UserRating userRating)
-            userRating.setRatee(userRatee);
+        var modelRating = ratingToModel.ratingToSave(ratingRequest , userRateeId , userAppraiser,RatingType.USER);
 
         var savedRating = ratingRepository.save(modelRating);
 
