@@ -5,21 +5,18 @@ import com.arthur.schedulingApi.controllers.response.ServiceResponseDTO;
 import com.arthur.schedulingApi.models.User;
 import com.arthur.schedulingApi.repositories.ServiceRepository;
 import com.arthur.schedulingApi.security.jwt.AuthenticatedUserService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import static com.arthur.schedulingApi.usecases.mapper.ServiceToModel.serviceToModel;
 import static com.arthur.schedulingApi.usecases.mapper.ServiceToResponse.serviceToResponse;
 
 @Service
+@RequiredArgsConstructor
 public class CreateService {
 
     private final ServiceRepository serviceRepository;
     private final AuthenticatedUserService authenticatedUserService;
-
-    public CreateService(ServiceRepository serviceRepository, AuthenticatedUserService authenticatedUserService) {
-        this.serviceRepository = serviceRepository;
-        this.authenticatedUserService = authenticatedUserService;
-    }
 
     public ServiceResponseDTO createService(ServiceRequestDTO serviceRequestDTO) {
 

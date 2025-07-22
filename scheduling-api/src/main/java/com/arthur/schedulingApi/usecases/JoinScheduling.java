@@ -5,22 +5,18 @@ import com.arthur.schedulingApi.exceptions.SchedulingNotAvailableException;
 import com.arthur.schedulingApi.models.enums.SchedulingStatus;
 import com.arthur.schedulingApi.security.jwt.AuthenticatedUserService;
 import jakarta.transaction.Transactional;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 
 import static com.arthur.schedulingApi.usecases.mapper.SchedulingToResponse.schedulingToResponse;
 
 @Service
+@RequiredArgsConstructor
 public class JoinScheduling {
 
     private final AuthenticatedUserService authenticatedUserService;
     private final FindScheduling findScheduling;
-
-    public JoinScheduling(AuthenticatedUserService authenticatedUserService, FindScheduling findScheduling) {
-        this.authenticatedUserService = authenticatedUserService;
-
-        this.findScheduling = findScheduling;
-    }
 
     @Transactional
     public SchedulingResponseDTO joinScheduling(Long id) {

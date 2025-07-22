@@ -7,21 +7,18 @@ import com.arthur.schedulingApi.models.enums.SchedulingStatus;
 import com.arthur.schedulingApi.models.Services;
 import com.arthur.schedulingApi.repositories.SchedulingRepository;
 import jakarta.transaction.Transactional;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import static com.arthur.schedulingApi.usecases.mapper.SchedulingToModel.schedulingToModel;
 import static com.arthur.schedulingApi.usecases.mapper.SchedulingToResponse.schedulingToResponse;
 
 @Service
+@RequiredArgsConstructor
 public class CreateScheduling {
 
     private final FindServiceById findServiceById;
     private final SchedulingRepository schedulingRepository;
-
-    public CreateScheduling(FindServiceById findServiceById, SchedulingRepository schedulingRepository) {
-        this.findServiceById = findServiceById;
-        this.schedulingRepository = schedulingRepository;
-    }
 
     @Transactional
     public SchedulingResponseDTO createScheduling(SchedulingSlotRequestDTO schedulingSlotRequestDTO, Long serviceId) {
@@ -37,9 +34,5 @@ public class CreateScheduling {
         service.addScheduling(scheduling);
 
         return schedulingToResponse(schedulingReturn);
-
     }
-
-
-
 }

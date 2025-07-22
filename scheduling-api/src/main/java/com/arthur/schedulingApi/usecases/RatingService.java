@@ -25,7 +25,7 @@ public class RatingService {
         User userAppraiser = authenticatedUserService.getAuthenticatedUser();
 
         var modelRating = ratingToModel.ratingToSave(ratingRequest , serviceId, userAppraiser, RatingType.SERVICE);
-        
+
         var savedRating = ratingRepository.save(modelRating);
 
         return ratingToResponse(savedRating);

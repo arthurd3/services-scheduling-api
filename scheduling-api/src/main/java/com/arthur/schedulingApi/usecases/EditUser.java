@@ -4,6 +4,7 @@ import com.arthur.schedulingApi.controllers.request.UserRequestDTO;
 import com.arthur.schedulingApi.controllers.response.UserResponseDTO;
 import com.arthur.schedulingApi.models.User;
 import jakarta.transaction.Transactional;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import static com.arthur.schedulingApi.utilities.copyproperties.UserCopyProperties.copyProperties;
@@ -11,13 +12,10 @@ import static com.arthur.schedulingApi.usecases.mapper.UserMapperToResponse.user
 
 
 @Service
+@RequiredArgsConstructor
 public class EditUser {
 
     private final FindUser findUser;
-
-    public EditUser(FindUser findUser) {
-        this.findUser = findUser;
-    }
 
     @Transactional
     public UserResponseDTO editUser(Long id , UserRequestDTO userRequestDTO) {
@@ -28,5 +26,4 @@ public class EditUser {
 
         return userToResponse(editedUser);
     }
-
 }

@@ -2,16 +2,14 @@ package com.arthur.schedulingApi.usecases;
 
 import com.arthur.schedulingApi.exceptions.ServiceNotFoundException;
 import com.arthur.schedulingApi.repositories.ServiceRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 @Service
+@RequiredArgsConstructor
 public class DeleteById {
 
     private final ServiceRepository serviceRepository;
-
-    public DeleteById(ServiceRepository serviceRepository) {
-        this.serviceRepository = serviceRepository;
-    }
 
     public void deleteById(Long id) {
 
@@ -21,5 +19,4 @@ public class DeleteById {
 
         serviceRepository.deleteById(id);
     }
-
 }

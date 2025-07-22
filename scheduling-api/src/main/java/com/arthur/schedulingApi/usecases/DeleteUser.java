@@ -2,17 +2,14 @@ package com.arthur.schedulingApi.usecases;
 
 import com.arthur.schedulingApi.exceptions.UserNotFoundException;
 import com.arthur.schedulingApi.repositories.UserRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 @Service
+@RequiredArgsConstructor
 public class DeleteUser {
 
-
     private final UserRepository userRepository;
-
-    public DeleteUser(UserRepository userRepository) {
-        this.userRepository = userRepository;
-    }
 
     public void deleteUser(Long userId) {
 
@@ -22,5 +19,4 @@ public class DeleteUser {
 
         userRepository.deleteById(userId);
     }
-
 }

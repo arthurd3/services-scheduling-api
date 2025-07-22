@@ -7,6 +7,7 @@ import com.arthur.schedulingApi.exceptions.PhoneAlreadyExistsException;
 import com.arthur.schedulingApi.models.User;
 import com.arthur.schedulingApi.models.enums.UserRoles;
 import com.arthur.schedulingApi.repositories.UserRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -15,15 +16,11 @@ import static com.arthur.schedulingApi.usecases.mapper.UserMapperToResponse.user
 
 
 @Service
+@RequiredArgsConstructor
 public class RegisterUser {
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
-
-    public RegisterUser(UserRepository userRepository, PasswordEncoder passwordEncoder) {
-        this.userRepository = userRepository;
-        this.passwordEncoder = passwordEncoder;
-    }
 
     public UserResponseDTO registerUser(UserRequestDTO userRequestDTO) {
 
@@ -42,6 +39,4 @@ public class RegisterUser {
 
         return userToResponse(userRepository.save(userModel));
     }
-
-
 }
