@@ -1,6 +1,7 @@
 package com.arthur.schedulingApi.config;
 
 import com.arthur.schedulingApi.controllers.response.ServiceResponseDTO;
+import com.arthur.schedulingApi.controllers.response.UserResponseDTO;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
@@ -32,7 +33,7 @@ public class RedisConfig {
         return objectMapper;
     }
 
-    @Bean
+    @Bean("serviceResponseSerializer")
     public Jackson2JsonRedisSerializer<ServiceResponseDTO> serviceResponseSerializer() {
         Jackson2JsonRedisSerializer<ServiceResponseDTO> serializer = 
             new Jackson2JsonRedisSerializer<>(ServiceResponseDTO.class);
@@ -40,8 +41,24 @@ public class RedisConfig {
         return serializer;
     }
 
-    @Bean
-    public RedisCacheConfiguration cacheConfiguration() {
+    @Bean("userResponseSerializer")
+    public Jackson2JsonRedisSerializer<UserResponseDTO> userResponseSerializer() {
+        Jackson2JsonRedisSerializer<UserResponseDTO> serializer = 
+            new Jackson2JsonRedisSerializer<>(UserResponseDTO.class);
+        serializer.setObjectMapper(redisObjectMapper());
+        return serializer;
+    }
+
+    @Bean("genericSerializer")
+    public Jackson2JsonRedisSerializer<Object> genericSerializer() {
+        Jackson2JsonRedisSerializer<Object> serializer = 
+            new Jackson2JsonRedisSerializer<>(Object.class);
+        serializer.setObjectMapper(redisObjectMapper());
+        return serializer;
+    }
+
+    @Bean("serviceCacheConfig")
+    public RedisCacheConfiguration serviceCacheConfiguration() {
         return RedisCacheConfiguration.defaultCacheConfig()
                 .entryTtl(Duration.ofMinutes(10))
                 .serializeKeysWith(SerializationPair.fromSerializer(new StringRedisSerializer()))
@@ -49,10 +66,30 @@ public class RedisConfig {
                 .disableCachingNullValues();
     }
 
+    @Bean("userCacheConfig")
+    public RedisCacheConfiguration userCacheConfiguration() {
+        return RedisCacheConfiguration.defaultCacheConfig()
+                .entryTtl(Duration.ofMinutes(10))
+                .serializeKeysWith(SerializationPair.fromSerializer(new StringRedisSerializer()))
+                .serializeValuesWith(SerializationPair.fromSerializer(userResponseSerializer()))
+                .disableCachingNullValues();
+    }
+
+    @Bean("genericCacheConfig")
+    public RedisCacheConfiguration genericCacheConfiguration() {
+        return RedisCacheConfiguration.defaultCacheConfig()
+                .entryTtl(Duration.ofMinutes(10))
+                .serializeKeysWith(SerializationPair.fromSerializer(new StringRedisSerializer()))
+                .serializeValuesWith(SerializationPair.fromSerializer(genericSerializer()))
+                .disableCachingNullValues();
+    }
+
     @Bean
     public RedisCacheManager cacheManager(RedisConnectionFactory connectionFactory) {
         return RedisCacheManager.builder(connectionFactory)
-                .cacheDefaults(cacheConfiguration())
+                .cacheDefaults(genericCacheConfiguration())
+                .withCacheConfiguration("SERVICE_CACHE", serviceCacheConfiguration())
+                .withCacheConfiguration("USER_CACHE", userCacheConfiguration()) 
                 .build();
     }
 }
