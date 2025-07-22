@@ -6,7 +6,7 @@ import com.arthur.schedulingApi.models.User;
 import com.arthur.schedulingApi.models.enums.RatingType;
 import com.arthur.schedulingApi.repositories.RatingRepository;
 import com.arthur.schedulingApi.security.jwt.AuthenticatedUserService;
-import com.arthur.schedulingApi.utilities.RatingToSave;
+import com.arthur.schedulingApi.utilities.factory.RatingFactory;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -19,14 +19,14 @@ public class RatingUser {
 
     private final RatingRepository ratingRepository;
     private final AuthenticatedUserService  authenticatedUserService;
-    private final RatingToSave ratingToSave;
+    private final RatingFactory ratingFactory;
 
     @Transactional
     public RatingResponseDTO ratingUser(Long userRateeId , RatingRequestDTO ratingRequest) {
 
         User userAppraiser = authenticatedUserService.getAuthenticatedUser();
 
-        var modelRating = ratingToSave.ratingToSave(ratingRequest , userRateeId , userAppraiser,RatingType.USER);
+        var modelRating = ratingFactory.createForUser(ratingRequest , userRateeId , userAppraiser);
 
         var savedRating = ratingRepository.save(modelRating);
 
