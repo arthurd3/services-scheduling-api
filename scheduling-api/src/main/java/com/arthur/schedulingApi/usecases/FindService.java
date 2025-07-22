@@ -34,8 +34,5 @@ public class FindService {
                 .orElseThrow(() -> new ServiceNotFoundException("Servico com id "+ id +" nao encontrado"));
     }
 
-    @CacheEvict(value = "SERVICE_CACHE", allEntries = true)
-    public void clearAllCache() {
-        log.info("### Limpando todo o cache SERVICE_CACHE ###");
-    }
+
 }

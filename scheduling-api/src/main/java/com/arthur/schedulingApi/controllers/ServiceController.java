@@ -4,12 +4,14 @@ import com.arthur.schedulingApi.controllers.request.ServiceRequestDTO;
 import com.arthur.schedulingApi.controllers.response.ServiceResponseDTO;
 import com.arthur.schedulingApi.usecases.*;
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import static org.springframework.http.HttpStatus.*;
 
 @RestController
 @RequestMapping("api/v1/services")
+@RequiredArgsConstructor
 public class ServiceController {
 
     private final CreateService createService;
@@ -17,14 +19,7 @@ public class ServiceController {
     private final FindService findService;
     private final DeleteService deleteService;
     private final EditService editService;
-
-    public ServiceController(CreateService createService, FindServiceByName findServiceByName, FindService findService, DeleteService deleteService, EditService editService) {
-        this.createService = createService;
-        this.findServiceByName = findServiceByName;
-        this.findService = findService;
-        this.deleteService = deleteService;
-        this.editService = editService;
-    }
+    private final ClearServiceCache clearServiceCache;
 
     @ResponseStatus(CREATED)
     @PostMapping
@@ -60,6 +55,6 @@ public class ServiceController {
     @ResponseStatus(OK)
     @PostMapping("/cache/clear")
     public void clearCache(){
-        findService.clearAllCache();
+        clearServiceCache.clearAllCache();
     }
 }

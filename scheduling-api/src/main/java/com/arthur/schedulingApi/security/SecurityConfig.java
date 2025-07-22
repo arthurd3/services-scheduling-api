@@ -33,6 +33,8 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.GET, "/api/v1/users/**").authenticated()
                         .requestMatchers(HttpMethod.POST, "/api/v1/users/**").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.GET, "/api/v1/services/**").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/api/v1/services/**").permitAll()
+                        .requestMatchers(HttpMethod.PUT, "/api/v1/services/**").permitAll()
                         .anyRequest().authenticated()
                 )
                 .addFilterBefore(securityFilter , UsernamePasswordAuthenticationFilter.class)
