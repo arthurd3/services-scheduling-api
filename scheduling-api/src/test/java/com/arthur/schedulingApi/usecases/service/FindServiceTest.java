@@ -3,7 +3,7 @@ package com.arthur.schedulingApi.usecases.service;
 import com.arthur.schedulingApi.exceptions.ServiceNotFoundException;
 import com.arthur.schedulingApi.models.Services;
 import com.arthur.schedulingApi.repositories.ServiceRepository;
-import com.arthur.schedulingApi.usecases.FindServiceById;
+import com.arthur.schedulingApi.usecases.FindService;
 import com.arthur.schedulingApi.usecases.factory.TestDataFactory;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -19,10 +19,10 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
-class FindServiceByIdTest {
+class FindServiceTest {
 
     @InjectMocks
-    private FindServiceById serviceFindById;
+    private FindService serviceFindById;
 
     @Mock
     private ServiceRepository svcRepository;

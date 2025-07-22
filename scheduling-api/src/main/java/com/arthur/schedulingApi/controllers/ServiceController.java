@@ -16,7 +16,7 @@ public class ServiceController {
 
     private final CreateService createService;
     private final FindServiceByName findServiceByName;
-    private final FindServiceById findServiceById;
+    private final FindService findService;
     private final DeleteService deleteService;
     private final EditService editService;
 
@@ -36,7 +36,7 @@ public class ServiceController {
     @ResponseStatus(FOUND)
     @GetMapping("{id}")
     public ServiceResponseDTO findById(@PathVariable Long id){
-        return findServiceById.findById(id);
+        return findService.findById(id);
     }
 
     @ResponseStatus(NO_CONTENT)

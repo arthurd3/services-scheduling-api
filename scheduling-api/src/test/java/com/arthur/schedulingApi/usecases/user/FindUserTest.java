@@ -46,7 +46,7 @@ class FindUserTest {
             when(userRepository.findById(userIdFind)).thenReturn(Optional.of(userFounded));
 
             // ACT
-            UserResponseDTO response = findUser.findUserAsDto(userIdFind);
+            UserResponseDTO response = findUser.findById(userIdFind);
 
             // ASSERT
             assertNotNull(response);
@@ -67,7 +67,7 @@ class FindUserTest {
 
             // ACT
             UserNotFoundException exception = assertThrows(UserNotFoundException.class, () -> {
-                findUser.findUserAsDto(userIdFind);
+                findUser.findById(userIdFind);
             });
 
             // ASSERT
@@ -94,7 +94,7 @@ class FindUserTest {
 
             //ACT
 
-            User userReturn = findUser.findUserEntity(userIdFind);
+            User userReturn = findUser.findByIdAsModel(userIdFind);
 
             // ASSERT
 
@@ -116,7 +116,7 @@ class FindUserTest {
             //ACT
 
             UserNotFoundException exception = assertThrows(UserNotFoundException.class, () -> {
-                findUser.findUserEntity(userIdFind);
+                findUser.findByIdAsModel(userIdFind);
             });
 
             //ASSERT

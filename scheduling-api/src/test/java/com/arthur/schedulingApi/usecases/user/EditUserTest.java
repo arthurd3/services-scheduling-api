@@ -46,7 +46,7 @@ class EditUserTest {
             userOriginal.setId(1L);
             userOriginal.setRole(UserRoles.USER);
 
-            when(findUser.findUserEntity(userIdToEdit)).thenReturn(userOriginal);
+            when(findUser.findByIdAsModel(userIdToEdit)).thenReturn(userOriginal);
 
             //ACT
 
@@ -73,7 +73,7 @@ class EditUserTest {
             var userDTO = new UserRequestDTO("Nome Novo", "email@novo.com", "senha", "12345");
 
 
-            when(findUser.findUserEntity(userIdInexistente))
+            when(findUser.findByIdAsModel(userIdInexistente))
                     .thenThrow(new UserNotFoundException("Usuario com id " + userIdInexistente + " nao encontrado!"));
 
             // ACT

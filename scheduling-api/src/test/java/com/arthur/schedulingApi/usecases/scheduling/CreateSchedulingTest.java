@@ -7,7 +7,7 @@ import com.arthur.schedulingApi.models.enums.SchedulingStatus;
 import com.arthur.schedulingApi.repositories.SchedulingRepository;
 import com.arthur.schedulingApi.usecases.CreateScheduling;
 import com.arthur.schedulingApi.usecases.factory.TestDataFactory;
-import com.arthur.schedulingApi.usecases.FindServiceById;
+import com.arthur.schedulingApi.usecases.FindService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -31,7 +31,7 @@ class CreateSchedulingTest {
     private CreateScheduling createScheduling;
 
     @Mock
-    private FindServiceById findServiceById;
+    private FindService findService;
 
     @Mock
     private SchedulingRepository schedulingRepository;
@@ -51,7 +51,7 @@ class CreateSchedulingTest {
             LocalDateTime endTime = LocalDateTime.now().plusDays(1).withHour(15).withMinute(0).withSecond(0).withNano(0);
             var schedulingCreate = new SchedulingSlotRequestDTO(startTime , endTime);
 
-            when(findServiceById.findByIdAsModel(newService.getId())).thenReturn(newService);
+            when(findService.findByIdAsModel(newService.getId())).thenReturn(newService);
 
             when(schedulingRepository.save(any(Scheduling.class))).thenAnswer(invocation -> {
                 Scheduling schedulingToSave = invocation.getArgument(0);
@@ -83,7 +83,7 @@ class CreateSchedulingTest {
         void shouldThrowServiceNotFoundException() {
              var serviceId = 104L;
 
-             when(findServiceById.findByIdAsModel(serviceId))
+             when(findService.findByIdAsModel(serviceId))
                      .thenThrow(new ServiceNotFoundException("Servico com id "+ serviceId +" nao encontrado"));
 
              ServiceNotFoundException exception = assertThrows(

@@ -5,6 +5,7 @@ import com.arthur.schedulingApi.controllers.response.ServiceResponseDTO;
 
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.CachePut;
 import org.springframework.stereotype.Service;
 
 import static com.arthur.schedulingApi.utilities.copyproperties.ServiceCopyProperties.copyServiceProperties;
@@ -14,12 +15,13 @@ import static com.arthur.schedulingApi.usecases.mapper.ServiceToResponse.service
 @RequiredArgsConstructor
 public class EditService {
 
-    private final FindServiceById findServiceById;
+    private final FindService findService;
 
     @Transactional
+    @CachePut(value = "SERVICE_CACHE" , key = "#result.id()")
     public ServiceResponseDTO editService(Long id ,ServiceRequestDTO serviceRequestDTO) {
 
-        var originalService = findServiceById.findByIdAsModel(id);
+        var originalService = findService.findByIdAsModel(id);
 
         var editedService = copyServiceProperties(serviceRequestDTO , originalService);
 

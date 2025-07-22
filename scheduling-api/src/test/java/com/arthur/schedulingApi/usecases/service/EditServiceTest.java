@@ -3,7 +3,7 @@ package com.arthur.schedulingApi.usecases.service;
 import com.arthur.schedulingApi.controllers.request.ServiceRequestDTO;
 import com.arthur.schedulingApi.exceptions.ServiceNotFoundException;
 import com.arthur.schedulingApi.usecases.EditService;
-import com.arthur.schedulingApi.usecases.FindServiceById;
+import com.arthur.schedulingApi.usecases.FindService;
 import com.arthur.schedulingApi.usecases.factory.TestDataFactory;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -26,7 +26,7 @@ class EditServiceTest {
     private EditService editService;
 
     @Mock
-    private FindServiceById findServiceById;
+    private FindService findService;
 
     @Nested
     class editService{
@@ -48,7 +48,7 @@ class EditServiceTest {
                     new ArrayList<>(){}
             );
 
-            when(findServiceById.findByIdAsModel(serviceId)).thenReturn(serviceDb);
+            when(findService.findByIdAsModel(serviceId)).thenReturn(serviceDb);
 
             //ACT
 
@@ -71,7 +71,7 @@ class EditServiceTest {
 
             var serviceId = 142L;
 
-            when(findServiceById.findByIdAsModel(serviceId))
+            when(findService.findByIdAsModel(serviceId))
                     .thenThrow(new ServiceNotFoundException("Servico com id "+ serviceId +" nao encontrado"));
 
             var requestServiceDTO = new ServiceRequestDTO(

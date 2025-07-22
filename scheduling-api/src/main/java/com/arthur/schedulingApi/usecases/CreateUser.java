@@ -8,6 +8,7 @@ import com.arthur.schedulingApi.models.User;
 import com.arthur.schedulingApi.models.enums.UserRoles;
 import com.arthur.schedulingApi.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.CachePut;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -22,6 +23,7 @@ public class CreateUser {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
 
+    @CachePut(value = "USER_CACHE" , key = "#result.id()")
     public UserResponseDTO registerUser(UserRequestDTO userRequestDTO) {
 
         if (userRepository.existsByEmail(userRequestDTO.email())) {

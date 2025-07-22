@@ -17,13 +17,13 @@ import static com.arthur.schedulingApi.usecases.mapper.SchedulingToResponse.sche
 @RequiredArgsConstructor
 public class CreateScheduling {
 
-    private final FindServiceById findServiceById;
+    private final FindService findService;
     private final SchedulingRepository schedulingRepository;
 
     @Transactional
     public SchedulingResponseDTO createScheduling(SchedulingSlotRequestDTO schedulingSlotRequestDTO, Long serviceId) {
 
-        Services service = findServiceById.findByIdAsModel(serviceId);
+        Services service = findService.findByIdAsModel(serviceId);
 
         Scheduling scheduling = schedulingToModel(schedulingSlotRequestDTO, service);
 

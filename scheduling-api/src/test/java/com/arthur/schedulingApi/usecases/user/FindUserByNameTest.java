@@ -40,7 +40,7 @@ class FindUserByNameTest {
 
             when(userRepository.findByName(searchName)).thenReturn(Optional.of(foundUser));
 
-            User response = findUserByName.findUserByName(searchName);
+            User response = findUserByName.findUser(searchName);
 
             assertNotNull(response);
             assertEquals("Arthur", response.getName());
@@ -59,7 +59,7 @@ class FindUserByNameTest {
             when(userRepository.findByName(searchName)).thenReturn(Optional.empty());
 
             UserNotFoundException exception = assertThrows(UserNotFoundException.class, () -> {
-                findUserByName.findUserByName(searchName);
+                findUserByName.findUser(searchName);
             });
 
             assertEquals("Usuario com nome "+ searchName +" nao encontrado!",exception.getMessage());

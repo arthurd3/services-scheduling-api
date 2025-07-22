@@ -5,16 +5,18 @@ import com.arthur.schedulingApi.exceptions.ServiceNotFoundException;
 import com.arthur.schedulingApi.models.Services;
 import com.arthur.schedulingApi.repositories.ServiceRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import static com.arthur.schedulingApi.usecases.mapper.ServiceToResponse.serviceToResponse;
 
 @Service
 @RequiredArgsConstructor
-public class FindServiceById {
+public class FindService {
 
     private final ServiceRepository serviceRepository;
 
+    @Cacheable(value = "SERVICE_CACHE", key = "#id")
     public ServiceResponseDTO findById(Long id){
 
         var findService = serviceRepository.findById(id)

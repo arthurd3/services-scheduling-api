@@ -5,6 +5,7 @@ import com.arthur.schedulingApi.models.User;
 import com.arthur.schedulingApi.repositories.UserRepository;
 
 import com.arthur.schedulingApi.usecases.mapper.UserMapperToResponse;
+import jakarta.persistence.Cacheable;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;

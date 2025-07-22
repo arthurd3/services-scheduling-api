@@ -39,7 +39,7 @@ public class UserController {
     @ResponseStatus(FOUND)
     @GetMapping("{id}")
     public UserResponseDTO findById(@PathVariable Long id ) {
-        return findUser.findUserAsDto(id);
+        return findUser.findById(id);
     }
 
     @ResponseStatus(NO_CONTENT)

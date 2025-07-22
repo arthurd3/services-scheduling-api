@@ -5,6 +5,7 @@ import com.arthur.schedulingApi.exceptions.UserNotFoundException;
 import com.arthur.schedulingApi.models.User;
 import com.arthur.schedulingApi.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 
@@ -16,14 +17,15 @@ public class FindUser {
 
     private final UserRepository userRepository;
 
-    public UserResponseDTO findUserAsDto(Long userId) {
+    @Cacheable(value = "USER_CACHE", key = "#id")
+    public UserResponseDTO findById(Long userId) {
 
          var returnedUser = userRepository.findById(userId)
                  .orElseThrow(() -> new UserNotFoundException("Usuario com id "+ userId +" nao encontrado!"));
          return userToResponse(returnedUser);
     }
 
-    public User findUserEntity(Long userId) {
+    public User findByIdAsModel(Long userId) {
 
         return userRepository.findById(userId)
                 .orElseThrow(() -> new UserNotFoundException("Usuario com id "+ userId +" nao encontrado!"));

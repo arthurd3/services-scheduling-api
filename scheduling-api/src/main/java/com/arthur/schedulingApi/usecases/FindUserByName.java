@@ -12,7 +12,7 @@ public class FindUserByName {
 
     private final UserRepository userRepository;
 
-    public User findUserByName(String name) {
+    public User findUser(String name) {
 
         return userRepository.findByName(name)
                 .orElseThrow(() -> new UserNotFoundException("Usuario com nome "+ name +" nao encontrado!"));

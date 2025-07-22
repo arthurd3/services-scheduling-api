@@ -3,6 +3,7 @@ package com.arthur.schedulingApi.usecases;
 import com.arthur.schedulingApi.exceptions.UserNotFoundException;
 import com.arthur.schedulingApi.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -11,6 +12,7 @@ public class DeleteUser {
 
     private final UserRepository userRepository;
 
+    @CacheEvict(value = "USER_CACHE", key = "#id")
     public void deleteUser(Long userId) {
 
         if(!userRepository.existsById(userId)){
