@@ -12,7 +12,7 @@ public class DeleteUser {
 
     private final UserRepository userRepository;
 
-    @CacheEvict(value = "USER_CACHE", key = "#id")
+    @CacheEvict(value = "USER_CACHE", key = "#userId")
     public void deleteUser(Long userId) {
 
         if(!userRepository.existsById(userId)){

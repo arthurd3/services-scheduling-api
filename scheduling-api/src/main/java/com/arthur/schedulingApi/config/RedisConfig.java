@@ -1,5 +1,6 @@
 package com.arthur.schedulingApi.config;
 
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.jsontype.impl.LaissezFaireSubTypeValidator;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
@@ -21,13 +22,16 @@ public class RedisConfig {
 
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.registerModule(new JavaTimeModule());
-        objectMapper.activateDefaultTyping(LaissezFaireSubTypeValidator.instance, ObjectMapper.DefaultTyping.NON_FINAL);
+        objectMapper.activateDefaultTyping(
+                LaissezFaireSubTypeValidator.instance,
+                ObjectMapper.DefaultTyping.OBJECT_AND_NON_CONCRETE,
+                JsonTypeInfo.As.PROPERTY
+        );
 
         Jackson2JsonRedisSerializer<Object> serializer = new Jackson2JsonRedisSerializer<>(objectMapper, Object.class);
 
         RedisCacheConfiguration config = RedisCacheConfiguration.defaultCacheConfig()
-                .entryTtl(Duration.ofMinutes(6))
-                .disableCachingNullValues()
+                .entryTtl(Duration.ofMinutes(10))
                 .serializeValuesWith(RedisSerializationContext.SerializationPair.fromSerializer(serializer));
 
         return RedisCacheManager.builder(connectionFactory)

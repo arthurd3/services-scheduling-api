@@ -17,7 +17,7 @@ public class FindUser {
 
     private final UserRepository userRepository;
 
-    @Cacheable(value = "USER_CACHE", key = "#id")
+    @Cacheable(value = "USER_CACHE", key = "#userId")
     public UserResponseDTO findById(Long userId) {
 
          var returnedUser = userRepository.findById(userId)
