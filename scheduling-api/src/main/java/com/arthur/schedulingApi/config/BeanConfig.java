@@ -1,4 +1,4 @@
-package com.arthur.schedulingApi.utilities.config;
+package com.arthur.schedulingApi.config;
 
 import org.springframework.context.annotation.Configuration;
 
