@@ -30,15 +30,23 @@ public class SecurityConfig {
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers(HttpMethod.POST, "/auth/**").permitAll()
-                        .requestMatchers(HttpMethod.POST, "/api/v1/services/cache/clear").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/api/v1/users/**").authenticated()
-                        .requestMatchers(HttpMethod.POST, "/api/v1/users/**").hasRole("ADMIN")
-                        .requestMatchers(HttpMethod.POST, "/api/v1/services/**").authenticated()
-                        .requestMatchers(HttpMethod.GET, "/api/v1/services/**").permitAll()
-                        .requestMatchers(HttpMethod.PUT, "/api/v1/services/**").authenticated()
+                        .requestMatchers(HttpMethod.GET, "/api/v1/users/findAll").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.POST, "/api/v1/users").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.DELETE, "/api/v1/users/{id}").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.GET, "/api/v1/users/{id}").authenticated()
+                        .requestMatchers(HttpMethod.PUT, "/api/v1/users/{id}").authenticated()
+                        .requestMatchers(HttpMethod.POST, "/api/v1/services").hasRole("MANAGER")
+                        .requestMatchers(HttpMethod.PUT, "/api/v1/services/{id}").hasRole("MANAGER")
+                        .requestMatchers(HttpMethod.DELETE, "/api/v1/services/{id}").hasRole("MANAGER") // Regra que faltava
+                        .requestMatchers(HttpMethod.GET, "/api/v1/services/**").authenticated()
+                        .requestMatchers(HttpMethod.POST, "/api/v1/scheduling/{id}").hasRole("MANAGER")
+                        .requestMatchers(HttpMethod.PATCH, "/api/v1/scheduling/**").hasRole("MANAGER")
+                        .requestMatchers(HttpMethod.DELETE, "/api/v1/scheduling/{id}").hasRole("MANAGER")
+                        .requestMatchers(HttpMethod.POST, "/api/v1/scheduling/join/{id}").authenticated()
+                        .requestMatchers(HttpMethod.GET, "/api/v1/scheduling/**").authenticated()
                         .anyRequest().authenticated()
                 )
-                .addFilterBefore(securityFilter , UsernamePasswordAuthenticationFilter.class)
+                .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();
     }
 
