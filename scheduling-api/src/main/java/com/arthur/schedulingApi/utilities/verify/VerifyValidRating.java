@@ -1,4 +1,4 @@
-package com.arthur.schedulingApi.usecases;
+package com.arthur.schedulingApi.utilities.verify;
 
 import com.arthur.schedulingApi.exceptions.InvalidRatingException;
 import com.arthur.schedulingApi.models.User;

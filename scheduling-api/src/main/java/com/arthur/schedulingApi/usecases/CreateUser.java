@@ -30,6 +30,10 @@ public class CreateUser {
             throw new EmailAlreadyExistsException("O E-mail '" + userRequestDTO.email() + "' já está em uso.");
         }
 
+        if(userRepository.existsByName(userRequestDTO.name())) {
+            throw new NameAlreadyExistsException("O Nome '" + userRequestDTO.name() +"' ja esta em uso");
+        }
+
         if (userRepository.existsByPhoneNumber(userRequestDTO.phoneNumber())) {
             throw new PhoneAlreadyExistsException("O Telefone '" + userRequestDTO.phoneNumber() + "' já está em uso.");
         }

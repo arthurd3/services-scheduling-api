@@ -1,4 +1,4 @@
-package com.arthur.schedulingApi.usecases;
+package com.arthur.schedulingApi.utilities.verify;
 
 import com.arthur.schedulingApi.exceptions.SchedulingNotAvailableException;
 import com.arthur.schedulingApi.exceptions.UnauthorizedException;

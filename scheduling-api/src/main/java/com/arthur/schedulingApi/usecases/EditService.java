@@ -5,6 +5,7 @@ import com.arthur.schedulingApi.controllers.response.ServiceResponseDTO;
 
 import com.arthur.schedulingApi.models.User;
 import com.arthur.schedulingApi.security.jwt.AuthenticatedUserService;
+import com.arthur.schedulingApi.utilities.verify.VerifyEditService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.cache.annotation.CachePut;
@@ -19,7 +20,7 @@ public class EditService {
 
     private final FindService findService;
     private final AuthenticatedUserService  authenticatedUserService;
-    private final VerifyEditService verifyEditService;
+    private final VerifyEditService verifyEdit;
 
     @Transactional
     @CachePut(value = "SERVICE_CACHE" , key = "#result.id()")
@@ -29,7 +30,7 @@ public class EditService {
 
         var originalService = findService.findByIdAsModel(id);
 
-        verifyEditService.verifyService(authenticatedUser, originalService);
+        verifyEdit.verifyEdit(authenticatedUser, originalService);
 
         var editedService = copyServiceProperties(serviceRequestDTO , originalService);
 

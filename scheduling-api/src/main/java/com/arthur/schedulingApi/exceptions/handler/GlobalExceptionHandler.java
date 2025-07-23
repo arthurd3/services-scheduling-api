@@ -68,6 +68,13 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         return error;
     }
 
+    @ExceptionHandler(NameAlreadyExistsException.class)
+    public final ErrorResponse handleResourceAlreadyExistsException(NameAlreadyExistsException ex) {
+        var error = ErrorResponse.create(ex , HttpStatus.CONFLICT , ex.getMessage());
+        error.getBody().setTitle("Nome ja esta em uso");
+        return error;
+    }
+
     @Override
     protected ResponseEntity<Object> handleMethodArgumentNotValid(
             MethodArgumentNotValidException ex, HttpHeaders headers, HttpStatusCode status, WebRequest request) {

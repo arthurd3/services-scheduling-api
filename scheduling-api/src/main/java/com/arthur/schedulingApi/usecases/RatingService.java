@@ -2,13 +2,11 @@ package com.arthur.schedulingApi.usecases;
 
 import com.arthur.schedulingApi.controllers.request.RatingRequestDTO;
 import com.arthur.schedulingApi.controllers.response.RatingResponseDTO;
-import com.arthur.schedulingApi.exceptions.ServiceNotFoundException;
 import com.arthur.schedulingApi.models.User;
-import com.arthur.schedulingApi.models.enums.RatingType;
-import com.arthur.schedulingApi.models.ratingImpl.ServiceRating;
 import com.arthur.schedulingApi.repositories.RatingRepository;
 import com.arthur.schedulingApi.security.jwt.AuthenticatedUserService;
 import com.arthur.schedulingApi.utilities.factory.RatingFactory;
+import com.arthur.schedulingApi.utilities.verify.VerifyValidRating;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
