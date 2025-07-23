@@ -47,6 +47,13 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         return error;
     }
 
+    @ExceptionHandler(InvalidRatingException.class)
+    public final ErrorResponse handleResourceAlreadyExistsException(InvalidRatingException ex) {
+        var error = ErrorResponse.create(ex , HttpStatus.CONFLICT , ex.getMessage());
+        error.getBody().setTitle("Erro ao Avaliar");
+        return error;
+    }
+
     @ExceptionHandler(SchedulingNotAvailableException.class)
     public final ErrorResponse handleResourceAlreadyExistsException(SchedulingNotAvailableException ex) {
         var error = ErrorResponse.create(ex , HttpStatus.CONFLICT , ex.getMessage());

@@ -18,8 +18,6 @@ public class VerifyJoinScheduling {
 
     private void verifySchedulingIsAvailable(Scheduling scheduling) {
         if (scheduling.getStatus() != SchedulingStatus.AVAILABLE) {
-            log.warn("Tentativa de agendamento em horário indisponível. Scheduling ID: {}, Status: {}",
-                    scheduling.getId(), scheduling.getStatus());
             throw new SchedulingNotAvailableException("Este horário não está mais disponível.");
         }
     }
@@ -31,8 +29,6 @@ public class VerifyJoinScheduling {
                 .anyMatch(service -> service.getId().equals(serviceId));
 
         if (isOwner) {
-            log.warn("Cliente tentou agendar no próprio serviço. Client ID: {}, Service ID: {}",
-                    client.getId(), serviceId);
             throw new SchedulingNotAvailableException("Você não pode agendar no seu próprio serviço.");
         }
     }

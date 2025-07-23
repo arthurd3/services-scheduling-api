@@ -1,7 +1,6 @@
 package com.arthur.schedulingApi.usecases;
 
-import com.arthur.schedulingApi.exceptions.ServiceNotFoundException;
-import com.arthur.schedulingApi.exceptions.UserNotAuthenticatedException;
+import com.arthur.schedulingApi.exceptions.InvalidRatingException;
 import com.arthur.schedulingApi.models.User;
 import com.arthur.schedulingApi.models.ratingImpl.ServiceRating;
 import org.springframework.stereotype.Component;
@@ -9,20 +8,27 @@ import org.springframework.stereotype.Component;
 @Component
 public class VerifyValidRating {
 
-    public void verifyService(User userAppraiser , ServiceRating rating) {
+    public void verifyService(User userAppraiser, ServiceRating rating) {
+        verifyUserNotOwner(userAppraiser, rating);
+    }
 
+    public void verifyUser(User userAppraiser, Long userRatingId) {
+        verifyRateeIsNotAppraiser(userAppraiser, userRatingId);
+    }
+
+    private void verifyUserNotOwner(User userAppraiser, ServiceRating rating) {
         var serviceRating = rating.getServiceRatee();
         boolean isOwner = serviceRating.getOwner().getId().equals(userAppraiser.getId());
 
-        if(isOwner) {
-            throw new ServiceNotFoundException("Nao e possivel avaliar o proprio servico");
+        if (isOwner) {
+            throw new InvalidRatingException("Não é possível avaliar o próprio serviço");
         }
     }
 
-    public void verifyUser(User userAppraiser , Long userRatingId) {
+    private void verifyRateeIsNotAppraiser(User userAppraiser, Long userRatingId) {
 
-        if(userAppraiser.getId().equals(userRatingId)) {
-            throw new UserNotAuthenticatedException("Nao e possivel avaliar o proprio usuario");
+        if (userAppraiser.getId().equals(userRatingId)) {
+            throw new InvalidRatingException("Não é possível avaliar o próprio usuário");
         }
     }
 }
