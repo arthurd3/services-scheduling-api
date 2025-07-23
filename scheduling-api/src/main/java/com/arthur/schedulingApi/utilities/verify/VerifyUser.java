@@ -7,7 +7,8 @@ import org.springframework.stereotype.Component;
 public class VerifyUser extends Verify {
 
     public void verifyEdit(User userOwner , User userEdit) {
-        super.verifyEdit(userOwner);
+        if(super.verifyEdit(userOwner))
+            return;
 
         verifyUserIsSame(userOwner.getId(), userEdit.getId());
     }

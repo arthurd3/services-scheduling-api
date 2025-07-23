@@ -7,10 +7,11 @@ import org.springframework.stereotype.Component;
 @Component
 public class VerifyScheduling extends Verify {
 
-    public void verifyEdit(User ownerEdit , Scheduling schedulingEdit) {
-        super.verifyEdit(ownerEdit);
+    public void verifyEdit(User userOwner , Scheduling schedulingEdit) {
+        if(super.verifyEdit(userOwner))
+            return;
 
-        verifyUserIsOwner(ownerEdit.getId() , schedulingEdit.getServices().getOwner().getId());
+        verifyUserIsOwner(userOwner.getId() , schedulingEdit.getServices().getOwner().getId());
     }
 
     public void verifyDelete(User ownerDelete , Long schedulingId) {

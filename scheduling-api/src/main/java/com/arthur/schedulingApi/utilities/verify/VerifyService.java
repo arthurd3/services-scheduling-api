@@ -8,7 +8,8 @@ import org.springframework.stereotype.Component;
 public class VerifyService extends Verify {
 
     public void verifyEdit(User userOwner , Services serviceEdit) {
-        super.verifyEdit(userOwner);
+        if(super.verifyEdit(userOwner))
+            return;
 
         verifyUserIsOwner(userOwner.getId(),  serviceEdit.getOwner().getId());
     }

@@ -57,7 +57,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler(UnauthorizedException.class)
     public final ErrorResponse handleResourceAlreadyExistsException(UnauthorizedException ex) {
         var error = ErrorResponse.create(ex , HttpStatus.CONFLICT , ex.getMessage());
-        error.getBody().setTitle("Usuario nao e dono");
+        error.getBody().setTitle("Usuario nao autorizado");
         return error;
     }
 

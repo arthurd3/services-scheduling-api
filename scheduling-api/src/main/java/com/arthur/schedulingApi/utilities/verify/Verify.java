@@ -11,9 +11,8 @@ import com.arthur.schedulingApi.models.ratingImpl.ServiceRating;
 
 public abstract class Verify {
 
-     protected void verifyEdit(User userOwner) {
-        if(verifyUserIsAdmin(userOwner))
-            return;
+     protected boolean verifyEdit(User userOwner) {
+        return verifyUserIsAdmin(userOwner);
      }
 
     protected void verifyUserIsSame(Long ownerId , Long userEditId) {
