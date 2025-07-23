@@ -4,10 +4,9 @@ import com.arthur.schedulingApi.controllers.response.SchedulingResponseDTO;
 import com.arthur.schedulingApi.models.enums.SchedulingStatus;
 import com.arthur.schedulingApi.security.jwt.AuthenticatedUserService;
 import com.arthur.schedulingApi.utilities.verify.VerifyJoinScheduling;
-import jakarta.transaction.Transactional;
+import org.springframework.transaction.annotation.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
 
 import static com.arthur.schedulingApi.usecases.mapper.SchedulingToResponse.schedulingToResponse;
 
@@ -18,13 +17,14 @@ public class JoinScheduling {
     private final AuthenticatedUserService authenticatedUserService;
     private final FindScheduling findScheduling;
     private final VerifyJoinScheduling verifyJoinScheduling;
+    private final FindUser findUser;
 
     @Transactional
-    public SchedulingResponseDTO joinScheduling(Long id) {
+    public SchedulingResponseDTO joinScheduling(Long schedulingId) {
 
-        var client = authenticatedUserService.getAuthenticatedUser();
+        var client = findUser.findByIdAsModel(authenticatedUserService.getAuthenticatedUser().getId());
 
-        var scheduling = findScheduling.findSchedulingAsModel(id);
+        var scheduling = findScheduling.findSchedulingAsModel(schedulingId);
 
         verifyJoinScheduling.verifyJoin(client , scheduling);
 

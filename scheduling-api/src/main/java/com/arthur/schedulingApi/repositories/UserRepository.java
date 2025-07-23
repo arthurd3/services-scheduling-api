@@ -2,9 +2,11 @@ package com.arthur.schedulingApi.repositories;
 
 import com.arthur.schedulingApi.models.User;
 import com.arthur.schedulingApi.models.enums.UserRoles;
+import io.lettuce.core.dynamic.annotation.Param;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 
 import java.util.Optional;
 
@@ -22,4 +24,8 @@ public interface UserRepository extends JpaRepository<User, Long> {
     boolean existsByName(String name);
 
     boolean existsUserByRole(UserRoles role);
+
+    @Query("SELECT u FROM User u JOIN FETCH u.servicesOwned WHERE u.id = :id")
+    boolean findByIdWithServicesOwned(@Param("id") Long serviceId , Long userId);
+
 }
