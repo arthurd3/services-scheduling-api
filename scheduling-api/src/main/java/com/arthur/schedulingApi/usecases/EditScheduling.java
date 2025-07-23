@@ -4,7 +4,7 @@ import com.arthur.schedulingApi.controllers.request.SchedulingSlotRequestDTO;
 import com.arthur.schedulingApi.controllers.response.SchedulingResponseDTO;
 import com.arthur.schedulingApi.models.User;
 import com.arthur.schedulingApi.security.jwt.AuthenticatedUserService;
-import com.arthur.schedulingApi.utilities.verify.VerifyEditScheduling;
+import com.arthur.schedulingApi.utilities.verify.VerifyScheduling;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -17,7 +17,7 @@ public class EditScheduling {
 
     private final FindScheduling findScheduling;
     private final AuthenticatedUserService authenticatedUserService;
-    private final VerifyEditScheduling verifyEdit;
+    private final VerifyScheduling verifyEdit;
 
     @Transactional
     public SchedulingResponseDTO editSchedulingTime(Long id , SchedulingSlotRequestDTO schedulingSlotRequestDTO) {
