@@ -11,13 +11,15 @@ import org.springframework.context.annotation.Primary;
 @Configuration
 public class JacksonConfig {
 
-    @Bean
+    @Bean("redisObjectMapper")
     @Primary
-    public ObjectMapper objectMapper() {
+    public ObjectMapper redisObjectMapper() {
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.registerModule(new JavaTimeModule());
         objectMapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
         objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+        objectMapper.configure(DeserializationFeature.FAIL_ON_IGNORED_PROPERTIES, false);
+        objectMapper.configure(DeserializationFeature.FAIL_ON_NULL_FOR_PRIMITIVES, false);
         return objectMapper;
     }
 }
