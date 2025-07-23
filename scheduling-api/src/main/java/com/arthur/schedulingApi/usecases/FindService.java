@@ -23,7 +23,7 @@ public class FindService {
 
     @Cacheable(value = "SERVICE_CACHE", key = "#serviceId", unless = "#result == null")
     public ServiceResponseDTO findById(Long serviceId){
-        log.info("### Buscando serviço com ID {} no BANCO DE DADOS... ###", serviceId);
+        log.info("Buscando serviço com ID {} no BANCO DE DADOS", serviceId);
         var findService = serviceRepository.findById(serviceId)
                 .orElseThrow(() -> new ServiceNotFoundException("Servico com id "+ serviceId +" nao encontrado"));
         return serviceToResponse(findService);
@@ -33,6 +33,4 @@ public class FindService {
         return serviceRepository.findById(id)
                 .orElseThrow(() -> new ServiceNotFoundException("Servico com id "+ id +" nao encontrado"));
     }
-
-
 }

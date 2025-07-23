@@ -26,7 +26,6 @@ public class SchedulingController {
     private final JoinScheduling joinScheduling;
     private final EditScheduling editScheduling;
 
-
     @ResponseStatus(CREATED)
     @PostMapping("{id}")
     public SchedulingResponseDTO create(@PathVariable(name = "id") Long serviceId ,

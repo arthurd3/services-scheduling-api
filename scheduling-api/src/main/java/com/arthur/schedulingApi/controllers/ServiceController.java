@@ -51,10 +51,4 @@ public class ServiceController {
                                      @Valid @RequestBody ServiceRequestDTO serviceRequestDTO){
         return editService.editService(id,serviceRequestDTO);
     }
-
-    @ResponseStatus(OK)
-    @PostMapping("/cache/clear")
-    public void clearCache(){
-        clearServiceCache.clearAllCache();
-    }
 }

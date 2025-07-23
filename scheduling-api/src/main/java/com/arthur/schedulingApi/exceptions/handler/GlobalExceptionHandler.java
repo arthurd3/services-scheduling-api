@@ -54,6 +54,13 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         return error;
     }
 
+    @ExceptionHandler(UnauthorizedException.class)
+    public final ErrorResponse handleResourceAlreadyExistsException(UnauthorizedException ex) {
+        var error = ErrorResponse.create(ex , HttpStatus.CONFLICT , ex.getMessage());
+        error.getBody().setTitle("Usuario nao e dono");
+        return error;
+    }
+
     @ExceptionHandler(SchedulingNotAvailableException.class)
     public final ErrorResponse handleResourceAlreadyExistsException(SchedulingNotAvailableException ex) {
         var error = ErrorResponse.create(ex , HttpStatus.CONFLICT , ex.getMessage());
