@@ -21,6 +21,7 @@ public class RatingService {
     private final RatingRepository ratingRepository;
     private final AuthenticatedUserService authenticatedUserService;
     private final RatingFactory ratingFactory;
+    private final VerifyValidRating verifyValidRating;
 
     public RatingResponseDTO ratingService(Long serviceId,RatingRequestDTO ratingRequest) {
 
@@ -28,20 +29,10 @@ public class RatingService {
 
         var modelRating = ratingFactory.createForService(ratingRequest , serviceId, userAppraiser);
 
-        verifyValidRating(userAppraiser , modelRating);
+        verifyValidRating.verifyService(userAppraiser , modelRating);
 
         var savedRating = ratingRepository.save(modelRating);
 
         return ratingToResponse(savedRating);
-    }
-
-    private void verifyValidRating(User userAppraiser , ServiceRating rating) {
-
-        var serviceRating = rating.getServiceRatee();
-        boolean isOwner = serviceRating.getOwner().getId().equals(userAppraiser.getId());
-
-        if(isOwner) {
-            throw new ServiceNotFoundException("Nao e possivel avaliar o proprio servico");
-        }
     }
 }

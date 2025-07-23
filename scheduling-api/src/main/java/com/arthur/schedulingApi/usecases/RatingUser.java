@@ -20,6 +20,7 @@ public class RatingUser {
     private final RatingRepository ratingRepository;
     private final AuthenticatedUserService  authenticatedUserService;
     private final RatingFactory ratingFactory;
+    private final VerifyValidRating verifyValidRating;
 
     @Transactional
     public RatingResponseDTO ratingUser(Long userRateeId , RatingRequestDTO ratingRequest) {
@@ -28,12 +29,10 @@ public class RatingUser {
 
         var modelRating = ratingFactory.createForUser(ratingRequest , userRateeId , userAppraiser);
 
+        verifyValidRating.verifyUser(userAppraiser , userRateeId);
+
         var savedRating = ratingRepository.save(modelRating);
 
         return ratingToResponse(savedRating);
     }
-
-//    private boolean verifyValidRating(User userAppraiser){
-//
-//    }
 }

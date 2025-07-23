@@ -1,7 +1,6 @@
 package com.arthur.schedulingApi.usecases;
 
 import com.arthur.schedulingApi.controllers.response.SchedulingResponseDTO;
-import com.arthur.schedulingApi.exceptions.SchedulingNotAvailableException;
 import com.arthur.schedulingApi.models.enums.SchedulingStatus;
 import com.arthur.schedulingApi.security.jwt.AuthenticatedUserService;
 import jakarta.transaction.Transactional;
@@ -17,6 +16,7 @@ public class JoinScheduling {
 
     private final AuthenticatedUserService authenticatedUserService;
     private final FindScheduling findScheduling;
+    private final VerifyJoinScheduling verifyJoinScheduling;
 
     @Transactional
     public SchedulingResponseDTO joinScheduling(Long id) {
@@ -25,9 +25,7 @@ public class JoinScheduling {
 
         var scheduling = findScheduling.findSchedulingAsModel(id);
 
-        if (scheduling.getStatus() != SchedulingStatus.AVAILABLE) {
-            throw new SchedulingNotAvailableException("Este horário não está mais disponível.");
-        }
+        verifyJoinScheduling.verifyJoin(client , scheduling);
 
         scheduling.setClient(client);
         scheduling.setStatus(SchedulingStatus.BOOKED);
