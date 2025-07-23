@@ -15,6 +15,6 @@ public class VerifyUser extends Verify {
     public void verifyDelete(User ownerDelete , Long userIdDelete) {
         super.verifyEdit(ownerDelete);
 
-        verifyUserIsOwner(ownerDelete.getId(), userIdDelete);
+        verifyUserIsSame(ownerDelete.getId(), userIdDelete);
     }
 }

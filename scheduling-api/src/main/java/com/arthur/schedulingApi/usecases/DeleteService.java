@@ -22,10 +22,10 @@ public class DeleteService {
 
         User authUser = authenticatedUser.getAuthenticatedUser();
 
-        verify.verifyDelete(authUser , id);
-        if (!serviceRepository.existsById(id)) {
-            throw new ServiceNotFoundException("Não é possível deletar: Serviço com id " + id + " não encontrado.");
-        }
+        var foundedService = serviceRepository.findById(id)
+                .orElseThrow(() -> new ServiceNotFoundException("Não é possível deletar: Serviço com id " + id + " não encontrado."));
+
+        verify.verifyDelete(authUser , foundedService);
 
         serviceRepository.deleteById(id);
     }

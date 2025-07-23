@@ -13,9 +13,9 @@ public class VerifyService extends Verify {
         verifyUserIsOwner(userOwner.getId(),  serviceEdit.getOwner().getId());
     }
 
-    public void verifyDelete(User ownerDelete , Long serviceDeleteId) {
+    public void verifyDelete(User ownerDelete , Services serviceDelete) {
         super.verifyEdit(ownerDelete);
 
-        verifyUserIsOwner(ownerDelete.getId(),  serviceDeleteId);
+        verifyUserIsOwner(ownerDelete.getId(),  serviceDelete.getOwner().getId());
     }
 }
