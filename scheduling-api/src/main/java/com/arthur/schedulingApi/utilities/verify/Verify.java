@@ -25,7 +25,7 @@ public abstract class Verify {
     protected void verifyUserIsOwner(Long ownerId , Long ownerServiceId) {
 
         if(!ownerId.equals(ownerServiceId))
-            throw new UnauthorizedException("Voce nao e o dono desse Servico para editar");
+            throw new UnauthorizedException("Voce nao e o dono desse Servico para efetuar essa acao");
     }
 
     protected boolean verifyUserIsAdmin(User user) {

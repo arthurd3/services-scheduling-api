@@ -1,6 +1,7 @@
 package com.arthur.schedulingApi.repositories;
 
 import com.arthur.schedulingApi.models.User;
+import com.arthur.schedulingApi.models.enums.UserRoles;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -19,4 +20,6 @@ public interface UserRepository extends JpaRepository<User, Long> {
     boolean existsByPhoneNumber(String s);
 
     boolean existsByName(String name);
+
+    boolean existsUserByRole(UserRoles role);
 }
