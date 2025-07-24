@@ -30,22 +30,18 @@ public class ScheduleGeneratorTask {
     @Scheduled(cron = "0 0 1 * * *")
     @Transactional
     public void scheduledGeneration() {
-
         if (LocalDate.now().getDayOfMonth() != 1) {
             return;
         }
-
         forceGenerationForAllActiveConfigs();
     }
 
     @Transactional
     public void forceGenerationForAllActiveConfigs() {
         List<ServiceConfiguration> activeConfigs = configurationRepository.findByAutoGenerationEnabled(true);
-
         if (activeConfigs.isEmpty()) {
             return;
         }
-
         for (ServiceConfiguration config : activeConfigs) {
             processConfiguration(config);
         }
@@ -74,33 +70,34 @@ public class ScheduleGeneratorTask {
 
     private List<Scheduling> generateSchedulesForMonth(ServiceConfiguration config, YearMonth month) {
         List<Scheduling> schedules = new ArrayList<>();
-        for (int day = 1; day <= month.lengthOfMonth(); day++) {
 
+        final LocalTime lunchStart = config.getLunchStartTime();
+        final LocalTime lunchEnd = (lunchStart != null && config.getLunchDurationInMinutes() != null)
+                ? lunchStart.plusMinutes(config.getLunchDurationInMinutes())
+                : null;
+
+        for (int day = 1; day <= month.lengthOfMonth(); day++) {
             LocalDate currentDate = month.atDay(day);
             DayOfWeek dayOfWeek = currentDate.getDayOfWeek();
 
-            if (dayOfWeek == DayOfWeek.SATURDAY && !config.isAutoGenerationInSaturdays()) {
-                continue;
-            }
-            if (dayOfWeek == DayOfWeek.SUNDAY && !config.isAutoGenerationInSundays()) {
+            if ((dayOfWeek == DayOfWeek.SATURDAY && !config.isAutoGenerationInSaturdays()) ||
+                    (dayOfWeek == DayOfWeek.SUNDAY && !config.isAutoGenerationInSundays())) {
                 continue;
             }
 
-            // 2. LÓGICA DE HORÁRIOS DIFERENCIADOS
             LocalTime workStartTime = config.getWorkStartTime();
             LocalTime workEndTime = config.getWorkEndTime();
-
             boolean isWeekend = (dayOfWeek == DayOfWeek.SATURDAY || dayOfWeek == DayOfWeek.SUNDAY);
 
-            if (isWeekend && config.isAutoGenerationInWeekends()) {
-                workStartTime = workStartTime.plusMinutes(config.getStarEarlyInWeekends());
+            if (isWeekend) {
+                workStartTime = workStartTime.plusMinutes(config.getStartEarlyInWeekends());
                 workEndTime = workEndTime.minusMinutes(config.getEndEarlyInWeekends());
             }
 
-            // GERAÇÃO DOS SLOTS
             LocalTime slotTime = workStartTime;
             while (slotTime.isBefore(workEndTime)) {
-                if (config.getLunchTime() != null && slotTime.equals(config.getLunchTime())) {
+                // LÓGICA DE ALMOÇO
+                if (lunchEnd != null && !slotTime.isBefore(lunchStart) && slotTime.isBefore(lunchEnd)) {
                     slotTime = slotTime.plusMinutes(config.getSlotDurationInMinutes());
                     continue;
                 }

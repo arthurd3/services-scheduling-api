@@ -20,8 +20,6 @@ public class ServiceConfiguration {
 
     private boolean autoGenerationEnabled = false;
 
-    private boolean autoGenerationInWeekends = false;
-
     private boolean autoGenerationInSaturdays = false;
 
     private boolean autoGenerationInSundays = false;
@@ -32,13 +30,15 @@ public class ServiceConfiguration {
 
     private int slotDurationInMinutes;
 
-    private LocalTime lunchTime;
+    private LocalTime lunchStartTime;
+
+    private Integer lunchDurationInMinutes;
 
     private LocalTime workStartTime;
 
     private LocalTime workEndTime;
 
-    private int starEarlyInWeekends;
+    private int startEarlyInWeekends;
 
     private int endEarlyInWeekends;
 

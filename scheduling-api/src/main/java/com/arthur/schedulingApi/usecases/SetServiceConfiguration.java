@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 
 import static com.arthur.schedulingApi.usecases.mapper.ServiceConfigToModel.convertConfigToModel;
+import static com.arthur.schedulingApi.usecases.mapper.ServiceConfigToModel.updateModel;
 
 @Service
 @RequiredArgsConstructor
@@ -30,9 +31,13 @@ public class SetServiceConfiguration {
 
         verifyService.verifyEdit(userEdit, serviceFounded);
 
-        var convertConfig = convertConfigToModel(serviceConfigDTO);
-
-        serviceFounded.setConfiguration(convertConfig);
+        if(serviceFounded.getConfiguration() == null){
+            serviceFounded.setConfiguration(convertConfigToModel(serviceConfigDTO));
+        }
+        else{
+            var configEntity = serviceFounded.getConfiguration();
+            serviceFounded.setConfiguration(updateModel(configEntity ,serviceConfigDTO));
+        }
 
         serviceRepository.save(serviceFounded);
     }
