@@ -11,7 +11,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 import static java.util.stream.Collectors.averagingInt;
 

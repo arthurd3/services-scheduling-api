@@ -24,7 +24,7 @@ public class Scheduling {
     private LocalDateTime endTime;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "payment_status" , nullable = false)
+    @Column(name = "payment_status")
     private SchedulingPaymentStatus paymentStatus;
 
     @Column(name = "stripe_payment_intent_id", unique = true)
