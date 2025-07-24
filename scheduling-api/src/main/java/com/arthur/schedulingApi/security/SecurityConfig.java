@@ -45,7 +45,7 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.POST, "/api/v1/scheduling/join/{id}").authenticated()
                         .requestMatchers(HttpMethod.GET, "/api/v1/scheduling/**").authenticated()
                         .requestMatchers(HttpMethod.POST, "/api/v1/payments/create-payment-intent").authenticated()
-                        .requestMatchers(HttpMethod.POST, "/api/v1/stripe-webhooks").authenticated()
+                        .requestMatchers(HttpMethod.POST, "/api/v1/stripe-webhooks").permitAll()
                         .anyRequest().authenticated()
                 )
                 .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
