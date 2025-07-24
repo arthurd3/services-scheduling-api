@@ -32,6 +32,9 @@ public class Services {
     private String location;
     private String url_image;
 
+    @OneToOne(mappedBy = "service", cascade = CascadeType.ALL, orphanRemoval = true)
+    private ServiceConfiguration configuration;
+
     @OneToMany(mappedBy = "serviceRatee", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ServiceRating> ratingsReceived;
 
@@ -89,5 +92,17 @@ public class Services {
             return this.ratingsReceived.size();
 
         return 0;
+    }
+
+
+    public void setConfiguration(ServiceConfiguration configuration) {
+        if (configuration == null) {
+            if (this.configuration != null) {
+                this.configuration.setService(null);
+            }
+        } else {
+            configuration.setService(this);
+        }
+        this.configuration = configuration;
     }
 }

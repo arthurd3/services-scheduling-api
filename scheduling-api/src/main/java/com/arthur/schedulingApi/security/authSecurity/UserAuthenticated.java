@@ -26,18 +26,18 @@ public class UserAuthenticated implements UserDetails {
                     new SimpleGrantedAuthority("ROLE_" + ADMIN.getRole()),
                     new SimpleGrantedAuthority("ROLE_" + MANAGER.getRole()),
                     new SimpleGrantedAuthority("ROLE_" + MANAGER_VIP.getRole()),
-                    new SimpleGrantedAuthority("ROLE_" + UserRoles.USER.getRole())
+                    new SimpleGrantedAuthority("ROLE_" + USER.getRole())
             );
             case MANAGER_VIP -> List.of(
                     new SimpleGrantedAuthority("ROLE_" + MANAGER.getRole()),
                     new SimpleGrantedAuthority("ROLE_" + MANAGER_VIP.getRole()),
-                    new SimpleGrantedAuthority("ROLE_" + UserRoles.USER.getRole())
+                    new SimpleGrantedAuthority("ROLE_" + USER.getRole())
             );
             case MANAGER -> List.of(
                     new SimpleGrantedAuthority("ROLE_" + MANAGER.getRole())
             );
             default -> List.of(
-                    new SimpleGrantedAuthority("ROLE_" + UserRoles.USER.getRole())
+                    new SimpleGrantedAuthority("ROLE_" + USER.getRole())
             );
         };
     }
