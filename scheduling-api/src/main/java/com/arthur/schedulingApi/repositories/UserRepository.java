@@ -25,7 +25,4 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     boolean existsUserByRole(UserRoles role);
 
-    @Query("SELECT u FROM User u JOIN FETCH u.servicesOwned WHERE u.id = :id")
-    boolean findByIdWithServicesOwned(@Param("id") Long serviceId , Long userId);
-
 }
