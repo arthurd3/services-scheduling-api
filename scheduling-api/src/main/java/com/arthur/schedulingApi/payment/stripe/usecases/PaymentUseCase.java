@@ -23,11 +23,18 @@ public class PaymentUseCase {
 
         String currency = request.currency();
 
-        PaymentIntentCreateParams params = PaymentIntentCreateParams.builder()
-                .setAmount(amountInCents)
-                .setCurrency(currency)
-                .putMetadata("scheduling_id", request.schedulingId().toString())
-                .build();
+        PaymentIntentCreateParams params =
+                PaymentIntentCreateParams.builder()
+                        .setAmount(amountInCents)
+                        .setCurrency(currency)
+                        .setAutomaticPaymentMethods(
+                                PaymentIntentCreateParams.AutomaticPaymentMethods.builder()
+                                        .setEnabled(true)
+                                        .setAllowRedirects(PaymentIntentCreateParams.AutomaticPaymentMethods.AllowRedirects.NEVER) // <-- ADICIONE ESTA LINHA
+                                        .build()
+                        )
+                        .putMetadata("scheduling_id", request.schedulingId().toString())
+                        .build();
 
         PaymentIntent paymentIntent = PaymentIntent.create(params);
         return paymentIntent.getClientSecret();
