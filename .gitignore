@@ -1,0 +1,28 @@
+# ...existing code...
+
+### Environment Variables ###
+.env
+.env.local
+.env.*.local
+**/.env
+
+### Application Properties with Secrets ###
+**/application-dev.properties
+**/application-local.properties
+**/application-secrets.properties
+**/application-prod.properties
+
+### Stripe Keys ###
+**/*stripe*key*
+**/*secret*key*
+sk_test_*
+sk_live_*
+whsec_*
+
+### Database ###
+*.db
+*.sqlite
+
+### Logs ###
+*.log
+logs/
