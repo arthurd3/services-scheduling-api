@@ -1,4 +1,4 @@
-package com.arthur.schedulingApi.usecases.tasks;
+package com.arthur.schedulingApi.models.tasks;
 
 import com.arthur.schedulingApi.models.Scheduling;
 import com.arthur.schedulingApi.models.ServiceConfiguration;
@@ -18,7 +18,7 @@ import java.util.List;
 
 @Component
 @RequiredArgsConstructor
-@Slf4j
+
 public class ScheduleGeneratorTask {
 
     private final ServiceConfigurationRepository configurationRepository;
@@ -26,14 +26,11 @@ public class ScheduleGeneratorTask {
 
     @Scheduled(cron = "0 0 1 * * *")
     public void generateSchedulesBasedOnConfigurations() {
-        log.info("Iniciando tarefa agendada: Geração de Horários...");
-
         List<ServiceConfiguration> activeConfigs = configurationRepository.findByAutoGenerationEnabled(true);
 
         for (ServiceConfiguration config : activeConfigs) {
 
             if (LocalDate.now().getDayOfMonth() == 1) {
-                log.info("Gerando horários para o serviço: {}", config.getService().getName());
 
                 List<Scheduling> newSchedules = new ArrayList<>();
                 LocalTime slotTime = config.getWorkStartTime();
@@ -55,10 +52,8 @@ public class ScheduleGeneratorTask {
                 }
 
                 schedulingRepository.saveAll(newSchedules);
-                log.info("{} novos horários criados para o serviço: {}", newSchedules.size(), config.getService().getName());
             }
         }
-        log.info("Tarefa agendada finalizada.");
     }
 
     private static Scheduling getScheduling(ServiceConfiguration config, LocalDate currentDate, LocalTime slotTime) {
