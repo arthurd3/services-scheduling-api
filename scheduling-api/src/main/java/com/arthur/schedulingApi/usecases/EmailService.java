@@ -49,4 +49,15 @@ public class EmailService {
 
         mailSender.send(message);
     }
+
+    @Async
+    public void sendReservationConfirmationEmail(Scheduling scheduling) {
+        this.sendConfirmationEmail(
+                scheduling.getClient().getEmail(),
+                scheduling.getClient().getName(),
+                scheduling.getServices().getName(),
+                scheduling.getStartTime(),
+                scheduling.getServices().getLocation()
+        );
+    }
 }

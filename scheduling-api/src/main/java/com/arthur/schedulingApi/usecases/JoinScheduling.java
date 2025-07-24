@@ -1,6 +1,7 @@
 package com.arthur.schedulingApi.usecases;
 
 import com.arthur.schedulingApi.controllers.response.SchedulingResponseDTO;
+import com.arthur.schedulingApi.models.enums.SchedulingPaymentStatus;
 import com.arthur.schedulingApi.models.enums.SchedulingStatus;
 import com.arthur.schedulingApi.security.jwt.AuthenticatedUserService;
 import com.arthur.schedulingApi.usecases.mapper.SchedulingToResponse;
@@ -8,6 +9,8 @@ import com.arthur.schedulingApi.utilities.verify.VerifyJoinScheduling;
 import org.springframework.transaction.annotation.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import java.time.LocalDateTime;
 
 import static com.arthur.schedulingApi.usecases.mapper.SchedulingToResponse.schedulingToResponse;
 
@@ -32,14 +35,10 @@ public class JoinScheduling {
 
         scheduling.setClient(client);
         scheduling.setStatus(SchedulingStatus.BOOKED);
+        scheduling.setPaymentStatus(SchedulingPaymentStatus.PAYMENT_PENDING);
+        scheduling.setPaymentDueDate(LocalDateTime.now().plusHours(24));
 
-        emailService.sendConfirmationEmail(
-                scheduling.getClient().getEmail(),
-                scheduling.getClient().getName(),
-                scheduling.getServices().getName(),
-                scheduling.getStartTime(),
-                scheduling.getServices().getLocation()
-        );
+        emailService.sendReservationConfirmationEmail(scheduling);
 
         return schedulingToResponse(scheduling);
     }

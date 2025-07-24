@@ -1,7 +1,8 @@
 package com.arthur.schedulingApi.models.enums;
 
 public enum SchedulingPaymentStatus {
-    PAYMENT_AVAILABLE,
-    PAYMENT_CANCELED,
-    PAYMENT_COMPLETED,
+    PAYMENT_PENDING,
+    PAYMENT_PAID,
+    PAYMENT_FAILED,
+    PAYMENT_CANCELED
 }

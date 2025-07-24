@@ -27,6 +27,12 @@ public class Scheduling {
     @Column(name = "payment_status" , nullable = false)
     private SchedulingPaymentStatus paymentStatus;
 
+    @Column(name = "stripe_payment_intent_id", unique = true)
+    private String stripePaymentIntentId;
+
+    @Column(name = "payment_due_date")
+    private LocalDateTime paymentDueDate;
+
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private SchedulingStatus status;
