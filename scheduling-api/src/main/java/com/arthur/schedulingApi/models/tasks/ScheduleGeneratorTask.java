@@ -11,6 +11,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -29,13 +30,12 @@ public class ScheduleGeneratorTask {
     @Scheduled(cron = "0 0 1 * * *")
     @Transactional
     public void scheduledGeneration() {
-        LocalDate today = LocalDate.now();
 
-        if (today.getDayOfMonth() != 1) {
+        if (LocalDate.now().getDayOfMonth() != 1) {
             return;
         }
 
-        forceGenerationForAllActiveConfigs(); 
+        forceGenerationForAllActiveConfigs();
     }
 
     @Transactional
@@ -65,20 +65,51 @@ public class ScheduleGeneratorTask {
             return;
         }
 
-        List<Scheduling> newSchedules = new ArrayList<>();
-        LocalTime slotTime = config.getWorkStartTime();
-        for (int day = 1; day <= currentMonth.lengthOfMonth(); day++) {
-            LocalDate currentDate = currentMonth.atDay(day);
-            while (slotTime.isBefore(config.getWorkEndTime())) {
-                newSchedules.add(createSchedulingSlot(config, currentDate, slotTime));
-                slotTime = slotTime.plusMinutes(config.getSlotDurationInMinutes());
-            }
-            slotTime = config.getWorkStartTime();
-        }
+        List<Scheduling> newSchedules = generateSchedulesForMonth(config, currentMonth);
 
         if (!newSchedules.isEmpty()) {
             schedulingRepository.saveAll(newSchedules);
         }
+    }
+
+    private List<Scheduling> generateSchedulesForMonth(ServiceConfiguration config, YearMonth month) {
+        List<Scheduling> schedules = new ArrayList<>();
+        for (int day = 1; day <= month.lengthOfMonth(); day++) {
+
+            LocalDate currentDate = month.atDay(day);
+            DayOfWeek dayOfWeek = currentDate.getDayOfWeek();
+
+            if (dayOfWeek == DayOfWeek.SATURDAY && !config.isAutoGenerationInSaturdays()) {
+                continue;
+            }
+            if (dayOfWeek == DayOfWeek.SUNDAY && !config.isAutoGenerationInSundays()) {
+                continue;
+            }
+
+            // 2. LÓGICA DE HORÁRIOS DIFERENCIADOS
+            LocalTime workStartTime = config.getWorkStartTime();
+            LocalTime workEndTime = config.getWorkEndTime();
+
+            boolean isWeekend = (dayOfWeek == DayOfWeek.SATURDAY || dayOfWeek == DayOfWeek.SUNDAY);
+
+            if (isWeekend && config.isAutoGenerationInWeekends()) {
+                workStartTime = workStartTime.plusMinutes(config.getStarEarlyInWeekends());
+                workEndTime = workEndTime.minusMinutes(config.getEndEarlyInWeekends());
+            }
+
+            // GERAÇÃO DOS SLOTS
+            LocalTime slotTime = workStartTime;
+            while (slotTime.isBefore(workEndTime)) {
+                if (config.getLunchTime() != null && slotTime.equals(config.getLunchTime())) {
+                    slotTime = slotTime.plusMinutes(config.getSlotDurationInMinutes());
+                    continue;
+                }
+
+                schedules.add(createSchedulingSlot(config, currentDate, slotTime));
+                slotTime = slotTime.plusMinutes(config.getSlotDurationInMinutes());
+            }
+        }
+        return schedules;
     }
 
     private Scheduling createSchedulingSlot(ServiceConfiguration config, LocalDate currentDate, LocalTime slotTime) {
