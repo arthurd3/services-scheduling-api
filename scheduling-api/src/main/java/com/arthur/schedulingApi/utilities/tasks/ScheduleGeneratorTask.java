@@ -1,4 +1,4 @@
-package com.arthur.schedulingApi.models.tasks;
+package com.arthur.schedulingApi.utilities.tasks;
 
 import com.arthur.schedulingApi.models.Scheduling;
 import com.arthur.schedulingApi.models.ServiceConfiguration;

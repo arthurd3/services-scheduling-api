@@ -1,5 +1,6 @@
 package com.arthur.schedulingApi.models;
 
+import com.arthur.schedulingApi.models.enums.SchedulingPaymentStatus;
 import com.arthur.schedulingApi.models.enums.SchedulingStatus;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -21,6 +22,10 @@ public class Scheduling {
 
     @Column(name = "end_time", nullable = false)
     private LocalDateTime endTime;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "payment_status" , nullable = false)
+    private SchedulingPaymentStatus paymentStatus;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
