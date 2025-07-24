@@ -33,7 +33,13 @@ public class JoinScheduling {
         scheduling.setClient(client);
         scheduling.setStatus(SchedulingStatus.BOOKED);
 
-        emailService.sendSchedulingConfirmedEmail(scheduling);
+        emailService.sendConfirmationEmail(
+                scheduling.getClient().getEmail(),
+                scheduling.getClient().getName(),
+                scheduling.getServices().getName(),
+                scheduling.getStartTime(),
+                scheduling.getServices().getLocation()
+        );
 
         return schedulingToResponse(scheduling);
     }

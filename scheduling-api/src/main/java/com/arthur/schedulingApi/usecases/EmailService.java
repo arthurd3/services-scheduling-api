@@ -8,6 +8,9 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 @Service
 @RequiredArgsConstructor
 public class EmailService {
@@ -18,33 +21,32 @@ public class EmailService {
     private String userEmailSender;
 
     @Async
-    public void sendSchedulingConfirmedEmail(Scheduling scheduling) {
-        try{
-            SimpleMailMessage message = new SimpleMailMessage();
-            message.setFrom(userEmailSender);
-            message.setTo(scheduling.getClient().getEmail());
-            message.setSubject("Confirmação de Agendamento - " + scheduling.getServices().getName());
+    public void sendConfirmationEmail(String clientEmail, String clientName, String serviceName, LocalDateTime startTime, String location) {
+        SimpleMailMessage message = new SimpleMailMessage();
+        message.setFrom(userEmailSender);
+        message.setTo(clientEmail);
+        message.setSubject("Confirmação de Agendamento - " + serviceName);
 
-            String text = String.format(
-                    "Olá, %s!\n\n" +
-                            "Seu agendamento foi confirmado com sucesso.\n\n" +
-                            "Detalhes do Agendamento:\n" +
-                            "Serviço: %s\n" +
-                            "Data: %s\n" +
-                            "Horário: %s\n" +
-                            "Local: %s\n\n" +
-                            "Obrigado por escolher nossos serviços!",
-                    scheduling.getClient().getName(),
-                    scheduling.getServices().getName(),
-                    scheduling.getStartTime().toLocalDate().toString(),
-                    scheduling.getStartTime().toLocalTime().toString(),
-                    scheduling.getServices().getLocation()
-            );
-            message.setText(text);
+        DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm");
 
-            mailSender.send(message);
-        }catch (Exception e){
-            throw new RuntimeException(e);
-        }
+        String text = String.format(
+                "Olá, %s!\n\n" +
+                        "Seu agendamento foi confirmado com sucesso.\n\n" +
+                        "Detalhes do Agendamento:\n" +
+                        "Serviço: %s\n" +
+                        "Data: %s\n" +
+                        "Horário: %s\n" +
+                        "Local: %s\n\n" +
+                        "Obrigado por escolher nossos serviços!",
+                clientName,
+                serviceName,
+                startTime.format(dateFormatter),
+                startTime.format(timeFormatter),
+                location
+        );
+        message.setText(text);
+
+        mailSender.send(message);
     }
 }
