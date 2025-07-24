@@ -3,6 +3,7 @@ package com.arthur.schedulingApi.usecases;
 import com.arthur.schedulingApi.controllers.response.SchedulingResponseDTO;
 import com.arthur.schedulingApi.models.enums.SchedulingStatus;
 import com.arthur.schedulingApi.security.jwt.AuthenticatedUserService;
+import com.arthur.schedulingApi.usecases.mapper.SchedulingToResponse;
 import com.arthur.schedulingApi.utilities.verify.VerifyJoinScheduling;
 import org.springframework.transaction.annotation.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -18,6 +19,7 @@ public class JoinScheduling {
     private final FindScheduling findScheduling;
     private final VerifyJoinScheduling verifyJoinScheduling;
     private final FindUser findUser;
+    private final EmailService emailService;
 
     @Transactional
     public SchedulingResponseDTO joinScheduling(Long schedulingId) {
@@ -30,6 +32,8 @@ public class JoinScheduling {
 
         scheduling.setClient(client);
         scheduling.setStatus(SchedulingStatus.BOOKED);
+
+        emailService.sendSchedulingConfirmedEmail(scheduling);
 
         return schedulingToResponse(scheduling);
     }
