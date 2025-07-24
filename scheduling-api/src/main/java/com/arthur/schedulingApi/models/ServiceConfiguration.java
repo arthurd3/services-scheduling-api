@@ -1,14 +1,17 @@
 package com.arthur.schedulingApi.models;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
+
 import java.time.LocalTime;
 
 @Entity
 @Table(name = "service_configurations")
 @Getter
 @Setter
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class ServiceConfiguration {
 
     @Id
@@ -17,6 +20,7 @@ public class ServiceConfiguration {
 
     private boolean autoGenerationEnabled = false;
 
+    @Builder.Default
     @Column(nullable = false)
     private String generationCronExpression = "0 0 0 1 * *";
 
@@ -29,4 +33,5 @@ public class ServiceConfiguration {
     @OneToOne
     @JoinColumn(name = "service_id", referencedColumnName = "id")
     private Services service;
+
 }

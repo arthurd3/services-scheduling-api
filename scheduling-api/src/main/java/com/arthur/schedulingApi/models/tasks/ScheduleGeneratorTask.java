@@ -9,57 +9,81 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.YearMonth;
 import java.util.ArrayList;
 import java.util.List;
 
 @Component
 @RequiredArgsConstructor
-
+@Slf4j
 public class ScheduleGeneratorTask {
 
     private final ServiceConfigurationRepository configurationRepository;
     private final SchedulingRepository schedulingRepository;
 
     @Scheduled(cron = "0 0 1 * * *")
-    public void generateSchedulesBasedOnConfigurations() {
+    @Transactional
+    public void scheduledGeneration() {
+        LocalDate today = LocalDate.now();
+
+        if (today.getDayOfMonth() != 1) {
+            return;
+        }
+
+        forceGenerationForAllActiveConfigs(); 
+    }
+
+    @Transactional
+    public void forceGenerationForAllActiveConfigs() {
         List<ServiceConfiguration> activeConfigs = configurationRepository.findByAutoGenerationEnabled(true);
 
+        if (activeConfigs.isEmpty()) {
+            return;
+        }
+
         for (ServiceConfiguration config : activeConfigs) {
-
-            if (LocalDate.now().getDayOfMonth() == 1) {
-
-                List<Scheduling> newSchedules = new ArrayList<>();
-                LocalTime slotTime = config.getWorkStartTime();
-                LocalDate firstDayOfMonth = LocalDate.now().withDayOfMonth(1);
-
-                for (int day = 0; day < firstDayOfMonth.lengthOfMonth(); day++) {
-                    LocalDate currentDate = firstDayOfMonth.plusDays(day);
-                    
-                    while (slotTime.isBefore(config.getWorkEndTime())) {
-                        Scheduling schedule = getScheduling(config, currentDate, slotTime);
-
-                        newSchedules.add(schedule);
-
-
-                        slotTime = slotTime.plusMinutes(config.getSlotDurationInMinutes());
-                    }
-
-                    slotTime = config.getWorkStartTime();
-                }
-
-                schedulingRepository.saveAll(newSchedules);
-            }
+            processConfiguration(config);
         }
     }
 
-    private static Scheduling getScheduling(ServiceConfiguration config, LocalDate currentDate, LocalTime slotTime) {
+    private void processConfiguration(ServiceConfiguration config) {
+        Long serviceId = config.getService().getId();
+        YearMonth currentMonth = YearMonth.now();
+
+        boolean alreadyExists = schedulingRepository.existsByServicesIdAndStartTimeBetween(
+                serviceId,
+                currentMonth.atDay(1).atStartOfDay(),
+                currentMonth.atEndOfMonth().atTime(LocalTime.MAX)
+        );
+
+        if (alreadyExists) {
+            return;
+        }
+
+        List<Scheduling> newSchedules = new ArrayList<>();
+        LocalTime slotTime = config.getWorkStartTime();
+        for (int day = 1; day <= currentMonth.lengthOfMonth(); day++) {
+            LocalDate currentDate = currentMonth.atDay(day);
+            while (slotTime.isBefore(config.getWorkEndTime())) {
+                newSchedules.add(createSchedulingSlot(config, currentDate, slotTime));
+                slotTime = slotTime.plusMinutes(config.getSlotDurationInMinutes());
+            }
+            slotTime = config.getWorkStartTime();
+        }
+
+        if (!newSchedules.isEmpty()) {
+            schedulingRepository.saveAll(newSchedules);
+        }
+    }
+
+    private Scheduling createSchedulingSlot(ServiceConfiguration config, LocalDate currentDate, LocalTime slotTime) {
         LocalDateTime startTime = LocalDateTime.of(currentDate, slotTime);
         LocalDateTime endTime = startTime.plusMinutes(config.getSlotDurationInMinutes());
-
         Scheduling schedule = new Scheduling();
         schedule.setStartTime(startTime);
         schedule.setEndTime(endTime);
