@@ -44,6 +44,8 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.DELETE, "/api/v1/scheduling/{id}").hasRole("MANAGER")
                         .requestMatchers(HttpMethod.POST, "/api/v1/scheduling/join/{id}").authenticated()
                         .requestMatchers(HttpMethod.GET, "/api/v1/scheduling/**").authenticated()
+                        .requestMatchers(HttpMethod.POST, "/api/v1/payments/create-payment-intent").authenticated()
+                        .requestMatchers(HttpMethod.POST, "/api/v1/stripe-webhooks").authenticated()
                         .anyRequest().authenticated()
                 )
                 .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)

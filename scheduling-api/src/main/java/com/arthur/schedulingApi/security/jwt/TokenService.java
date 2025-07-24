@@ -14,6 +14,7 @@ import java.time.ZoneOffset;
 
 @Service
 public class TokenService {
+
     @Value("${security.token.secret}")
     private String secret;
 

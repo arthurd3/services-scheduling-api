@@ -1,5 +1,6 @@
 package com.arthur.schedulingApi.payment.stripe.usecases;
 
+import com.arthur.schedulingApi.models.Scheduling;
 import com.arthur.schedulingApi.payment.stripe.dto.PaymentRequestDTO;
 import com.arthur.schedulingApi.usecases.FindScheduling;
 import com.stripe.exception.StripeException;
@@ -8,29 +9,27 @@ import com.stripe.param.PaymentIntentCreateParams;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+
 @Service
 @RequiredArgsConstructor
 public class PaymentUseCase {
 
     private final FindScheduling findScheduling;
 
-    public String createPaymentIntent(PaymentRequestDTO request) throws StripeException {
+    public String createPaymentIntentForPendingScheduling(PaymentRequestDTO request) throws StripeException {
 
-        long amount = 5000;
+        //Scheduling scheduling = findScheduling.findSchedulingAsModel(request.schedulingId());
+        long amountInCents = 50000L; //scheduling.getServices().getPriceInCents();
 
-        PaymentIntentCreateParams params =
-                PaymentIntentCreateParams.builder()
-                        .setAmount(amount)
-                        .setCurrency(request.currency().toLowerCase())
-                        .setAutomaticPaymentMethods(
-                                PaymentIntentCreateParams.AutomaticPaymentMethods.builder()
-                                        .setEnabled(true)
-                                        .build()
-                        )
-                        .build();
+        String currency = request.currency();
+
+        PaymentIntentCreateParams params = PaymentIntentCreateParams.builder()
+                .setAmount(amountInCents)
+                .setCurrency(currency)
+                .putMetadata("scheduling_id", request.schedulingId().toString())
+                .build();
 
         PaymentIntent paymentIntent = PaymentIntent.create(params);
-
         return paymentIntent.getClientSecret();
     }
 }
