@@ -67,23 +67,7 @@ A complete RESTful API for service scheduling, built with Java and Spring Boot. 
 
 ## Project Structure
 
-```
-src/
-├── main/
-│   ├── java/com/arthur/schedulingApi/
-│   │   ├── config/           # Configuration classes
-│   │   ├── controllers/      # REST endpoints
-│   │   ├── models/          # JPA entities
-│   │   ├── repositories/    # Data access layer
-│   │   ├── security/        # Security configuration
-│   │   ├── usecases/        # Business logic
-│   │   ├── payment/         # Stripe integration
-│   │   └── exceptions/      # Custom exception handling
-│   └── resources/
-│       ├── application.properties
-│       └── static/          # Static resources
-└── test/                    # Test classes
-```
+Clean Architecture
 
 ## Getting Started
 
