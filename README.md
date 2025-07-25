@@ -134,27 +134,6 @@ The API will be available at `http://localhost:8080`
 #### Authentication
 - `POST /api/auth/login` - User authentication
 - `POST /api/auth/register` - User registration
-- `POST /api/auth/refresh` - Token refresh
-
-#### Schedule Management
-- `GET /api/schedules` - List available time slots
-- `POST /api/schedules/generate` - Generate monthly schedule
-- `PUT /api/schedules/{id}` - Update schedule configuration
-
-#### Booking Management  
-- `POST /api/bookings` - Create new booking
-- `GET /api/bookings/{id}` - Get booking details
-- `PUT /api/bookings/{id}/cancel` - Cancel booking
-
-#### Payment Processing
-- `POST /api/payments/create-intent` - Create payment intent
-- `POST /api/payments/webhook` - Stripe webhook handler
-- `GET /api/payments/{id}/status` - Payment status
-
-### Health & Monitoring
-- `GET /actuator/health` - Application health check
-- `GET /actuator/metrics` - Application metrics
-- `GET /actuator/info` - Application information
 
 ## Why This Project Stands Out for a Portfolio? 
 
