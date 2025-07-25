@@ -2,7 +2,7 @@
 
 A complete RESTful API for service scheduling, built with Java and Spring Boot. This project simulates a real-world system where service providers can configure their schedules and clients can book and pay for appointments.
 
-## Key Features 🚀
+## Key Features 
 
 ### Authentication & Authorization
 - JWT-based security system with Spring Security
@@ -35,7 +35,7 @@ A complete RESTful API for service scheduling, built with Java and Spring Boot. 
 - Pending payment reminders
 - Customizable email templates
 
-## Architecture & Technologies 🛠️
+## Architecture & Technologies 
 
 ### Backend Stack
 - **Java 17+** - Modern Java features and performance
@@ -156,7 +156,7 @@ The API will be available at `http://localhost:8080`
 - `GET /actuator/metrics` - Application metrics
 - `GET /actuator/info` - Application information
 
-## Why This Project Stands Out for a Portfolio? 🌟
+## Why This Project Stands Out for a Portfolio? 
 
 ### Demonstrates Core Competencies
 - **Spring Ecosystem Mastery**: Shows deep understanding of Spring Boot, Data, Security, and advanced features
